@@ -1,5 +1,5 @@
 # rgb_keyboard
-Controls the RGB lighting on some keyboards.
+Controls the RGB lighting on some keyboards. Only tested on Linux.
 
 ## Supported keyboards
 USB keyboards with VID 0c45 and PID 652f. 
