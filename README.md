@@ -34,8 +34,18 @@ to set a specific pattern.
     rgb_keyboard --custom-pattern example.conf
 to set a custom pattern from a file.
 
+### Config files
+
+Each line line in the file consists of two fields separated by a tab. The first field is the key name (include/constructor.cpp for a full list), the second field is the color as hexcode without any prefix. Lines starting with # are ignored.
+
+### Change custom key colors from the commandline
+
+Similar to the config file, instead of a tab an equal signs and instead of a newline a semicolon is being used. Comments are not allowed. The string must end with a semicolon.
+
+    rgb_keyboard --custom-keys "key_name=color;key_name=color;"
+
 ## TODO
 - [x] Implemented all lighting modes from the official software.
-- [ ] Create option to change individual keys in custom mode.
+- [x] Create option to change individual keys in custom mode.
 - [ ] Rewrite the frontend (code is old and messy)
 - [ ] Read current settings from the keyboard
