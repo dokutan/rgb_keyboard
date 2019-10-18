@@ -62,7 +62,7 @@ int main( int argc, char **argv ){
 		{"custom", no_argument, 0, 'j'},
 		//{"custom-clear", no_argument, 0, 'C'},
 		{"custom-pattern", required_argument, 0, 'P'},
-		//{"custom-keys", required_argument, 0, 'K'},
+		{"custom-keys", required_argument, 0, 'K'},
 		{0, 0, 0, 0}
 	};
 	
@@ -78,7 +78,7 @@ int main( int argc, char **argv ){
 	static string direction;
 	static string conf_file;
 	static string bg_color;
-	//static string keys;
+	static string keys;
 	
 	int c, option_index = 0;
 	
@@ -171,11 +171,11 @@ int main( int argc, char **argv ){
 				break;
 			/*case 'C':
 				mode_flag = 'C';
-				break;
+				break;*/
 			case 'K':
 				mode_flag = 'K';
 				keys = optarg;
-				break;*/
+				break;
 			case '?':
 				break;
 			default:
@@ -307,11 +307,14 @@ int main( int argc, char **argv ){
 		/*case 'C':
 			//set and clear custom pattern
 			///clear_custom();
-			break;
+			break;*/
 		case 'K':
 			//set custom pattern from string
-			///set_custom_keys( keys );
-			break;*/
+			kbd.set_custom_keys( keys );
+			kbd.set_mode( rgb_keyboard::keyboard::m_custom );
+			kbd.write_custom();
+			kbd.write_mode();
+			break;
 		default:
 			break;
 	}

@@ -24,6 +24,7 @@
 #include <map>
 #include <array>
 #include <string>
+#include <algorithm>
 //#include <assert.h>
 
 namespace rgb_keyboard{
@@ -86,6 +87,7 @@ class rgb_keyboard::keyboard{
 		int set_color( uint8_t Color_r, uint8_t Color_g, uint8_t Color_b );
 		int set_rainbow( bool Rainbow );
 		int set_variant( mode_variant Variant );
+		int set_custom_keys( std::string Keys );
 		
 		//getter functions
 		mode get_mode();

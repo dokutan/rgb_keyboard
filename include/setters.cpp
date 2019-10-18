@@ -62,3 +62,36 @@ int rgb_keyboard::keyboard::set_variant( mode_variant Variant ){
 	_variant = Variant;
 	return 0;
 }
+
+int rgb_keyboard::keyboard::keyboard::set_custom_keys( std::string Keys ){
+	
+	std::string value1 = "";
+	std::string value2 = "";
+	uint8_t val_r = 0, val_g = 0, val_b = 0;
+	std::array<uint8_t, 3> val_rgb;
+	std::size_t position1 = 0;
+	std::size_t position2 = 0;
+	
+	//process string
+	while( (position1 = Keys.find("=")) != std::string::npos ){
+		position2 = Keys.find(";");
+		if( position2 != std::string::npos ){
+			value1 = Keys.substr(0, position1);
+			value2 = Keys.substr(position1+1, position2-position1-1);
+			Keys.erase(0, position2+1);
+			
+			//store values in map
+			if( value2.length() == 6 ){
+				val_r = stoi( value2.substr(0,2), 0, 16 );
+				val_g = stoi( value2.substr(2,2), 0, 16 );
+				val_b = stoi( value2.substr(4,2), 0, 16 );
+				val_rgb = { val_r, val_g, val_b };
+				_key_colors[value1] = val_rgb;
+			}
+		} else{
+			break;
+		}
+	}
+	
+	return 0;
+}
