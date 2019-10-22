@@ -9,7 +9,19 @@ Tested with:
 
 ## Installing
 - Clone this repository
+    ```
+    git clone https://github.com/dokutan/rgb_keyboard
+    cd ./rgb_keyboard
+    ```
 - Make sure you have [libusb](https://libusb.info/) installed (on some distros you might need a dev package)
+
+### Automated (recommended)
+- compile and copy everything to the right place with
+    ```
+    sudo make install
+    ```
+
+### Manual
 - Compile with:
     g++ rgb_keyboard.cpp -o rgb_keyboard -lusb-1.0
 - (Optionally) add the binary to some place in your PATH variable
