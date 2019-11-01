@@ -52,7 +52,7 @@ Each line line in the file consists of two fields separated by a tab. The first 
 
 ### Change custom key colors from the commandline
 
-Similar to the config file, instead of a tab an equal signs and instead of a newline a semicolon is being used. Comments are not allowed. The string must end with a semicolon.
+Similar to the config file, instead of a tab an equal sign and instead of a newline a semicolon is being used. Comments are not allowed. The string must end with a semicolon.
 
     rgb_keyboard --custom-keys "key_name=color;key_name=color;"
 
