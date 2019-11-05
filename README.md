@@ -20,6 +20,7 @@ Tested with:
     ```
     sudo make install
     ```
+- restart for the udev rule to take effect
 
 ### Manual
 - Compile with:
@@ -27,7 +28,7 @@ Tested with:
 - (Optionally) add the binary to some place in your PATH variable
 - IMPORTANT: make the keyboard accessible without root rights by adding a udev rule
   - create a file named 'keyboard.rules' in /etc/udev/rules.d/
-  - add the following lines to the file
+  - add the following lines to the file and restart afterwards
   ```
   SUBSYSTEM=="usb", ATTRS{idVendor}=="0c45", ATTRS{idProduct}=="652f", MODE:="0666"
   SUBSYSTEM=="usb_device", ATTRS{idVendor}=="0c45", ATTRS{idProduct}=="652f", MODE:="0666"
