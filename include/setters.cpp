@@ -95,3 +95,8 @@ int rgb_keyboard::keyboard::keyboard::set_custom_keys( std::string Keys ){
 	
 	return 0;
 }
+
+int rgb_keyboard::keyboard::set_report_rate( report_rate Report_rate ){
+	_report_rate = Report_rate;
+	return 0;
+}

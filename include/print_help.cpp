@@ -55,6 +55,7 @@ void print_help(){
 	//std::cout << "\t--custom-clear\tEnables custom mode and clears pattern\n";
 	std::cout << "\t--custom-pattern=file\tSets pattern in custom mode\n";
 	std::cout << "\t--custom-keys=keys\tSets pattern in custom mode\n";
+	std::cout << "\n\t--report-rate=rate\tSets USB report rate (125, 250, 500, 1000) Hz\n";
 	std::cout << "\nColors need to be specified in hexadecimal without "
 	"any prefix.\n\"multi\" can also be used to create a rainbow effect.\n\n";
 }

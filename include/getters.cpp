@@ -51,3 +51,7 @@ bool rgb_keyboard::keyboard::get_rainbow(){
 rgb_keyboard::keyboard::mode_variant rgb_keyboard::keyboard::get_variant(){
 	return _variant;
 }
+
+rgb_keyboard::keyboard::report_rate rgb_keyboard::keyboard::get_report_rate(){
+	return _report_rate;
+}

@@ -408,7 +408,7 @@ int rgb_keyboard::keyboard::write_variant(){
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	data_settings[5] = 0x08;
 	
-	//convert variant string
+	//convert variant
 	if( _variant == v_color_red ){
 		data_settings[1] = 0x0f;
 		data_settings[8] = 0x00;
@@ -420,6 +420,63 @@ int rgb_keyboard::keyboard::write_variant(){
 		data_settings[8] = 0x02;
 	} else if( _variant == v_color_blue ){
 		data_settings[1] = 0x12;
+		data_settings[8] = 0x03;
+	} else{
+		return 1;
+	}
+	
+	//send data
+	
+	//write start data packet to endpoint 3
+	res += libusb_interrupt_transfer( _handle, 0x03, _data_start, 
+	64, &transferred, 1000);
+	
+	//read from endpoint 2
+	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
+	&transferred, 1000);
+	
+	//write data packet to endpoint 3
+	res += libusb_interrupt_transfer( _handle, 0x03, data_settings, 
+	64, &transferred, 1000);
+	
+	//read from endpoint 2
+	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
+	&transferred, 1000);
+	
+	//write end data packet to endpoint 3
+	res += libusb_interrupt_transfer( _handle, 0x03, _data_end, 
+	64, &transferred, 1000);
+	
+	//read from endpoint 2
+	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+	
+	return res;
+}
+
+int rgb_keyboard::keyboard::write_report_rate(){
+	
+	//vars
+	int res = 0;
+	int transferred = 0;
+	uint8_t buffer[64];
+	
+	//prepare data packet
+	uint8_t data_settings[64];
+	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
+	data_settings[5] = 0x0f;
+	
+	//convert report rate
+	if( _report_rate == r_125Hz ){
+		data_settings[1] = 0x16;
+		data_settings[8] = 0x00;
+	} else if( _report_rate == r_250Hz ){
+		data_settings[1] = 0x17;
+		data_settings[8] = 0x01;
+	} else if( _report_rate == r_500Hz ){
+		data_settings[1] = 0x18;
+		data_settings[8] = 0x02;
+	} else if( _report_rate == r_1000Hz ){
+		data_settings[1] = 0x19;
 		data_settings[8] = 0x03;
 	} else{
 		return 1;

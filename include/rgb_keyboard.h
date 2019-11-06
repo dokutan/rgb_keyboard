@@ -76,6 +76,13 @@ class rgb_keyboard::keyboard{
 			v_color_blue
 		};
 		
+		enum report_rate{
+			r_125Hz,
+			r_250Hz,
+			r_500Hz,
+			r_1000Hz
+		};
+		
 		//constructor
 		keyboard();
 		
@@ -88,6 +95,7 @@ class rgb_keyboard::keyboard{
 		int set_rainbow( bool Rainbow );
 		int set_variant( mode_variant Variant );
 		int set_custom_keys( std::string Keys );
+		int set_report_rate( report_rate Report_rate );
 		
 		//getter functions
 		mode get_mode();
@@ -99,6 +107,7 @@ class rgb_keyboard::keyboard{
 		uint8_t get_color_b();
 		bool get_rainbow();
 		mode_variant get_variant();
+		report_rate get_report_rate();
 		
 		//writer functions (apply settings to keyboard)
 		int write_brightness();
@@ -108,6 +117,7 @@ class rgb_keyboard::keyboard{
 		int write_color();
 		int write_custom();
 		int write_variant();
+		int write_report_rate();
 		
 		//helper functions
 		int open_keyboard();
@@ -126,6 +136,7 @@ class rgb_keyboard::keyboard{
 		uint8_t _color_r, _color_g, _color_b;
 		bool _rainbow;
 		mode_variant _variant;
+		report_rate _report_rate;
 		
 		//min and max values
 		const int _brightness_min = 0, _brightness_max = 9;
