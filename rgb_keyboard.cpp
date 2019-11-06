@@ -63,6 +63,7 @@ int main( int argc, char **argv ){
 		//{"custom-clear", no_argument, 0, 'C'},
 		{"custom-pattern", required_argument, 0, 'P'},
 		{"custom-keys", required_argument, 0, 'K'},
+		{"report-rate", required_argument, 0, 'R'},
 		{0, 0, 0, 0}
 	};
 	
@@ -79,11 +80,13 @@ int main( int argc, char **argv ){
 	static string conf_file;
 	static string bg_color;
 	static string keys;
+	static string r_rate;
+	static bool r_rate_flag = false;
 	
 	int c, option_index = 0;
 	
 	//parse command line options
-	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:jPCK",
+	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:jPCKR",
 	long_options, &option_index ) ) != -1 ){
 		
 		switch( c ){
@@ -175,6 +178,10 @@ int main( int argc, char **argv ){
 			case 'K':
 				mode_flag = 'K';
 				keys = optarg;
+				break;
+			case 'R':
+				r_rate_flag = true;
+				r_rate = optarg;
 				break;
 			case '?':
 				break;
@@ -358,6 +365,26 @@ int main( int argc, char **argv ){
 		} else if( direction == "right" || direction == "down" || direction == "outwards" ){
 			kbd.set_direction( rgb_keyboard::keyboard::d_right );
 			kbd.write_direction();
+		}
+	}
+	
+	//parse report rate flag
+	if( r_rate_flag ){
+		//set report rate
+		if( r_rate == "125" ){
+			kbd.set_report_rate( rgb_keyboard::keyboard::r_125Hz );
+			kbd.write_report_rate();
+		} else if( r_rate == "250" ){
+			kbd.set_report_rate( rgb_keyboard::keyboard::r_250Hz );
+			kbd.write_report_rate();
+		}  else if( r_rate == "500" ){
+			kbd.set_report_rate( rgb_keyboard::keyboard::r_500Hz );
+			kbd.write_report_rate();
+		}  else if( r_rate == "1000" ){
+			kbd.set_report_rate( rgb_keyboard::keyboard::r_1000Hz );
+			kbd.write_report_rate();
+		} else{
+			std::cout << "Unsupported report rate\n";
 		}
 	}
 	
