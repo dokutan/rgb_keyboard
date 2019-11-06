@@ -62,3 +62,4 @@ Similar to the config file, instead of a tab an equal sign and instead of a newl
 - [x] Create option to change individual keys in custom mode.
 - [ ] Rewrite the frontend (code is old and messy)
 - [ ] Read current settings from the keyboard
+- [ ] Add reprogramming and macro functionality
