@@ -51,7 +51,7 @@ to set a specific pattern.
 to set a custom pattern from a file.
 
     rgb_keyboard --keymap example.keymap
-to set a custom pattern from a file.
+to set a custom keymap from a file.
 
 ### Config files (Key mapping and color)
 
