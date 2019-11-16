@@ -35,9 +35,12 @@ Tested with:
   ```
 
 ## Usage
-    
     rgb_keyboard --help
 to see all options
+
+    rgb_keyboard --list-keys arg
+to see all keynames (arg = led, map, option)
+
 
 ### Examples
     
@@ -47,7 +50,10 @@ to set a specific pattern.
     rgb_keyboard --custom-pattern example.conf
 to set a custom pattern from a file.
 
-### Config files
+    rgb_keyboard --keymap example.keymap
+to set a custom pattern from a file.
+
+### Config files (Key mapping and color)
 
 Each line line in the file consists of two fields separated by a tab. The first field is the key name (include/constructor.cpp for a full list), the second field is the color as hexcode without any prefix. Lines starting with # are ignored.
 
@@ -62,4 +68,6 @@ Similar to the config file, instead of a tab an equal sign and instead of a newl
 - [x] Create option to change individual keys in custom mode.
 - [ ] Rewrite the frontend (code is old and messy)
 - [ ] Read current settings from the keyboard
-- [ ] Add reprogramming and macro functionality
+- [x] Add reprogramming and macro functionality
+  - [ ] Complete reprogramming
+  - [ ] Add macros to reprogramming

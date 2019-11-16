@@ -19,7 +19,7 @@
 #include <fstream>
 #include <utility>
 
-//loads custom pattern confifuration from a file
+//loads custom pattern configuration from a file
 int rgb_keyboard::keyboard::load_custom( std::string File ){
 	
 	//open file
@@ -52,6 +52,38 @@ int rgb_keyboard::keyboard::load_custom( std::string File ){
 					val_rgb = { val_r, val_g, val_b };
 					_key_colors[value1] = val_rgb;
 				}
+			}
+		}
+	}
+	
+	return 0;
+}
+
+//loads keymap from file
+int rgb_keyboard::keyboard::load_keymap( std::string File ){
+	
+	//open file
+	std::ifstream config_in( File );
+	if( !config_in.is_open() ){
+		return 1;
+	}
+	
+	//process file
+	std::string value1 = "";
+	std::string value2 = "";
+	std::size_t position = 0;
+	
+	for( std::string line; std::getline(config_in, line); ){
+		//process individual line
+		if( line.length() != 0 ){
+			if( line[0] != '#' ){
+				position = 0;
+				position = line.find("\t", position);
+				value1 = line.substr(0, position);
+				value2 = line.substr(position+1);
+													
+				//store values in map
+				_keymap[value1] = value2;
 			}
 		}
 	}

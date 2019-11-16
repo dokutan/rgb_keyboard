@@ -118,6 +118,7 @@ class rgb_keyboard::keyboard{
 		int write_custom();
 		int write_variant();
 		int write_report_rate();
+		int write_key_mapping();
 		
 		//helper functions
 		int open_keyboard();
@@ -125,6 +126,12 @@ class rgb_keyboard::keyboard{
 		
 		//loader functions (read settings from file)
 		int load_custom( std::string File );
+		int load_keymap( std::string File );
+		
+		//prints all valid keycodes
+		int print_keycodes_led(); //for custom led pattern
+		int print_keycodes_remap(); //physical keys for remapping
+		int print_keycodes_options(); //remapping options
 		
 	private:
 		
@@ -152,12 +159,29 @@ class rgb_keyboard::keyboard{
 		static uint8_t _data_start[];
 		static uint8_t _data_end[];
 		static uint8_t _data_settings[];
+		static uint8_t _data_remap_1[];
+		static uint8_t _data_remap_2[];
+		static uint8_t _data_remap_3[];
+		static uint8_t _data_remap_4[];
+		static uint8_t _data_remap_5[];
+		static uint8_t _data_remap_6[];
+		static uint8_t _data_remap_7[];
+		static uint8_t _data_remap_8[];
+		static uint8_t _data_remap_9[];
+		static uint8_t _data_remap_10[];
 		
-		//stores key codes
+		//stores key codes for custom colors
 		std::map< std::string, std::array<uint8_t, 3> > _keycodes;
-		
 		//stores custom key colors
 		std::map < std::string, std::array<uint8_t, 3> > _key_colors;
+		
+		//offsets for key remapping ( key → data positon ) ["string":[ [x,y], [x,y], [x,y] ]]
+		//std::map < std::string, std::array< std::array<uint8_t, 2>, 3 > > _keymap_offsets;
+		std::map < std::string, std::array< std::array<uint8_t, 2>, 3 > > _keymap_offsets;
+		//keymap options (what a key can do when pressed)  ( option → code )
+		std::map < std::string, std::array<uint8_t, 3> > _keymap_options;
+		//stores current keymapping ( key → option)
+		std::map < std::string, std::string > _keymap;
 };
 
 #include "data.h"
@@ -167,5 +191,6 @@ class rgb_keyboard::keyboard{
 #include "helpers.cpp"
 #include "fileio.cpp"
 #include "constructor.cpp"
+#include "print_keycodes.cpp"
 
 #endif

@@ -24,7 +24,8 @@ void print_help(){
 	"keyboards.\n";
 	std::cout << "Licensed under the GNU GPL version 3 or later.\n\n";
 	std::cout << "Options:\n";
-	std::cout << "\t--help\tDisplays this message\n\n";
+	std::cout << "\t--help\tDisplays this message\n";
+	std::cout << "\t--list-keys=arg\tList valid keynames (arg: led, map, option)\n\n";
 	std::cout << "\t--color=color\tSets color of the current animation\n";
 	std::cout << "\t--brightness=brightness\tSets brightness of the current animation.\n"
 	"\t\tInteger from 0 to 9.\n";
@@ -56,6 +57,7 @@ void print_help(){
 	std::cout << "\t--custom-pattern=file\tSets pattern in custom mode\n";
 	std::cout << "\t--custom-keys=keys\tSets pattern in custom mode\n";
 	std::cout << "\n\t--report-rate=rate\tSets USB report rate (125, 250, 500, 1000) Hz\n";
+	std::cout << "\n\t--keymap=file\tLoad keymap from specified file\n";
 	std::cout << "\nColors need to be specified in hexadecimal without "
 	"any prefix.\n\"multi\" can also be used to create a rainbow effect.\n\n";
 }

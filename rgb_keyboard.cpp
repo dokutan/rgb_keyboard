@@ -64,6 +64,8 @@ int main( int argc, char **argv ){
 		{"custom-pattern", required_argument, 0, 'P'},
 		{"custom-keys", required_argument, 0, 'K'},
 		{"report-rate", required_argument, 0, 'R'},
+		{"keymap", required_argument, 0, 'M'},
+		{"list-keys", required_argument, 0, 'L'},
 		{0, 0, 0, 0}
 	};
 	
@@ -82,11 +84,15 @@ int main( int argc, char **argv ){
 	static string keys;
 	static string r_rate;
 	static bool r_rate_flag = false;
+	static string keymap_file;
+	static bool keymap_flag = false;
+	static string list_keys_arg;
+	static bool list_keys_flag = false;
 	
 	int c, option_index = 0;
 	
 	//parse command line options
-	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:jPCKR",
+	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:jPCKRML",
 	long_options, &option_index ) ) != -1 ){
 		
 		switch( c ){
@@ -182,6 +188,14 @@ int main( int argc, char **argv ){
 			case 'R':
 				r_rate_flag = true;
 				r_rate = optarg;
+				break;
+			case 'M':
+				keymap_flag = true;
+				keymap_file = optarg;
+				break;
+			case 'L':
+				list_keys_flag = true;
+				list_keys_arg = optarg;
 				break;
 			case '?':
 				break;
@@ -386,6 +400,36 @@ int main( int argc, char **argv ){
 		} else{
 			std::cout << "Unsupported report rate\n";
 		}
+	}
+	
+	//parse keymap flag
+	if( keymap_flag ){
+		kbd.load_keymap( keymap_file );
+		kbd.write_key_mapping();
+	}
+	
+	//parse list keys flag
+	if( list_keys_flag ){
+		
+		if( list_keys_arg == "led" || list_keys_arg == "custom" ){
+			//list physical keys for custom led pattern
+			std::cout << "Keynames for custom pattern:\n(Some keys might have multiple names)\n\n";
+			kbd.print_keycodes_led();
+		} else if( list_keys_arg == "map" || list_keys_arg == "keymap" ){
+			//list physical keys for key 
+			std::cout << "Keynames of physical keys for remapping:\n(Some keys might have multiple names, not all keys can be remapped)\n\n";
+			kbd.print_keycodes_remap();
+		} else if( list_keys_arg == "function" || list_keys_arg == "option" ){
+			//list options for remapping
+			std::cout << "Options for key remapping:\n(Some options might have multiple names)\n\n";
+			kbd.print_keycodes_options();
+		} else{
+			std::cout << "Valid options:\n";
+			std::cout << "\"--list-keys led\" or \"--list-keys custom\"\n";
+			std::cout << "\"--list-keys map\" or \"--list-keys keymap\"\n";
+			std::cout << "\"--list-keys function\" or \"--list-keys option\"\n";
+		}
+		
 	}
 	
 	kbd.close_keyboard();

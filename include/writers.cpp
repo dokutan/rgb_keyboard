@@ -509,3 +509,74 @@ int rgb_keyboard::keyboard::write_report_rate(){
 	
 	return res;
 }
+
+int rgb_keyboard::keyboard::write_key_mapping(){
+	
+	//vars
+	int res = 0;
+	int transferred = 0;
+	uint8_t buffer[64];
+	
+	//prepare data packets
+	uint8_t data_remap[10][64];
+	std::copy(std::begin(_data_remap_1), std::end(_data_remap_1), std::begin(data_remap[0]));
+	std::copy(std::begin(_data_remap_2), std::end(_data_remap_2), std::begin(data_remap[1]));
+	std::copy(std::begin(_data_remap_3), std::end(_data_remap_3), std::begin(data_remap[2]));
+	std::copy(std::begin(_data_remap_4), std::end(_data_remap_4), std::begin(data_remap[3]));
+	std::copy(std::begin(_data_remap_5), std::end(_data_remap_5), std::begin(data_remap[4]));
+	std::copy(std::begin(_data_remap_6), std::end(_data_remap_6), std::begin(data_remap[5]));
+	std::copy(std::begin(_data_remap_7), std::end(_data_remap_7), std::begin(data_remap[6]));
+	std::copy(std::begin(_data_remap_8), std::end(_data_remap_8), std::begin(data_remap[7]));
+	std::copy(std::begin(_data_remap_9), std::end(_data_remap_9), std::begin(data_remap[8]));
+	std::copy(std::begin(_data_remap_10), std::end(_data_remap_10), std::begin(data_remap[9]));
+	
+	//modify data packets
+	/*for( std::pair< std::string, std::string > element : _keymap ){
+		if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&
+			_keymap_options.find( element.second ) != _keymap_options.end() ){
+			data_remap[ _keymap_offsets[element.first][0] ][ _keymap_offsets[element.first][1] ]
+			= _keymap_options[ element.second ][0];
+			data_remap[ _keymap_offsets[element.first][0] ][ _keymap_offsets[element.first][1]+1 ]
+			= _keymap_options[ element.second ][1];
+			data_remap[ _keymap_offsets[element.first][0] ][ _keymap_offsets[element.first][1]+2 ]
+			= _keymap_options[ element.second ][2];
+		}
+	}*/
+	for( std::pair< std::string, std::string > element : _keymap ){
+		if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&
+			_keymap_options.find( element.second ) != _keymap_options.end() ){
+			data_remap[ _keymap_offsets[element.first][0][0] ][ _keymap_offsets[element.first][0][1] ]
+			= _keymap_options[ element.second ][0];
+			data_remap[ _keymap_offsets[element.first][1][0] ][ _keymap_offsets[element.first][1][1] ]
+			= _keymap_options[ element.second ][1];
+			data_remap[ _keymap_offsets[element.first][2][0] ][ _keymap_offsets[element.first][2][1] ]
+			= _keymap_options[ element.second ][2];
+		}
+	}
+	
+	//send data
+	
+	//write start data packet to endpoint 3
+	res += libusb_interrupt_transfer( _handle, 0x03, _data_start, 
+	64, &transferred, 1000);
+	//read from endpoint 2
+	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
+	&transferred, 1000);
+	
+	for( int i = 0; i < 10; i++ ){
+		//write data packet to endpoint 3
+		res += libusb_interrupt_transfer( _handle, 0x03, data_remap[i], 
+		64, &transferred, 1000);
+		//read from endpoint 2
+		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
+		&transferred, 1000);
+	}
+	
+	//write end data packet to endpoint 3
+	res += libusb_interrupt_transfer( _handle, 0x03, _data_end, 
+	64, &transferred, 1000);
+	//read from endpoint 2
+	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+	
+	return res;
+}
