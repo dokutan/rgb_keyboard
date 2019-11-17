@@ -207,16 +207,16 @@ rgb_keyboard::keyboard::keyboard(){
 	_keymap_offsets["Comma"] = {{ { 7, 15 }, { 7, 16 }, { 7, 17 } }};
 	_keymap_offsets["Period"] = {{ { 7, 18 }, { 7, 19 }, { 7, 20 } }};
 	_keymap_offsets["Slash"] = {{ { 7, 21 }, { 7, 22 }, { 7, 23 } }};
-	/*_keymap_offsets["Shift_l"] = {{ { 6, 23 }, { 6, 24 }, { 6, 25 } }};
-	_keymap_offsets["Shift_r"] = {{ { 0x44, 0xf0, 0x00 } }};
-	_keymap_offsets["Ctrl_l"] = {{ { 0x57, 0x02, 0x01 } }};
-	_keymap_offsets["Super_l"] = {{ { 0x5a, 0x05, 0x01 } }};
-	_keymap_offsets["Alt_l"] = {{ { 0x5d, 0x08, 0x01 } }};
-	_keymap_offsets["Space"] = {{ { 0x60, 0x0b, 0x01 } }};
-	_keymap_offsets["Alt_r"] = {{ { 0x63, 0x0e, 0x01 } }};
-	_keymap_offsets["Fn"] = {{ { 0x66, 0x11, 0x01 } }};
-	_keymap_offsets["Menu"] = {{ { 0x69, 0x14, 0x01 } }};
-	_keymap_offsets["Ctrl_r"] = {{ { 0x6c, 0x17, 0x01 } }};*/
+	_keymap_offsets["Shift_l"] = {{ { 6, 47 }, { 6, 48 }, { 6, 49 } }};
+	_keymap_offsets["Shift_r"] = {{ { 7, 24 }, { 7, 25 }, { 7, 26 } }};
+	_keymap_offsets["Ctrl_l"] = {{ { 7, 42 }, { 7, 43 }, { 7, 44 } }};
+	_keymap_offsets["Super_l"] = {{ { 7, 45 }, { 7, 46 }, { 7, 47 } }};
+	_keymap_offsets["Alt_l"] = {{ { 7, 48 }, { 7, 49 }, { 7, 50 } }};
+	_keymap_offsets["Space"] = {{ { 7, 51 }, { 7, 52 }, { 7, 53 } }};
+	_keymap_offsets["Alt_r"] = {{ { 7, 54 }, { 7, 55 }, { 7, 56 } }};
+	_keymap_offsets["Fn"] = {{ { 7, 57 }, { 7, 58 }, { 7, 59 } }};
+	_keymap_offsets["Menu"] = {{ { 7, 60 }, { 7, 61 }, { 7, 62 } }};
+	_keymap_offsets["Ctrl_r"] = {{ { 7, 63 }, { 8, 8 }, { 8, 9 } }};
 	_keymap_offsets["Num_Lock"] = {{ { 4, 45 }, { 4, 46 }, { 4, 47 } }};
 	_keymap_offsets["Num_Slash"] = {{ { 4, 48 }, { 4, 49 }, { 4, 50 } }};
 	_keymap_offsets["Num_Asterisk"] = {{ { 4, 51 }, { 4, 52 }, { 4, 53 } }};
@@ -236,6 +236,7 @@ rgb_keyboard::keyboard::keyboard(){
 	_keymap_offsets["Num_Return"] = {{ { 8, 31 }, { 8, 32 }, { 8, 33 } }};
 	
 	//keymap options (what a key can do when pressed)
+	_keymap_options["Fn"] = { 0x05, 0x02, 0x02 };
 	_keymap_options["Esc"] = { 0x02, 0x02, 0x29 };
 	_keymap_options["F1"] = { 0x02, 0x02, 0x3a };
 	_keymap_options["F2"] = { 0x02, 0x02, 0x3b };

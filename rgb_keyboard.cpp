@@ -417,7 +417,7 @@ int main( int argc, char **argv ){
 			kbd.print_keycodes_led();
 		} else if( list_keys_arg == "map" || list_keys_arg == "keymap" ){
 			//list physical keys for key 
-			std::cout << "Keynames of physical keys for remapping:\n(Some keys might have multiple names, not all keys can be remapped)\n\n";
+			std::cout << "Keynames of physical keys for remapping:\n(Some keys might have multiple names)\n\n";
 			kbd.print_keycodes_remap();
 		} else if( list_keys_arg == "function" || list_keys_arg == "option" ){
 			//list options for remapping
