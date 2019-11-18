@@ -1,9 +1,5 @@
 # example config
 # "rgb_keyboard --list-keys map" to see all physical keys that can be mapped
 # "rgb_keyboard --list-keys option" to see all keymap options
-F1	Volume-
-F1	Volume+
-F3	Mute
-F4	PlayPause
-Fn	a
+Fn	Int_Key
 ScrLk	Fn

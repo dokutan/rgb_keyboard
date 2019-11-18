@@ -69,5 +69,5 @@ Similar to the config file, instead of a tab an equal sign and instead of a newl
 - [ ] Rewrite the frontend (code is old and messy)
 - [ ] Read current settings from the keyboard
 - [x] Add reprogramming and macro functionality
-  - [ ] Complete reprogramming
+  - [x] Complete reprogramming
   - [ ] Add macros to reprogramming
