@@ -34,6 +34,7 @@ int rgb_keyboard::keyboard::open_keyboard(){
 	_handle = libusb_open_device_with_vid_pid( NULL, _keyboard_vid, 
 	_keyboard_pid );
 	if( !_handle ){
+		res++;
 		return res;
 	}
 	

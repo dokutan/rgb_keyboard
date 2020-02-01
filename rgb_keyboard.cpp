@@ -89,9 +89,14 @@ int main( int argc, char **argv ){
 	static string list_keys_arg;
 	static bool list_keys_flag = false;
 	
-	int c, option_index = 0;
+	//check commandline options
+	if( argc == 1 ){
+		print_help();
+		return 0;
+	}
 	
 	//parse command line options
+	int c, option_index = 0;
 	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:jPCKRML",
 	long_options, &option_index ) ) != -1 ){
 		
@@ -205,8 +210,39 @@ int main( int argc, char **argv ){
 		
 	}
 	
+	//keyboard object
 	rgb_keyboard::keyboard kbd;
-	kbd.open_keyboard();
+	
+	//parse list keys flag
+	if( list_keys_flag ){
+		
+		if( list_keys_arg == "led" || list_keys_arg == "custom" ){
+			//list physical keys for custom led pattern
+			std::cout << "Keynames for custom pattern:\n(Some keys might have multiple names)\n\n";
+			kbd.print_keycodes_led();
+		} else if( list_keys_arg == "map" || list_keys_arg == "keymap" ){
+			//list physical keys for key 
+			std::cout << "Keynames of physical keys for remapping:\n(Some keys might have multiple names)\n\n";
+			kbd.print_keycodes_remap();
+		} else if( list_keys_arg == "function" || list_keys_arg == "option" ){
+			//list options for remapping
+			std::cout << "Options for key remapping:\n(Some options might have multiple names)\n\n";
+			kbd.print_keycodes_options();
+		} else{
+			std::cout << "Valid options:\n";
+			std::cout << "\"--list-keys led\" or \"--list-keys custom\"\n";
+			std::cout << "\"--list-keys map\" or \"--list-keys keymap\"\n";
+			std::cout << "\"--list-keys function\" or \"--list-keys option\"\n";
+		}
+		
+		return 0;
+	}
+	
+	//open keyboard
+	if( kbd.open_keyboard() != 0 ){
+		std::cout << "Could not open keyboard, check hardware and permissions.\n";
+		return 1;
+	}
 	
 	//parse mode flag
 	switch( mode_flag ){
@@ -406,30 +442,6 @@ int main( int argc, char **argv ){
 	if( keymap_flag ){
 		kbd.load_keymap( keymap_file );
 		kbd.write_key_mapping();
-	}
-	
-	//parse list keys flag
-	if( list_keys_flag ){
-		
-		if( list_keys_arg == "led" || list_keys_arg == "custom" ){
-			//list physical keys for custom led pattern
-			std::cout << "Keynames for custom pattern:\n(Some keys might have multiple names)\n\n";
-			kbd.print_keycodes_led();
-		} else if( list_keys_arg == "map" || list_keys_arg == "keymap" ){
-			//list physical keys for key 
-			std::cout << "Keynames of physical keys for remapping:\n(Some keys might have multiple names)\n\n";
-			kbd.print_keycodes_remap();
-		} else if( list_keys_arg == "function" || list_keys_arg == "option" ){
-			//list options for remapping
-			std::cout << "Options for key remapping:\n(Some options might have multiple names)\n\n";
-			kbd.print_keycodes_options();
-		} else{
-			std::cout << "Valid options:\n";
-			std::cout << "\"--list-keys led\" or \"--list-keys custom\"\n";
-			std::cout << "\"--list-keys map\" or \"--list-keys keymap\"\n";
-			std::cout << "\"--list-keys function\" or \"--list-keys option\"\n";
-		}
-		
 	}
 	
 	kbd.close_keyboard();
