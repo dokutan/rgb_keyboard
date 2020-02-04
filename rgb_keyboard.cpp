@@ -25,6 +25,7 @@
 #include <iostream>
 #include <string>
 #include <exception>
+#include <regex>
 #include <libusb-1.0/libusb.h>
 #include <getopt.h>
 
@@ -222,7 +223,7 @@ int main( int argc, char **argv ){
 			std::cout << "Keynames for custom pattern:\n(Some keys might have multiple names)\n\n";
 			kbd.print_keycodes_led();
 		} else if( list_keys_arg == "map" || list_keys_arg == "keymap" ){
-			//list physical keys for key 
+			//list physical keys for key remapping
 			std::cout << "Keynames of physical keys for remapping:\n(Some keys might have multiple names)\n\n";
 			kbd.print_keycodes_remap();
 		} else if( list_keys_arg == "function" || list_keys_arg == "option" ){
@@ -241,7 +242,7 @@ int main( int argc, char **argv ){
 	
 	//open keyboard
 	if( kbd.open_keyboard() != 0 ){
-		std::cout << "Could not open keyboard, check hardware and permissions.\n";
+		std::cerr << "Could not open keyboard, check hardware and permissions.\n";
 		return 1;
 	}
 	
@@ -349,6 +350,10 @@ int main( int argc, char **argv ){
 				} else if( variant == "blue" ){
 					kbd.set_variant( rgb_keyboard::keyboard::v_color_blue );
 					kbd.write_variant();
+				} else if( variant == "none" ){
+					// do not change variant
+				} else{
+					std::cerr << "Unknown variant for reactive-color.\n";
 				}
 				kbd.write_mode();
 				break;
@@ -382,31 +387,46 @@ int main( int argc, char **argv ){
 		
 		//parse color flag
 		if( color_flag ){
+			
 			//set color
-			if( color == "multi" ){
+			if( color == "multi" ){ // multicolor
 				kbd.set_rainbow( true );
 				kbd.write_color();
-			} else if( color.length() == 6 ){
+			} else if( std::regex_match( color, std::regex("[0-9a-fA-F]{6}") ) ){ // normal color
 				kbd.set_rainbow( false );
 				kbd.set_color( stoi( color.substr(0,2), 0, 16 ), 
 					stoi( color.substr(2,2), 0, 16 ),
 					stoi( color.substr(4,2), 0, 16 ) );
 				kbd.write_color();
+			} else{ // wrong format
+				std::cerr << "Wrong color format, expected rrggbb.\n";
 			}
+			
 		}
 		
 		//parse brightness flag
 		if( brightness_flag ){
+			
 			//set brightness
-			kbd.set_brightness( stoi(brightness) );
-			kbd.write_brightness();
+			if( std::regex_match( brightness, std::regex("[0-9]") ) ){
+				kbd.set_brightness( stoi(brightness) );
+				kbd.write_brightness();
+			} else{
+				std::cerr << "Wrong brightness format, expected 0-9.\n";
+			}
+			
 		}
 		
 		//parse speed flag
 		if( speed_flag ){
+			
 			//set speed
-			kbd.set_speed( stoi(speed) );
-			kbd.write_speed();
+			if( std::regex_match( speed, std::regex("[0-3]") ) ){
+				kbd.set_speed( stoi(speed) );
+				kbd.write_speed();
+			} else{
+				std::cerr << "Wrong speed format, expected 0-3.\n";
+			}
 		}
 		
 		//parse direction flag
@@ -418,6 +438,8 @@ int main( int argc, char **argv ){
 			} else if( direction == "right" || direction == "down" || direction == "outwards" ){
 				kbd.set_direction( rgb_keyboard::keyboard::d_right );
 				kbd.write_direction();
+			} else{
+				std::cerr << "Unknown direction.\n";
 			}
 		}
 		
@@ -437,7 +459,7 @@ int main( int argc, char **argv ){
 				kbd.set_report_rate( rgb_keyboard::keyboard::r_1000Hz );
 				kbd.write_report_rate();
 			} else{
-				std::cout << "Unsupported report rate\n";
+				std::cerr << "Unsupported report rate\n";
 			}
 		}
 		
@@ -448,7 +470,9 @@ int main( int argc, char **argv ){
 		}
 		
 	}catch( std::exception &e ){
-		std::cout << "Caught exception: " << e.what() << "\n";
+		std::cerr << "Caught exception: " << e.what() << "\n";
+		kbd.close_keyboard();
+		return 1;
 	}
 	
 	kbd.close_keyboard();
