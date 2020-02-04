@@ -99,7 +99,7 @@ int main( int argc, char **argv ){
 	
 	//parse command line options
 	int c, option_index = 0;
-	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:jPCKRML",
+	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:jP:CK:R:M:L:",
 	long_options, &option_index ) ) != -1 ){
 		
 		switch( c ){
@@ -364,10 +364,13 @@ int main( int argc, char **argv ){
 				break;
 			case 'P':
 				//set custom pattern
-				kbd.load_custom( conf_file );
-				kbd.set_mode( rgb_keyboard::keyboard::m_custom );
-				kbd.write_custom();
-				kbd.write_mode();
+				if( kbd.load_custom( conf_file ) == 0 ){
+					kbd.set_mode( rgb_keyboard::keyboard::m_custom );
+					kbd.write_custom();
+					kbd.write_mode();
+				} else{
+					std::cerr << "Couldn't open custom pattern file\n";
+				}
 				break;
 			/*case 'C':
 				//set and clear custom pattern
@@ -465,8 +468,11 @@ int main( int argc, char **argv ){
 		
 		//parse keymap flag
 		if( keymap_flag ){
-			kbd.load_keymap( keymap_file );
-			kbd.write_key_mapping();
+			if( kbd.load_keymap( keymap_file ) == 0 ){
+				kbd.write_key_mapping();
+			} else{
+				std::cerr << "Couldn't open keymap file\n";
+			}
 		}
 		
 	}catch( std::exception &e ){
