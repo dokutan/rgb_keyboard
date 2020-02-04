@@ -41,6 +41,7 @@ to see all options
     rgb_keyboard --list-keys arg
 to see all keynames (arg = led, map, option)
 
+For the gui see the appropriate section below
 
 ### Examples
     
@@ -62,6 +63,15 @@ Each line line in the file consists of two fields separated by a tab. The first 
 Similar to the config file, instead of a tab an equal sign and instead of a newline a semicolon is being used. Comments are not allowed. The string must end with a semicolon.
 
     rgb_keyboard --custom-keys "key_name=color;key_name=color;"
+
+## GUI
+
+A separate frontend written in Tcl/Tk exists, however not all features are implemented. Running the gui:
+```
+chmod +x rgb_keyboard-gui.tcl
+./rgb_keyboard-gui.tcl
+```
+The gui is not copied to /usr/bin by default, you can do so manually.
 
 ## TODO
 - [x] Implemented all lighting modes from the official software.
