@@ -24,6 +24,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <exception>
 #include <libusb-1.0/libusb.h>
 #include <getopt.h>
 
@@ -244,204 +245,210 @@ int main( int argc, char **argv ){
 		return 1;
 	}
 	
-	//parse mode flag
-	switch( mode_flag ){
-		case 'i':
-			//set sine wave animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_sine );
-			kbd.write_mode();
-			break;
-		case 'r':
-			//set raindrop animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_rain );
-			kbd.write_mode();
-			break;
-		case 'w':
-			//set waterfall animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_waterfall );
-			kbd.write_mode();
-			break;
-		case 'v':
-			//set vortex animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_vortex );
-			kbd.write_mode();
-			break;
-		case 'd':
-			//set diagonal wave animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_diagonal_wave );
-			kbd.write_mode();
-			break;
-		case 'f':
-			//set fixed color
-			kbd.set_mode( rgb_keyboard::keyboard::m_fixed );
-			kbd.write_mode();
-			break;
-		case 'l':
-			//set swirl animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_swirl );
-			kbd.write_mode();
-			break;
-		case 'e':
-			//set breathing animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_breathing );
-			kbd.write_mode();
-			break;
-		case 'a':
-			//set colorful breathing animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_breathing_color );
-			kbd.write_mode();
-			break;
-		case 'p':
-			//set reactive ripple animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_reactive_ripple );
-			kbd.write_mode();
-			break;
-		case 'g':
-			//set reactive single-key animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_reactive_single );
-			kbd.write_mode();
-			break;
-		case 'o':
-			//set reactive horizontal animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_reactive_horizontal );
-			kbd.write_mode();
-			break;
-		case 'z':
-			//set horizontal wave animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_horizontal_wave );
-			kbd.write_mode();
-			break;
-		case 'm':
-			//set vertical wave animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_vertical_wave );
-			kbd.write_mode();
-			break;
-		case 'u':
-			//set pulse wave animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_pulse );
-			kbd.write_mode();
-			break;
-		case 'n':
-			//set hurricane animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_hurricane );
-			kbd.write_mode();
-			break;
-		case 'x':
-			//set ripple animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_ripple );
-			kbd.write_mode();
-			break;
-		case 'y':
-			//set reactive color animation
-			kbd.set_mode( rgb_keyboard::keyboard::m_reactive_color );
-			if( variant == "red" ){
-				kbd.set_variant( rgb_keyboard::keyboard::v_color_red );
-				kbd.write_variant();
-			} else if( variant == "yellow" ){
-				kbd.set_variant( rgb_keyboard::keyboard::v_color_yellow );
-				kbd.write_variant();
-			} else if( variant == "green" ){
-				kbd.set_variant( rgb_keyboard::keyboard::v_color_green );
-				kbd.write_variant();
-			} else if( variant == "blue" ){
-				kbd.set_variant( rgb_keyboard::keyboard::v_color_blue );
-				kbd.write_variant();
+	try{
+		
+		//parse mode flag
+		switch( mode_flag ){
+			case 'i':
+				//set sine wave animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_sine );
+				kbd.write_mode();
+				break;
+			case 'r':
+				//set raindrop animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_rain );
+				kbd.write_mode();
+				break;
+			case 'w':
+				//set waterfall animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_waterfall );
+				kbd.write_mode();
+				break;
+			case 'v':
+				//set vortex animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_vortex );
+				kbd.write_mode();
+				break;
+			case 'd':
+				//set diagonal wave animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_diagonal_wave );
+				kbd.write_mode();
+				break;
+			case 'f':
+				//set fixed color
+				kbd.set_mode( rgb_keyboard::keyboard::m_fixed );
+				kbd.write_mode();
+				break;
+			case 'l':
+				//set swirl animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_swirl );
+				kbd.write_mode();
+				break;
+			case 'e':
+				//set breathing animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_breathing );
+				kbd.write_mode();
+				break;
+			case 'a':
+				//set colorful breathing animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_breathing_color );
+				kbd.write_mode();
+				break;
+			case 'p':
+				//set reactive ripple animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_reactive_ripple );
+				kbd.write_mode();
+				break;
+			case 'g':
+				//set reactive single-key animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_reactive_single );
+				kbd.write_mode();
+				break;
+			case 'o':
+				//set reactive horizontal animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_reactive_horizontal );
+				kbd.write_mode();
+				break;
+			case 'z':
+				//set horizontal wave animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_horizontal_wave );
+				kbd.write_mode();
+				break;
+			case 'm':
+				//set vertical wave animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_vertical_wave );
+				kbd.write_mode();
+				break;
+			case 'u':
+				//set pulse wave animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_pulse );
+				kbd.write_mode();
+				break;
+			case 'n':
+				//set hurricane animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_hurricane );
+				kbd.write_mode();
+				break;
+			case 'x':
+				//set ripple animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_ripple );
+				kbd.write_mode();
+				break;
+			case 'y':
+				//set reactive color animation
+				kbd.set_mode( rgb_keyboard::keyboard::m_reactive_color );
+				if( variant == "red" ){
+					kbd.set_variant( rgb_keyboard::keyboard::v_color_red );
+					kbd.write_variant();
+				} else if( variant == "yellow" ){
+					kbd.set_variant( rgb_keyboard::keyboard::v_color_yellow );
+					kbd.write_variant();
+				} else if( variant == "green" ){
+					kbd.set_variant( rgb_keyboard::keyboard::v_color_green );
+					kbd.write_variant();
+				} else if( variant == "blue" ){
+					kbd.set_variant( rgb_keyboard::keyboard::v_color_blue );
+					kbd.write_variant();
+				}
+				kbd.write_mode();
+				break;
+			case 'j':
+				//set custom mode
+				kbd.set_mode( rgb_keyboard::keyboard::m_custom );
+				kbd.write_mode();
+				break;
+			case 'P':
+				//set custom pattern
+				kbd.load_custom( conf_file );
+				kbd.set_mode( rgb_keyboard::keyboard::m_custom );
+				kbd.write_custom();
+				kbd.write_mode();
+				break;
+			/*case 'C':
+				//set and clear custom pattern
+				///clear_custom();
+				break;*/
+			case 'K':
+				//set custom pattern from string
+				kbd.set_custom_keys( keys );
+				kbd.set_mode( rgb_keyboard::keyboard::m_custom );
+				kbd.write_custom();
+				kbd.write_mode();
+				break;
+			default:
+				break;
+		}
+		
+		
+		//parse color flag
+		if( color_flag ){
+			//set color
+			if( color == "multi" ){
+				kbd.set_rainbow( true );
+				kbd.write_color();
+			} else if( color.length() == 6 ){
+				kbd.set_rainbow( false );
+				kbd.set_color( stoi( color.substr(0,2), 0, 16 ), 
+					stoi( color.substr(2,2), 0, 16 ),
+					stoi( color.substr(4,2), 0, 16 ) );
+				kbd.write_color();
 			}
-			kbd.write_mode();
-			break;
-		case 'j':
-			//set custom mode
-			kbd.set_mode( rgb_keyboard::keyboard::m_custom );
-			kbd.write_mode();
-			break;
-		case 'P':
-			//set custom pattern
-			kbd.load_custom( conf_file );
-			kbd.set_mode( rgb_keyboard::keyboard::m_custom );
-			kbd.write_custom();
-			kbd.write_mode();
-			break;
-		/*case 'C':
-			//set and clear custom pattern
-			///clear_custom();
-			break;*/
-		case 'K':
-			//set custom pattern from string
-			kbd.set_custom_keys( keys );
-			kbd.set_mode( rgb_keyboard::keyboard::m_custom );
-			kbd.write_custom();
-			kbd.write_mode();
-			break;
-		default:
-			break;
-	}
-	
-	
-	//parse color flag
-	if( color_flag ){
-		//set color
-		if( color == "multi" ){
-			kbd.set_rainbow( true );
-			kbd.write_color();
-		} else if( color.length() == 6 ){
-			kbd.set_rainbow( false );
-			kbd.set_color( stoi( color.substr(0,2), 0, 16 ), 
-				stoi( color.substr(2,2), 0, 16 ),
-				stoi( color.substr(4,2), 0, 16 ) );
-			kbd.write_color();
 		}
-	}
-	
-	//parse brightness flag
-	if( brightness_flag ){
-		//set brightness
-		kbd.set_brightness( stoi(brightness) );
-		kbd.write_brightness();
-	}
-	
-	//parse speed flag
-	if( speed_flag ){
-		//set speed
-		kbd.set_speed( stoi(speed) );
-		kbd.write_speed();
-	}
-	
-	//parse direction flag
-	if( direction_flag ){
-		//set direction
-		if( direction == "left" || direction == "up" || direction == "inwards" ){
-			kbd.set_direction( rgb_keyboard::keyboard::d_left );
-			kbd.write_direction();
-		} else if( direction == "right" || direction == "down" || direction == "outwards" ){
-			kbd.set_direction( rgb_keyboard::keyboard::d_right );
-			kbd.write_direction();
+		
+		//parse brightness flag
+		if( brightness_flag ){
+			//set brightness
+			kbd.set_brightness( stoi(brightness) );
+			kbd.write_brightness();
 		}
-	}
-	
-	//parse report rate flag
-	if( r_rate_flag ){
-		//set report rate
-		if( r_rate == "125" ){
-			kbd.set_report_rate( rgb_keyboard::keyboard::r_125Hz );
-			kbd.write_report_rate();
-		} else if( r_rate == "250" ){
-			kbd.set_report_rate( rgb_keyboard::keyboard::r_250Hz );
-			kbd.write_report_rate();
-		}  else if( r_rate == "500" ){
-			kbd.set_report_rate( rgb_keyboard::keyboard::r_500Hz );
-			kbd.write_report_rate();
-		}  else if( r_rate == "1000" ){
-			kbd.set_report_rate( rgb_keyboard::keyboard::r_1000Hz );
-			kbd.write_report_rate();
-		} else{
-			std::cout << "Unsupported report rate\n";
+		
+		//parse speed flag
+		if( speed_flag ){
+			//set speed
+			kbd.set_speed( stoi(speed) );
+			kbd.write_speed();
 		}
-	}
-	
-	//parse keymap flag
-	if( keymap_flag ){
-		kbd.load_keymap( keymap_file );
-		kbd.write_key_mapping();
+		
+		//parse direction flag
+		if( direction_flag ){
+			//set direction
+			if( direction == "left" || direction == "up" || direction == "inwards" ){
+				kbd.set_direction( rgb_keyboard::keyboard::d_left );
+				kbd.write_direction();
+			} else if( direction == "right" || direction == "down" || direction == "outwards" ){
+				kbd.set_direction( rgb_keyboard::keyboard::d_right );
+				kbd.write_direction();
+			}
+		}
+		
+		//parse report rate flag
+		if( r_rate_flag ){
+			//set report rate
+			if( r_rate == "125" ){
+				kbd.set_report_rate( rgb_keyboard::keyboard::r_125Hz );
+				kbd.write_report_rate();
+			} else if( r_rate == "250" ){
+				kbd.set_report_rate( rgb_keyboard::keyboard::r_250Hz );
+				kbd.write_report_rate();
+			}  else if( r_rate == "500" ){
+				kbd.set_report_rate( rgb_keyboard::keyboard::r_500Hz );
+				kbd.write_report_rate();
+			}  else if( r_rate == "1000" ){
+				kbd.set_report_rate( rgb_keyboard::keyboard::r_1000Hz );
+				kbd.write_report_rate();
+			} else{
+				std::cout << "Unsupported report rate\n";
+			}
+		}
+		
+		//parse keymap flag
+		if( keymap_flag ){
+			kbd.load_keymap( keymap_file );
+			kbd.write_key_mapping();
+		}
+		
+	}catch( std::exception &e ){
+		std::cout << "Caught exception: " << e.what() << "\n";
 	}
 	
 	kbd.close_keyboard();
