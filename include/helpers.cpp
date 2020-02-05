@@ -18,7 +18,7 @@
 
 //helper functions
 
-//init libusb and open keyboard
+//init libusb and open keyboard with default vid and pid
 int rgb_keyboard::keyboard::open_keyboard(){
 	
 	//vars
@@ -37,6 +37,81 @@ int rgb_keyboard::keyboard::open_keyboard(){
 		res++;
 		return res;
 	}
+	
+	//detach kernel driver on interface 0 if active 
+	if( libusb_kernel_driver_active( _handle, 0 ) ){
+		res += libusb_detach_kernel_driver( _handle, 0 );
+		if( res == 0 ){
+			_detached_driver_0 = true;
+		} else{
+			return res;
+		}
+	}
+	
+	//detach kernel driver on interface 1 if active 
+	if( libusb_kernel_driver_active( _handle, 1 ) ){
+		res += libusb_detach_kernel_driver( _handle, 1 );
+		if( res == 0 ){
+			_detached_driver_1 = true;
+		} else{
+			return res;
+		}
+	}
+	
+	//claim interface 0
+	res += libusb_claim_interface( _handle, 0 );
+	if( res != 0 ){
+		return res;
+	}
+	
+	//claim interface 1
+	res += libusb_claim_interface( _handle, 1 );
+	if( res != 0 ){
+		return res;
+	}
+	
+	return res;
+}
+
+//init libusb and open keyboard with bus and device id
+int rgb_keyboard::keyboard::open_keyboard_bus_device( uint8_t bus, uint8_t device ){
+	
+	//vars
+	int res = 0;
+	
+	//libusb init
+	res = libusb_init( NULL );
+	if( res < 0 ){
+		return res;
+	}
+	
+	//open device (_handle)
+	
+	libusb_device **dev_list; // device list
+	ssize_t num_devs = libusb_get_device_list(NULL, &dev_list); //get device list
+	
+	if( num_devs < 0 )
+		return 1;
+	
+	for( ssize_t i = 0; i < num_devs; i++ ){
+		
+		// check if correct bus and device
+		if( bus == libusb_get_bus_number( dev_list[i] ) &&
+			device == libusb_get_device_address( dev_list[i] ) ){
+			
+			// open device
+			if( libusb_open( dev_list[i], &_handle ) != 0 ){
+				return 1;
+			} else{
+				break;
+			}
+			
+		}
+		
+	}
+	
+	//free device list, unreference devices
+	libusb_free_device_list( dev_list, 1 );
 	
 	//detach kernel driver on interface 0 if active 
 	if( libusb_kernel_driver_active( _handle, 0 ) ){

@@ -121,7 +121,8 @@ class rgb_keyboard::keyboard{
 		int write_key_mapping();
 		
 		//helper functions
-		int open_keyboard();
+		int open_keyboard(); // open keyboard with default vid and pid
+		int open_keyboard_bus_device( uint8_t bus, uint8_t device ); // open keyboard with bus and device id
 		int close_keyboard();
 		
 		//loader functions (read settings from file)

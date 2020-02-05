@@ -58,6 +58,8 @@ void print_help(){
 	std::cout << "\t-K --custom-keys=keys\tSets pattern in custom mode\n";
 	std::cout << "\n\t-R --report-rate=rate\tSets USB report rate (125, 250, 500, 1000) Hz\n";
 	std::cout << "\n\t-M --keymap=file\tLoad keymap from specified file\n";
+	std::cout << "\n\t-D --bus=number\tSpecify USB bus id, must be used with --device\n";
+	std::cout << "\t-D --device=number\tSpecify USB device number, must be used with --bus\n";
 	std::cout << "\nColors need to be specified in hexadecimal without "
 	"any prefix.\n\"multi\" can also be used to create a rainbow effect.\n\n";
 }

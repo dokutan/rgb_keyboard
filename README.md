@@ -64,6 +64,14 @@ Similar to the config file, instead of a tab an equal sign and instead of a newl
 
     rgb_keyboard --custom-keys "key_name=color;key_name=color;"
 
+### --bus and --device options
+
+In case you have multiple keyboards attached or you suspect a keyboard with a different vendor id or product id might be compatible, the keyboard can also be opened by specifying the bus number and device id. These can be found by running lsusb.
+
+```
+rgb_keyboard --bus ⟨bus id⟩ --device ⟨device number⟩ ...
+```
+
 ## GUI
 
 A separate frontend written in Tcl/Tk exists, however not all features are implemented. Running the gui:
