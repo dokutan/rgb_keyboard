@@ -136,6 +136,10 @@ class rgb_keyboard::keyboard{
 		
 	private:
 		
+		// changes the way configuration is sent to ansure compatibility
+		// across different firmware / keyboards
+		int _compatibility = 2;
+		
 		//rgb control vars
 		mode _mode = m_fixed;
 		direction _direction;
