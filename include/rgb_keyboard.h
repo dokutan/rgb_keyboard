@@ -88,7 +88,7 @@ class rgb_keyboard::keyboard{
 		keyboard();
 		
 		//setter functions
-		int set_compatibility( int compatibility );
+		int set_profile( int profile );
 		int set_mode( mode Mode );
 		int set_direction( direction Direction );
 		int set_brightness( int Brightness );
@@ -138,9 +138,8 @@ class rgb_keyboard::keyboard{
 		
 	private:
 		
-		// changes the way configuration is sent to ansure compatibility
-		// across different firmware / keyboards
-		int _compatibility = 1;
+		// profile (1-3)
+		int _profile = 1;
 		
 		//rgb control vars
 		mode _mode = m_fixed;

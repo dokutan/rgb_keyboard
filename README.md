@@ -4,14 +4,10 @@ Controls the RGB lighting on some keyboards. Only tested on Linux.
 ## Supported keyboards
 USB keyboards with VID 0c45 and PID 652f. 
 Tested with:
-- Tecware Phantom RGB TKL (--compatibility 1, after firmware change --compatibility 2)
-- Glorious GMMK full-size ANSI (--compatibility 1)
+- Tecware Phantom RGB TKL
+- Glorious GMMK full-size ANSI
 
 You can help expand this list by providing information whether this software works correctly or not.
-
-### Compatibility option
-
-Depending on the particular firmware and keyboard version a different compatibility mode is required. There are two modes available, these can be selected with the --compatibility option. Default is mode 1.
 
 ## Installing
 - Clone this repository

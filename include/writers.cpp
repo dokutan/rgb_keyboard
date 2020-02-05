@@ -29,7 +29,7 @@ int rgb_keyboard::keyboard::write_brightness(){
 	uint8_t data_settings[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
-	if( _compatibility == 2 ){
+	if( _profile == 2 ){
 		data_settings[1] = 0x32 + _brightness;
 		data_settings[8] = _brightness;
 		data_settings[5] = 0x2b;
@@ -78,7 +78,7 @@ int rgb_keyboard::keyboard::write_speed(){
 	uint8_t data_settings[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
-	if( _compatibility == 2 ){
+	if( _profile == 2 ){
 		data_settings[1] = 0x37 - _speed;
 		data_settings[8] = 0x04 - _speed;
 		data_settings[5] = 0x2c;
@@ -127,7 +127,7 @@ int rgb_keyboard::keyboard::write_direction(){
 	uint8_t data_settings[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
-	if( _compatibility == 2 ){
+	if( _profile == 2 ){
 		switch( _direction ){
 			case d_left:
 				data_settings[1] = 0x33;
@@ -200,7 +200,7 @@ int rgb_keyboard::keyboard::write_mode(){
 	uint8_t data_settings[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
-	if( _compatibility == 2 ){
+	if( _profile == 2 ){
 		switch( _mode ){
 			case m_horizontal_wave://ok
 				data_settings[1] = 0x32;
@@ -424,7 +424,7 @@ int rgb_keyboard::keyboard::write_color(){
 	uint8_t data_settings_2[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings_2));
 	
-	if( _compatibility == 2 ){
+	if( _profile == 2 ){
 		data_settings_1[1] = 0x35;
 		data_settings_1[5] = 0x2e;
 		if( _rainbow ){
@@ -519,11 +519,11 @@ int rgb_keyboard::keyboard::write_custom(){
 			//if keycode is stored in _keycodes: set values in data packets
 			
 			//prepare data packet
-			if( _compatibility == 2 ){
+			if( _profile == 2 ){
 				/*data_settings[3] = 0x11;
 				data_settings[4] = 0x03;
 				
-				//keycode: different to _compatibility == 1
+				//keycode: different to _profile == 1
 				data_settings[1] = _keycodes.at(element.first)[0];
 				data_settings[5] = _keycodes.at(element.first)[1];
 				data_settings[6] = _keycodes.at(element.first)[2];
@@ -579,7 +579,7 @@ int rgb_keyboard::keyboard::write_variant(){
 	data_settings[5] = 0x08;
 	
 	//convert variant
-	if( _compatibility == 2 ){
+	if( _profile == 2 ){
 		if( _variant == v_color_red ){
 			data_settings[1] = 0x39;
 			data_settings[5] = 0x32;
@@ -658,7 +658,7 @@ int rgb_keyboard::keyboard::write_report_rate(){
 	data_settings[5] = 0x0f;
 	
 	//convert report rate
-	if( _compatibility == 2 ){
+	if( _profile == 2 ){
 		if( _report_rate == r_125Hz ){
 			data_settings[1] = 0x40;
 			data_settings[5] = 0x39;
@@ -742,7 +742,7 @@ int rgb_keyboard::keyboard::write_key_mapping(){
 	std::copy(std::begin(_data_remap_7), std::end(_data_remap_7), std::begin(data_remap[6]));
 	std::copy(std::begin(_data_remap_8), std::end(_data_remap_8), std::begin(data_remap[7]));
 	
-	if( _compatibility == 2 ){
+	if( _profile == 2 ){
 		/*for( std::pair< std::string, std::string > element : _keymap ){
 			if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&
 				_keymap_options.find( element.second ) != _keymap_options.end() ){
