@@ -70,6 +70,7 @@ int main( int argc, char **argv ){
 		{"list-keys", required_argument, 0, 'L'},
 		{"bus", required_argument, 0, 'B'},
 		{"device", required_argument, 0, 'D'},
+		{"compatibility", required_argument, 0, 'C'},
 		{0, 0, 0, 0}
 	};
 	
@@ -94,6 +95,8 @@ int main( int argc, char **argv ){
 	static bool list_keys_flag = false;
 	bool bus_flag = false, device_flag = false;
 	string bus_string, device_string;
+	bool comp_flag = false;
+	string comp_string;
 	
 	//check commandline options
 	if( argc == 1 ){
@@ -103,7 +106,7 @@ int main( int argc, char **argv ){
 	
 	//parse command line options
 	int c, option_index = 0;
-	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:jP:CK:R:M:L:B:D:",
+	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:jP:K:R:M:L:B:D:C:",
 	long_options, &option_index ) ) != -1 ){
 		
 		switch( c ){
@@ -216,6 +219,10 @@ int main( int argc, char **argv ){
 				device_flag = true;
 				device_string = optarg;
 				break;
+			case 'C':
+				comp_flag = true;
+				comp_string = optarg;
+				break;
 			case '?':
 				break;
 			default:
@@ -226,6 +233,20 @@ int main( int argc, char **argv ){
 	
 	//keyboard object
 	rgb_keyboard::keyboard kbd;
+	
+	//parse compat_flag
+	if( comp_flag ){
+		
+		if( comp_string == "1" ){
+			kbd.set_compatibility(1);
+		} else if( comp_string == "2" ){
+			kbd.set_compatibility(2);
+		} else{
+			std::cerr << "Invalid compatibility mode, expecting 1 or 2\n";
+			return 1;
+		}
+		
+	}
 	
 	//parse list keys flag
 	if( list_keys_flag ){

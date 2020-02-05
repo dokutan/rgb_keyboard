@@ -25,6 +25,7 @@
 #include <array>
 #include <string>
 #include <algorithm>
+#include <exception>
 //#include <assert.h>
 
 namespace rgb_keyboard{
@@ -87,6 +88,7 @@ class rgb_keyboard::keyboard{
 		keyboard();
 		
 		//setter functions
+		int set_compatibility( int compatibility );
 		int set_mode( mode Mode );
 		int set_direction( direction Direction );
 		int set_brightness( int Brightness );
@@ -110,14 +112,14 @@ class rgb_keyboard::keyboard{
 		report_rate get_report_rate();
 		
 		//writer functions (apply settings to keyboard)
-		int write_brightness();
-		int write_speed();
-		int write_mode();
-		int write_direction();
-		int write_color();
+		int write_brightness(); // compatibility done
+		int write_speed(); // compatibility done
+		int write_mode(); // compatibility done
+		int write_direction(); // compatibility done
+		int write_color(); // compatibility done
 		int write_custom();
-		int write_variant();
-		int write_report_rate();
+		int write_variant(); // compatibility done
+		int write_report_rate(); // compatibility done
 		int write_key_mapping();
 		
 		//helper functions
@@ -138,7 +140,7 @@ class rgb_keyboard::keyboard{
 		
 		// changes the way configuration is sent to ansure compatibility
 		// across different firmware / keyboards
-		int _compatibility = 2;
+		int _compatibility = 1;
 		
 		//rgb control vars
 		mode _mode = m_fixed;

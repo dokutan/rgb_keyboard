@@ -100,3 +100,8 @@ int rgb_keyboard::keyboard::set_report_rate( report_rate Report_rate ){
 	_report_rate = Report_rate;
 	return 0;
 }
+
+int rgb_keyboard::keyboard::set_compatibility( int compatibility ){
+	_compatibility = compatibility;
+	return 0;
+}

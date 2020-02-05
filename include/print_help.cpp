@@ -60,6 +60,7 @@ void print_help(){
 	std::cout << "\n\t-M --keymap=file\tLoad keymap from specified file\n";
 	std::cout << "\n\t-D --bus=number\tSpecify USB bus id, must be used with --device\n";
 	std::cout << "\t-D --device=number\tSpecify USB device number, must be used with --bus\n";
+	std::cout << "\n\t-C --compatibility=number\tCompatibility mode, is required with some keyboards. 1 or 2\n";
 	std::cout << "\nColors need to be specified in hexadecimal without "
 	"any prefix.\n\"multi\" can also be used to create a rainbow effect.\n\n";
 }

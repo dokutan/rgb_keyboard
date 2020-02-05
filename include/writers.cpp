@@ -28,9 +28,16 @@ int rgb_keyboard::keyboard::write_brightness(){
 	//prepare data packet
 	uint8_t data_settings[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
-	data_settings[1] = 0x08 + _brightness;
-	data_settings[8] = _brightness;
-	data_settings[5] = 0x01;
+	
+	if( _compatibility == 2 ){
+		data_settings[1] = 0x32 + _brightness;
+		data_settings[8] = _brightness;
+		data_settings[5] = 0x2b;
+	} else{
+		data_settings[1] = 0x08 + _brightness;
+		data_settings[8] = _brightness;
+		data_settings[5] = 0x01;
+	}
 	
 	//send data
 	
@@ -70,9 +77,16 @@ int rgb_keyboard::keyboard::write_speed(){
 	//prepare data packet
 	uint8_t data_settings[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
-	data_settings[1] = 0x0d - _speed;
-	data_settings[8] = 0x04 - _speed;
-	data_settings[5] = 0x02;
+	
+	if( _compatibility == 2 ){
+		data_settings[1] = 0x37 - _speed;
+		data_settings[8] = 0x04 - _speed;
+		data_settings[5] = 0x2c;
+	} else{
+		data_settings[1] = 0x0d - _speed;
+		data_settings[8] = 0x04 - _speed;
+		data_settings[5] = 0x02;
+	}
 	
 	//send data
 	
@@ -112,20 +126,39 @@ int rgb_keyboard::keyboard::write_direction(){
 	//prepare data packet
 	uint8_t data_settings[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
-	switch( _direction ){
-		case d_left:
-			data_settings[1] = 0x09;
-			data_settings[2] = 0x01;
-			data_settings[5] = 0x03;
-			data_settings[8] = 0xff;
-			break;
-		case d_right:
-			data_settings[1] = 0x0a;
-			data_settings[2] = 0x00;
-			data_settings[5] = 0x03;
-			data_settings[8] = 0x00;
-		default:
-			break;
+	
+	if( _compatibility == 2 ){
+		switch( _direction ){
+			case d_left:
+				data_settings[1] = 0x33;
+				data_settings[2] = 0x01;
+				data_settings[5] = 0x2d;
+				data_settings[8] = 0xff;
+				break;
+			case d_right:
+				data_settings[1] = 0x34;
+				data_settings[2] = 0x00;
+				data_settings[5] = 0x2d;
+				data_settings[8] = 0x00;
+			default:
+				break;
+		}
+	} else{
+		switch( _direction ){
+			case d_left:
+				data_settings[1] = 0x09;
+				data_settings[2] = 0x01;
+				data_settings[5] = 0x03;
+				data_settings[8] = 0xff;
+				break;
+			case d_right:
+				data_settings[1] = 0x0a;
+				data_settings[2] = 0x00;
+				data_settings[5] = 0x03;
+				data_settings[8] = 0x00;
+			default:
+				break;
+		}
 	}
 	
 	//send data
@@ -391,19 +424,35 @@ int rgb_keyboard::keyboard::write_color(){
 	uint8_t data_settings_2[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings_2));
 	
-	data_settings_1[1] = 0x0b;
-	data_settings_1[5] = 0x04;
-	if( _rainbow ){
-		data_settings_1[1] = 0x0c;
-		data_settings_1[8] = 0x01;
+	if( _compatibility == 2 ){
+		data_settings_1[1] = 0x35;
+		data_settings_1[5] = 0x2e;
+		if( _rainbow ){
+			data_settings_1[1] = 0x36;
+			data_settings_1[5] = 0x2e;
+			data_settings_1[8] = 0x01;
+		}
+		
+		data_settings_2[4] = 0x03;
+		data_settings_2[5] = 0x2f;
+		data_settings_2[8] = _color_r;
+		data_settings_2[9] = _color_g;
+		data_settings_2[10] = _color_b;
+	} else{
+		data_settings_1[1] = 0x0b;
+		data_settings_1[5] = 0x04;
+		if( _rainbow ){
+			data_settings_1[1] = 0x0c;
+			data_settings_1[8] = 0x01;
+		}
+		
+		data_settings_2[2] = 0x02;
+		data_settings_2[4] = 0x03;
+		data_settings_2[5] = 0x05;
+		data_settings_2[8] = _color_r;
+		data_settings_2[9] = _color_g;
+		data_settings_2[10] = _color_b;
 	}
-	
-	data_settings_2[2] = 0x02;
-	data_settings_2[4] = 0x03;
-	data_settings_2[5] = 0x05;
-	data_settings_2[8] = _color_r;
-	data_settings_2[9] = _color_g;
-	data_settings_2[10] = _color_b;
 	
 	//send data
 	
@@ -470,13 +519,31 @@ int rgb_keyboard::keyboard::write_custom(){
 			//if keycode is stored in _keycodes: set values in data packets
 			
 			//prepare data packet
-			data_settings[1] = _keycodes.at(element.first)[0];
-			data_settings[5] = _keycodes.at(element.first)[1];
-			data_settings[6] = _keycodes.at(element.first)[2];
-			
-			data_settings[8] = element.second[0];
-			data_settings[9] = element.second[1];
-			data_settings[10] = element.second[2];
+			if( _compatibility == 2 ){
+				/*data_settings[3] = 0x11;
+				data_settings[4] = 0x03;
+				
+				//keycode: different to _compatibility == 1
+				data_settings[1] = _keycodes.at(element.first)[0];
+				data_settings[5] = _keycodes.at(element.first)[1];
+				data_settings[6] = _keycodes.at(element.first)[2];
+				
+				//color
+				data_settings[8] = element.second[0];
+				data_settings[9] = element.second[1];
+				data_settings[10] = element.second[2];*/
+				throw std::invalid_argument("Currently not available with compatibility mode 2");
+			} else{
+				//keycode
+				data_settings[1] = _keycodes.at(element.first)[0];
+				data_settings[5] = _keycodes.at(element.first)[1];
+				data_settings[6] = _keycodes.at(element.first)[2];
+				
+				//color
+				data_settings[8] = element.second[0];
+				data_settings[9] = element.second[1];
+				data_settings[10] = element.second[2];
+			}
 			
 			//send data
 			//write first data packet to endpoint 3
@@ -512,20 +579,42 @@ int rgb_keyboard::keyboard::write_variant(){
 	data_settings[5] = 0x08;
 	
 	//convert variant
-	if( _variant == v_color_red ){
-		data_settings[1] = 0x0f;
-		data_settings[8] = 0x00;
-	} else if( _variant == v_color_yellow ){
-		data_settings[1] = 0x10;
-		data_settings[8] = 0x01;
-	} else if( _variant == v_color_green ){
-		data_settings[1] = 0x11;
-		data_settings[8] = 0x02;
-	} else if( _variant == v_color_blue ){
-		data_settings[1] = 0x12;
-		data_settings[8] = 0x03;
+	if( _compatibility == 2 ){
+		if( _variant == v_color_red ){
+			data_settings[1] = 0x39;
+			data_settings[5] = 0x32;
+			data_settings[8] = 0x00;
+		} else if( _variant == v_color_yellow ){
+			data_settings[1] = 0x3a;
+			data_settings[5] = 0x32;
+			data_settings[8] = 0x01;
+		} else if( _variant == v_color_green ){
+			data_settings[1] = 0x3b;
+			data_settings[5] = 0x32;
+			data_settings[8] = 0x02;
+		} else if( _variant == v_color_blue ){
+			data_settings[1] = 0x3c;
+			data_settings[5] = 0x32;
+			data_settings[8] = 0x03;
+		} else{
+			return 1;
+		}
 	} else{
-		return 1;
+		if( _variant == v_color_red ){
+			data_settings[1] = 0x0f;
+			data_settings[8] = 0x00;
+		} else if( _variant == v_color_yellow ){
+			data_settings[1] = 0x10;
+			data_settings[8] = 0x01;
+		} else if( _variant == v_color_green ){
+			data_settings[1] = 0x11;
+			data_settings[8] = 0x02;
+		} else if( _variant == v_color_blue ){
+			data_settings[1] = 0x12;
+			data_settings[8] = 0x03;
+		} else{
+			return 1;
+		}
 	}
 	
 	//send data
@@ -569,20 +658,42 @@ int rgb_keyboard::keyboard::write_report_rate(){
 	data_settings[5] = 0x0f;
 	
 	//convert report rate
-	if( _report_rate == r_125Hz ){
-		data_settings[1] = 0x16;
-		data_settings[8] = 0x00;
-	} else if( _report_rate == r_250Hz ){
-		data_settings[1] = 0x17;
-		data_settings[8] = 0x01;
-	} else if( _report_rate == r_500Hz ){
-		data_settings[1] = 0x18;
-		data_settings[8] = 0x02;
-	} else if( _report_rate == r_1000Hz ){
-		data_settings[1] = 0x19;
-		data_settings[8] = 0x03;
+	if( _compatibility == 2 ){
+		if( _report_rate == r_125Hz ){
+			data_settings[1] = 0x40;
+			data_settings[5] = 0x39;
+			data_settings[8] = 0x00;
+		} else if( _report_rate == r_250Hz ){
+			data_settings[1] = 0x41;
+			data_settings[5] = 0x39;
+			data_settings[8] = 0x01;
+		} else if( _report_rate == r_500Hz ){
+			data_settings[1] = 0x42;
+			data_settings[5] = 0x39;
+			data_settings[8] = 0x02;
+		} else if( _report_rate == r_1000Hz ){
+			data_settings[1] = 0x43;
+			data_settings[5] = 0x39;
+			data_settings[8] = 0x03;
+		} else{
+			return 1;
+		}
 	} else{
-		return 1;
+		if( _report_rate == r_125Hz ){
+			data_settings[1] = 0x16;
+			data_settings[8] = 0x00;
+		} else if( _report_rate == r_250Hz ){
+			data_settings[1] = 0x17;
+			data_settings[8] = 0x01;
+		} else if( _report_rate == r_500Hz ){
+			data_settings[1] = 0x18;
+			data_settings[8] = 0x02;
+		} else if( _report_rate == r_1000Hz ){
+			data_settings[1] = 0x19;
+			data_settings[8] = 0x03;
+		} else{
+			return 1;
+		}
 	}
 	
 	//send data
@@ -631,15 +742,30 @@ int rgb_keyboard::keyboard::write_key_mapping(){
 	std::copy(std::begin(_data_remap_7), std::end(_data_remap_7), std::begin(data_remap[6]));
 	std::copy(std::begin(_data_remap_8), std::end(_data_remap_8), std::begin(data_remap[7]));
 	
-	for( std::pair< std::string, std::string > element : _keymap ){
-		if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&
-			_keymap_options.find( element.second ) != _keymap_options.end() ){
-			data_remap[ _keymap_offsets[element.first][0][0] ][ _keymap_offsets[element.first][0][1] ]
-			= _keymap_options[ element.second ][0];
-			data_remap[ _keymap_offsets[element.first][1][0] ][ _keymap_offsets[element.first][1][1] ]
-			= _keymap_options[ element.second ][1];
-			data_remap[ _keymap_offsets[element.first][2][0] ][ _keymap_offsets[element.first][2][1] ]
-			= _keymap_options[ element.second ][2];
+	if( _compatibility == 2 ){
+		/*for( std::pair< std::string, std::string > element : _keymap ){
+			if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&
+				_keymap_options.find( element.second ) != _keymap_options.end() ){
+				data_remap[ _keymap_offsets[element.first][0][0] ][ _keymap_offsets[element.first][0][1] ]
+				= _keymap_options[ element.second ][0];
+				data_remap[ _keymap_offsets[element.first][1][0] ][ _keymap_offsets[element.first][1][1] ]
+				= _keymap_options[ element.second ][1];
+				data_remap[ _keymap_offsets[element.first][2][0] ][ _keymap_offsets[element.first][2][1] ]
+				= _keymap_options[ element.second ][2];
+			}
+		}*/
+		throw std::invalid_argument("Currently not available with compatibility mode 2");
+	} else{
+		for( std::pair< std::string, std::string > element : _keymap ){
+			if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&
+				_keymap_options.find( element.second ) != _keymap_options.end() ){
+				data_remap[ _keymap_offsets[element.first][0][0] ][ _keymap_offsets[element.first][0][1] ]
+				= _keymap_options[ element.second ][0];
+				data_remap[ _keymap_offsets[element.first][1][0] ][ _keymap_offsets[element.first][1][1] ]
+				= _keymap_options[ element.second ][1];
+				data_remap[ _keymap_offsets[element.first][2][0] ][ _keymap_offsets[element.first][2][1] ]
+				= _keymap_options[ element.second ][2];
+			}
 		}
 	}
 	
