@@ -297,6 +297,11 @@ int rgb_keyboard::keyboard::write_mode(){
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x14;
 				break;
+			case m_off://ok
+				data_settings[1] = 0x44;
+				data_settings[5] = 0x2a;
+				data_settings[8] = 0x13;
+				break;
 			default:
 				break;
 		}
@@ -377,6 +382,10 @@ int rgb_keyboard::keyboard::write_mode(){
 			case m_custom://ok
 				data_settings[1] = 0x1b;
 				data_settings[8] = 0x14;
+				break;
+			case m_off://ok
+				data_settings[1] = 0x1a;
+				data_settings[8] = 0x13;
 				break;
 			default:
 				break;

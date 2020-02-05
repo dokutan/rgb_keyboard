@@ -61,6 +61,7 @@ int main( int argc, char **argv ){
 		{"hurricane", no_argument, 0, 'n'},
 		{"ripple", no_argument, 0, 'x'},
 		{"reactive-color", required_argument, 0, 'y'},
+		{"off", no_argument, 0, 'q'},
 		{"custom", no_argument, 0, 'j'},
 		//{"custom-clear", no_argument, 0, 'C'},
 		{"custom-pattern", required_argument, 0, 'P'},
@@ -73,7 +74,7 @@ int main( int argc, char **argv ){
 		{0, 0, 0, 0}
 	};
 	
-	static int mode_flag;
+	static int mode_flag = 0;
 	static string variant;
 	static bool color_flag = false;
 	static string color;
@@ -103,7 +104,7 @@ int main( int argc, char **argv ){
 	
 	//parse command line options
 	int c, option_index = 0;
-	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:jP:K:R:M:L:B:D:",
+	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:qjP:K:R:M:L:B:D:",
 	long_options, &option_index ) ) != -1 ){
 		
 		switch( c ){
@@ -181,6 +182,9 @@ int main( int argc, char **argv ){
 			case 'y':
 				mode_flag = 'y';
 				variant = optarg;
+				break;
+			case 'q':
+				mode_flag = 'q';
 				break;
 			case 'j':
 				mode_flag = 'j';
@@ -389,6 +393,11 @@ int main( int argc, char **argv ){
 				} else{
 					std::cerr << "Unknown variant for reactive-color.\n";
 				}
+				kbd.write_mode();
+				break;
+			case 'q':
+				// turn leds off
+				kbd.set_mode( rgb_keyboard::keyboard::m_off );
 				kbd.write_mode();
 				break;
 			case 'j':

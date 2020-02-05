@@ -52,6 +52,7 @@ void print_help(){
 	std::cout << "\t-x --ripple\tSets a ripple animation\n";
 	std::cout << "\t-y --reactive-color=variant\tSets a reactive color animation.\n"
 	"\t\"red\", \"yellow\", \"green\", \"blue\", \"none\" (doesn't change color).\n\n";
+	std::cout << "\t-q --off\tTurn all leds off\n";
 	std::cout << "\t-j --custom\tEnables custom mode\n";
 	//std::cout << "\t--custom-clear\tEnables custom mode and clears pattern\n";
 	std::cout << "\t-P --custom-pattern=file\tSets pattern in custom mode\n";

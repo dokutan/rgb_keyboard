@@ -56,7 +56,8 @@ class rgb_keyboard::keyboard{
 			m_pulse,
 			m_hurricane,
 			m_ripple,
-			m_custom
+			m_custom,
+			m_off
 		};
 		
 		enum direction{
