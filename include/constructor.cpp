@@ -128,6 +128,7 @@ rgb_keyboard::keyboard::keyboard(){
 	_keycodes["Num_0"] = { 0x7e, 0x29, 0x01 };
 	_keycodes["Num_Period"] = { 0x81, 0x2c, 0x01 };
 	_keycodes["Num_Return"] = { 0x84, 0x2f, 0x01 };
+	_keycodes["Int_Key"] = { 0xd2, 0x3b, 0x02 };
 	
 	//offsets for key remapping
 	_keymap_offsets["Esc"] = {{ { 1, 11 }, { 1, 12 }, { 1, 13 } }};
