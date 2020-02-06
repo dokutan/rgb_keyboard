@@ -71,6 +71,7 @@ int main( int argc, char **argv ){
 		{"list-keys", required_argument, 0, 'L'},
 		{"bus", required_argument, 0, 'B'},
 		{"device", required_argument, 0, 'D'},
+		{"profile", required_argument, 0, 'O'},
 		{"active", required_argument, 0, 'A'},
 		{0, 0, 0, 0}
 	};
@@ -98,6 +99,8 @@ int main( int argc, char **argv ){
 	string bus_string, device_string;
 	bool active_flag = false;
 	string active_string;
+	bool profile_flag = false;
+	string profile_string;
 	
 	//check commandline options
 	if( argc == 1 ){
@@ -107,7 +110,7 @@ int main( int argc, char **argv ){
 	
 	//parse command line options
 	int c, option_index = 0;
-	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:qjP:K:R:M:L:B:D:A:",
+	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:qjP:K:R:M:L:B:D:O:A:",
 	long_options, &option_index ) ) != -1 ){
 		
 		switch( c ){
@@ -223,6 +226,9 @@ int main( int argc, char **argv ){
 				device_flag = true;
 				device_string = optarg;
 				break;
+			case 'O':
+				profile_flag = true;
+				profile_string = optarg;
 			case 'A':
 				active_flag = true;
 				active_string = optarg;
@@ -291,6 +297,18 @@ int main( int argc, char **argv ){
 				std::cerr << "Could not open keyboard, check hardware and permissions.\n";
 				return 1;
 			}
+		}
+		
+		//parse profile flag, set profile
+		if( profile_flag ){
+			
+			if( std::regex_match( profile_string, std::regex("[1-3]") ) ){
+				kbd.set_profile( stoi( profile_string) );
+			} else{
+				std::cerr << "Invalid profile, expected 1-3\n";
+				return 1;
+			}
+			
 		}
 		
 		//parse active flag, set active profile

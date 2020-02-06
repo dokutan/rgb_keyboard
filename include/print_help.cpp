@@ -27,7 +27,8 @@ void print_help(){
 	std::cout << "\t-h --help\tDisplays this message\n";
 	std::cout << "\t-L --list-keys=arg\tList valid keynames (arg: led, map, option)\n";
 	
-	std::cout << "\n\t-A --active=arg\tSet currently active profile (1-3)\n";
+	std::cout << "\n\t-O --profile=arg\tSet profile to which the settings are applied (1-3)\n";
+	std::cout << "\t-A --active=arg\tSet currently active profile (1-3)\n";
 	
 	std::cout << "\n\t-c --color=color\tSets color of the current animation\n";
 	std::cout << "\t-b --brightness=brightness\tSets brightness of the current animation.\n"

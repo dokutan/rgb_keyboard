@@ -836,11 +836,11 @@ int rgb_keyboard::keyboard::write_active_profile(){
 	std::copy(std::begin(_data_profile_17), std::end(_data_profile_17), std::begin(data_remap[16]));
 	
 	// change data
-	if( _profile == 1 ){
+	if( _active_profile == 1 ){
 		
 		// 1 is default, do nothing
 		
-	} else if( _profile == 2 ){
+	} else if( _active_profile == 2 ){
 		
 		data_remap[7][1] = 0x49;
 		data_remap[7][6] = 0x02;
@@ -859,7 +859,7 @@ int rgb_keyboard::keyboard::write_active_profile(){
 		data_remap[16][1] = 0xe1;
 		data_remap[16][18] = 0x01;
 		
-	} else if( _profile == 3 ){
+	} else if( _active_profile == 3 ){
 		
 		data_remap[7][1] = 0x4b;
 		data_remap[7][6] = 0x04;
