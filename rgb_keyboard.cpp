@@ -71,6 +71,7 @@ int main( int argc, char **argv ){
 		{"list-keys", required_argument, 0, 'L'},
 		{"bus", required_argument, 0, 'B'},
 		{"device", required_argument, 0, 'D'},
+		{"active", required_argument, 0, 'A'},
 		{0, 0, 0, 0}
 	};
 	
@@ -95,6 +96,8 @@ int main( int argc, char **argv ){
 	static bool list_keys_flag = false;
 	bool bus_flag = false, device_flag = false;
 	string bus_string, device_string;
+	bool active_flag = false;
+	string active_string;
 	
 	//check commandline options
 	if( argc == 1 ){
@@ -104,7 +107,7 @@ int main( int argc, char **argv ){
 	
 	//parse command line options
 	int c, option_index = 0;
-	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:qjP:K:R:M:L:B:D:",
+	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:qjP:K:R:M:L:B:D:A:",
 	long_options, &option_index ) ) != -1 ){
 		
 		switch( c ){
@@ -220,6 +223,10 @@ int main( int argc, char **argv ){
 				device_flag = true;
 				device_string = optarg;
 				break;
+			case 'A':
+				active_flag = true;
+				active_string = optarg;
+				break;
 			case '?':
 				break;
 			default:
@@ -256,35 +263,48 @@ int main( int argc, char **argv ){
 		return 0;
 	}
 	
-	//open keyboard
-	if( bus_flag != device_flag ){ // only -B xor -D: error
-		std::cerr << "--bus and --device must be used together\n";
-		return 1;
-	} else if( bus_flag && device_flag ){ // -B and -D
+	
+	try{
 		
-		// check -B and -D arguments
-		if( std::regex_match( bus_string, std::regex("[0-9]+") ) && 
-			std::regex_match( device_string, std::regex("[0-9]+") ) ){
+		//open keyboard
+		if( bus_flag != device_flag ){ // only -B xor -D: error
+			std::cerr << "--bus and --device must be used together\n";
+			return 1;
+		} else if( bus_flag && device_flag ){ // -B and -D
 			
-			if( kbd.open_keyboard_bus_device( stoi(bus_string), stoi(device_string) ) != 0 ){
+			// check -B and -D arguments
+			if( std::regex_match( bus_string, std::regex("[0-9]+") ) && 
+				std::regex_match( device_string, std::regex("[0-9]+") ) ){
+				
+				if( kbd.open_keyboard_bus_device( stoi(bus_string), stoi(device_string) ) != 0 ){
+					std::cerr << "Could not open keyboard, check hardware and permissions.\n";
+					return 1;
+				}
+			
+			} else{
+				std::cerr << "Wrong format for --bus and --device\n";
+				return 1;
+			}
+			
+		} else{ // open with default vid and pid
+			if( kbd.open_keyboard() != 0 ){
 				std::cerr << "Could not open keyboard, check hardware and permissions.\n";
 				return 1;
 			}
-		
-		} else{
-			std::cerr << "Wrong format for --bus and --device\n";
-			return 1;
 		}
 		
-	} else{ // open with default vid and pid
-		if( kbd.open_keyboard() != 0 ){
-			std::cerr << "Could not open keyboard, check hardware and permissions.\n";
-			return 1;
+		//parse active flag, set active profile
+		if( active_flag ){
+			
+			if( std::regex_match( active_string, std::regex("[1-3]") ) ){
+				kbd.set_active_profile( stoi( active_string) );
+				kbd.write_active_profile();
+			} else{
+				std::cerr << "Invalid profile, expected 1-3\n";
+				return 1;
+			}
+			
 		}
-	}
-
-	
-	try{
 		
 		//parse mode flag
 		switch( mode_flag ){

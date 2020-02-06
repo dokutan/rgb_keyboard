@@ -105,3 +105,8 @@ int rgb_keyboard::keyboard::set_profile( int profile ){
 	_profile = profile;
 	return 0;
 }
+
+int rgb_keyboard::keyboard::set_active_profile( int profile ){
+	_active_profile = profile;
+	return 0;
+}

@@ -90,6 +90,7 @@ class rgb_keyboard::keyboard{
 		
 		//setter functions
 		int set_profile( int profile );
+		int set_active_profile( int profile );
 		int set_mode( mode Mode );
 		int set_direction( direction Direction );
 		int set_brightness( int Brightness );
@@ -122,6 +123,7 @@ class rgb_keyboard::keyboard{
 		int write_variant(); // compatibility done
 		int write_report_rate(); // compatibility done
 		int write_key_mapping();
+		int write_active_profile();
 		
 		//helper functions
 		int open_keyboard(); // open keyboard with default vid and pid
@@ -139,8 +141,12 @@ class rgb_keyboard::keyboard{
 		
 	private:
 		
-		// profile (1-3)
+		// profile (1-3): this changes the profile to which the settings
+		// are applied
 		int _profile = 1;
+		
+		// currently active profile
+		int _active_profile = 1;
 		
 		//rgb control vars
 		mode _mode = m_fixed;
@@ -176,6 +182,23 @@ class rgb_keyboard::keyboard{
 		static uint8_t _data_remap_8[];
 		static uint8_t _data_remap_9[];
 		static uint8_t _data_remap_10[];
+		static uint8_t _data_profile_1[];
+		static uint8_t _data_profile_2[];
+		static uint8_t _data_profile_3[];
+		static uint8_t _data_profile_4[];
+		static uint8_t _data_profile_5[];
+		static uint8_t _data_profile_6[];
+		static uint8_t _data_profile_7[];
+		static uint8_t _data_profile_8[];
+		static uint8_t _data_profile_9[];
+		static uint8_t _data_profile_10[];
+		static uint8_t _data_profile_11[];
+		static uint8_t _data_profile_12[];
+		static uint8_t _data_profile_13[];
+		static uint8_t _data_profile_14[];
+		static uint8_t _data_profile_15[];
+		static uint8_t _data_profile_16[];
+		static uint8_t _data_profile_17[];
 		
 		//stores key codes for custom colors
 		std::map< std::string, std::array<uint8_t, 3> > _keycodes;
@@ -192,6 +215,7 @@ class rgb_keyboard::keyboard{
 };
 
 #include "data.h"
+#include "data_profile.h"
 #include "setters.cpp"
 #include "getters.cpp"
 #include "writers.cpp"
