@@ -451,7 +451,7 @@ int main( int argc, char **argv ){
 					kbd.write_custom();
 					kbd.write_mode();
 				} else{
-					std::cerr << "Couldn't open custom pattern file\n";
+					std::cerr << "Couldn't open custom pattern file.\n";
 				}
 				break;
 			/*case 'C':
@@ -544,7 +544,7 @@ int main( int argc, char **argv ){
 				kbd.set_report_rate( rgb_keyboard::keyboard::r_1000Hz );
 				kbd.write_report_rate();
 			} else{
-				std::cerr << "Unsupported report rate\n";
+				std::cerr << "Unsupported report rate.\n";
 			}
 		}
 		
@@ -553,7 +553,7 @@ int main( int argc, char **argv ){
 			if( kbd.load_keymap( keymap_file ) == 0 ){
 				kbd.write_key_mapping();
 			} else{
-				std::cerr << "Couldn't open keymap file\n";
+				std::cerr << "Couldn't open keymap file.\n";
 			}
 		}
 		

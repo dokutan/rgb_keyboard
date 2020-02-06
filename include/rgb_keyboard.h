@@ -114,10 +114,10 @@ class rgb_keyboard::keyboard{
 		report_rate get_report_rate();
 		
 		//writer functions (apply settings to keyboard)
-		int write_brightness(); // compatibility done 2
-		int write_speed(); // compatibility done 2
-		int write_mode(); // compatibility done 2
-		int write_direction(); // compatibility done 2
+		int write_brightness(); // compatibility done 2 3
+		int write_speed(); // compatibility done 2 3
+		int write_mode(); // compatibility done 2 3
+		int write_direction(); // compatibility done 2 3
 		int write_color(); // compatibility done 2
 		int write_custom();
 		int write_variant(); // compatibility done 2
