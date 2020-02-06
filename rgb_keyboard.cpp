@@ -229,6 +229,7 @@ int main( int argc, char **argv ){
 			case 'O':
 				profile_flag = true;
 				profile_string = optarg;
+				break;
 			case 'A':
 				active_flag = true;
 				active_string = optarg;
@@ -299,11 +300,12 @@ int main( int argc, char **argv ){
 			}
 		}
 		
-		//parse profile flag, set profile
-		if( profile_flag ){
+		//parse active flag, set active profile
+		if( active_flag ){
 			
-			if( std::regex_match( profile_string, std::regex("[1-3]") ) ){
-				kbd.set_profile( stoi( profile_string) );
+			if( std::regex_match( active_string, std::regex("[1-3]") ) ){
+				kbd.set_active_profile( stoi( active_string) );
+				kbd.write_active_profile();
 			} else{
 				std::cerr << "Invalid profile, expected 1-3\n";
 				return 1;
@@ -311,12 +313,11 @@ int main( int argc, char **argv ){
 			
 		}
 		
-		//parse active flag, set active profile
-		if( active_flag ){
+		//parse profile flag, set profile
+		if( profile_flag ){
 			
-			if( std::regex_match( active_string, std::regex("[1-3]") ) ){
-				kbd.set_active_profile( stoi( active_string) );
-				kbd.write_active_profile();
+			if( std::regex_match( profile_string, std::regex("[1-3]") ) ){
+				kbd.set_profile( stoi( profile_string) );
 			} else{
 				std::cerr << "Invalid profile, expected 1-3\n";
 				return 1;

@@ -45,6 +45,18 @@ to see all keynames (arg = led, map, option)
 
 For the gui see the appropriate section below
 
+### Profiles
+
+Three individual profiles (1-3) are stored on the keyboard. Examples:
+
+    rgb_keyboard --active 2
+to change to the second profile.
+
+    rgb_keyboard --profile 3 ⟨further options⟩
+to apply settings to profile 3. Without this option profile 1 is used.
+
+Not all features are implemented for profile 2 and 3.
+
 ### Examples
     
     rgb_keyboard --brightness 5 --speed 2 --color 00ff00 --rain
@@ -91,3 +103,4 @@ The gui is not copied to /usr/bin by default, you can do so manually.
 - [x] Add reprogramming and macro functionality
   - [x] Complete reprogramming
   - [ ] Add macros to reprogramming
+- [ ] Complete profile support

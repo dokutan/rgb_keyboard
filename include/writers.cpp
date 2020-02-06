@@ -29,14 +29,18 @@ int rgb_keyboard::keyboard::write_brightness(){
 	uint8_t data_settings[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
-	if( _profile == 2 ){
-		data_settings[1] = 0x32 + _brightness;
-		data_settings[8] = _brightness;
-		data_settings[5] = 0x2b;
-	} else{
+	if( _profile == 1 ){
 		data_settings[1] = 0x08 + _brightness;
 		data_settings[8] = _brightness;
 		data_settings[5] = 0x01;
+	} else if( _profile == 2 ){
+		data_settings[1] = 0x32 + _brightness;
+		data_settings[8] = _brightness;
+		data_settings[5] = 0x2b;
+	} else if( _profile == 3 ){
+		throw std::invalid_argument("Currently not available");
+	} else{
+		throw std::invalid_argument("Invalid profile number");
 	}
 	
 	//send data
@@ -78,14 +82,18 @@ int rgb_keyboard::keyboard::write_speed(){
 	uint8_t data_settings[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
-	if( _profile == 2 ){
-		data_settings[1] = 0x37 - _speed;
-		data_settings[8] = 0x04 - _speed;
-		data_settings[5] = 0x2c;
-	} else{
+	if( _profile == 1 ){
 		data_settings[1] = 0x0d - _speed;
 		data_settings[8] = 0x04 - _speed;
 		data_settings[5] = 0x02;
+	} else if( _profile == 2 ){
+		data_settings[1] = 0x37 - _speed;
+		data_settings[8] = 0x04 - _speed;
+		data_settings[5] = 0x2c;
+	} else if( _profile == 3 ){
+		throw std::invalid_argument("Currently not available");
+	} else{
+		throw std::invalid_argument("Invalid profile number");
 	}
 	
 	//send data
@@ -127,23 +135,7 @@ int rgb_keyboard::keyboard::write_direction(){
 	uint8_t data_settings[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
-	if( _profile == 2 ){
-		switch( _direction ){
-			case d_left:
-				data_settings[1] = 0x33;
-				data_settings[2] = 0x01;
-				data_settings[5] = 0x2d;
-				data_settings[8] = 0xff;
-				break;
-			case d_right:
-				data_settings[1] = 0x34;
-				data_settings[2] = 0x00;
-				data_settings[5] = 0x2d;
-				data_settings[8] = 0x00;
-			default:
-				break;
-		}
-	} else{
+	if( _profile == 1 ){
 		switch( _direction ){
 			case d_left:
 				data_settings[1] = 0x09;
@@ -159,6 +151,26 @@ int rgb_keyboard::keyboard::write_direction(){
 			default:
 				break;
 		}
+	} else if( _profile == 2 ){
+		switch( _direction ){
+			case d_left:
+				data_settings[1] = 0x33;
+				data_settings[2] = 0x01;
+				data_settings[5] = 0x2d;
+				data_settings[8] = 0xff;
+				break;
+			case d_right:
+				data_settings[1] = 0x34;
+				data_settings[2] = 0x00;
+				data_settings[5] = 0x2d;
+				data_settings[8] = 0x00;
+			default:
+				break;
+		}
+	} else if( _profile == 3 ){
+		throw std::invalid_argument("Currently not available");
+	} else{
+		throw std::invalid_argument("Invalid profile number");
 	}
 	
 	//send data
@@ -200,7 +212,92 @@ int rgb_keyboard::keyboard::write_mode(){
 	uint8_t data_settings[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
-	if( _profile == 2 ){
+	if( _profile == 1 ){
+		switch( _mode ){
+			case m_horizontal_wave://ok
+				data_settings[1] = 0x08;
+				data_settings[8] = 0x01;
+				break;
+			case m_pulse://ok
+				data_settings[1] = 0x09;
+				data_settings[8] = 0x02;
+				break;
+			case m_hurricane://ok
+				data_settings[1] = 0x0a;
+				data_settings[8] = 0x03;
+				break;
+			case m_breathing_color://ok
+				data_settings[1] = 0x0b;
+				data_settings[8] = 0x04;
+				break;
+			case m_breathing://ok
+				data_settings[1] = 0x0c;
+				data_settings[8] = 0x05;
+				break;
+			case m_fixed://ok
+				data_settings[1] = 0x0d;
+				data_settings[8] = 0x06;
+				break;
+			case m_reactive_single://ok
+				data_settings[1] = 0x0e;
+				data_settings[8] = 0x07;
+				break;
+			case m_reactive_ripple://ok
+				data_settings[1] = 0x0f;
+				data_settings[8] = 0x08;
+				break;
+			case m_reactive_horizontal://ok
+				data_settings[1] = 0x10;
+				data_settings[8] = 0x09;
+				break;
+			case m_waterfall://ok
+				data_settings[1] = 0x11;
+				data_settings[8] = 0x0a;
+				break;
+			case m_swirl://ok
+				data_settings[1] = 0x12;
+				data_settings[8] = 0x0b;
+				break;
+			case m_vertical_wave://ok
+				data_settings[1] = 0x13;
+				data_settings[8] = 0x0c;
+				break;
+			case m_sine://ok
+				data_settings[1] = 0x14;
+				data_settings[8] = 0x0d;
+				break;
+			case m_vortex://ok
+				data_settings[1] = 0x15;
+				data_settings[8] = 0x0e;
+				break;
+			case m_rain://ok
+				data_settings[1] = 0x16;
+				data_settings[8] = 0x0f;
+				break;
+			case m_diagonal_wave://ok
+				data_settings[1] = 0x17;
+				data_settings[8] = 0x10;
+				break;
+			case m_reactive_color://ok
+				data_settings[1] = 0x18;
+				data_settings[8] = 0x11;
+				break;
+			case m_ripple://ok
+				data_settings[1] = 0x19;
+				data_settings[8] = 0x12;
+				break;
+			case m_custom://ok
+				data_settings[1] = 0x1b;
+				data_settings[8] = 0x14;
+				break;
+			case m_off://ok
+				data_settings[1] = 0x1a;
+				data_settings[8] = 0x13;
+				break;
+			default:
+				break;
+		}
+	} else if( _profile == 2 ){
 		switch( _mode ){
 			case m_horizontal_wave://ok
 				data_settings[1] = 0x32;
@@ -305,93 +402,12 @@ int rgb_keyboard::keyboard::write_mode(){
 			default:
 				break;
 		}
+	} else if( _profile == 3 ){
+		throw std::invalid_argument("Currently not available");
 	} else{
-		switch( _mode ){
-			case m_horizontal_wave://ok
-				data_settings[1] = 0x08;
-				data_settings[8] = 0x01;
-				break;
-			case m_pulse://ok
-				data_settings[1] = 0x09;
-				data_settings[8] = 0x02;
-				break;
-			case m_hurricane://ok
-				data_settings[1] = 0x0a;
-				data_settings[8] = 0x03;
-				break;
-			case m_breathing_color://ok
-				data_settings[1] = 0x0b;
-				data_settings[8] = 0x04;
-				break;
-			case m_breathing://ok
-				data_settings[1] = 0x0c;
-				data_settings[8] = 0x05;
-				break;
-			case m_fixed://ok
-				data_settings[1] = 0x0d;
-				data_settings[8] = 0x06;
-				break;
-			case m_reactive_single://ok
-				data_settings[1] = 0x0e;
-				data_settings[8] = 0x07;
-				break;
-			case m_reactive_ripple://ok
-				data_settings[1] = 0x0f;
-				data_settings[8] = 0x08;
-				break;
-			case m_reactive_horizontal://ok
-				data_settings[1] = 0x10;
-				data_settings[8] = 0x09;
-				break;
-			case m_waterfall://ok
-				data_settings[1] = 0x11;
-				data_settings[8] = 0x0a;
-				break;
-			case m_swirl://ok
-				data_settings[1] = 0x12;
-				data_settings[8] = 0x0b;
-				break;
-			case m_vertical_wave://ok
-				data_settings[1] = 0x13;
-				data_settings[8] = 0x0c;
-				break;
-			case m_sine://ok
-				data_settings[1] = 0x14;
-				data_settings[8] = 0x0d;
-				break;
-			case m_vortex://ok
-				data_settings[1] = 0x15;
-				data_settings[8] = 0x0e;
-				break;
-			case m_rain://ok
-				data_settings[1] = 0x16;
-				data_settings[8] = 0x0f;
-				break;
-			case m_diagonal_wave://ok
-				data_settings[1] = 0x17;
-				data_settings[8] = 0x10;
-				break;
-			case m_reactive_color://ok
-				data_settings[1] = 0x18;
-				data_settings[8] = 0x11;
-				break;
-			case m_ripple://ok
-				data_settings[1] = 0x19;
-				data_settings[8] = 0x12;
-				break;
-			case m_custom://ok
-				data_settings[1] = 0x1b;
-				data_settings[8] = 0x14;
-				break;
-			case m_off://ok
-				data_settings[1] = 0x1a;
-				data_settings[8] = 0x13;
-				break;
-			default:
-				break;
-		}
+		throw std::invalid_argument("Invalid profile number");
 	}
-			
+	
 	//send data
 	
 	//write start data packet to endpoint 3
@@ -433,21 +449,7 @@ int rgb_keyboard::keyboard::write_color(){
 	uint8_t data_settings_2[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings_2));
 	
-	if( _profile == 2 ){
-		data_settings_1[1] = 0x35;
-		data_settings_1[5] = 0x2e;
-		if( _rainbow ){
-			data_settings_1[1] = 0x36;
-			data_settings_1[5] = 0x2e;
-			data_settings_1[8] = 0x01;
-		}
-		
-		data_settings_2[4] = 0x03;
-		data_settings_2[5] = 0x2f;
-		data_settings_2[8] = _color_r;
-		data_settings_2[9] = _color_g;
-		data_settings_2[10] = _color_b;
-	} else{
+	if( _profile == 1 ){
 		data_settings_1[1] = 0x0b;
 		data_settings_1[5] = 0x04;
 		if( _rainbow ){
@@ -461,6 +463,24 @@ int rgb_keyboard::keyboard::write_color(){
 		data_settings_2[8] = _color_r;
 		data_settings_2[9] = _color_g;
 		data_settings_2[10] = _color_b;
+	} else if( _profile == 2 ){
+		data_settings_1[1] = 0x35;
+		data_settings_1[5] = 0x2e;
+		if( _rainbow ){
+			data_settings_1[1] = 0x36;
+			data_settings_1[5] = 0x2e;
+			data_settings_1[8] = 0x01;
+		}
+		
+		data_settings_2[4] = 0x03;
+		data_settings_2[5] = 0x2f;
+		data_settings_2[8] = _color_r;
+		data_settings_2[9] = _color_g;
+		data_settings_2[10] = _color_b;
+	} else if( _profile == 3 ){
+		throw std::invalid_argument("Currently not available");
+	} else{
+		throw std::invalid_argument("Invalid profile number");
 	}
 	
 	//send data
@@ -587,8 +607,24 @@ int rgb_keyboard::keyboard::write_variant(){
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	data_settings[5] = 0x08;
 	
-	//convert variant
-	if( _profile == 2 ){
+	//convert variant	
+	if( _profile == 1 ){
+		if( _variant == v_color_red ){
+			data_settings[1] = 0x0f;
+			data_settings[8] = 0x00;
+		} else if( _variant == v_color_yellow ){
+			data_settings[1] = 0x10;
+			data_settings[8] = 0x01;
+		} else if( _variant == v_color_green ){
+			data_settings[1] = 0x11;
+			data_settings[8] = 0x02;
+		} else if( _variant == v_color_blue ){
+			data_settings[1] = 0x12;
+			data_settings[8] = 0x03;
+		} else{
+			return 1;
+		}
+	} else if( _profile == 2 ){
 		if( _variant == v_color_red ){
 			data_settings[1] = 0x39;
 			data_settings[5] = 0x32;
@@ -608,22 +644,10 @@ int rgb_keyboard::keyboard::write_variant(){
 		} else{
 			return 1;
 		}
+	} else if( _profile == 3 ){
+		throw std::invalid_argument("Currently not available");
 	} else{
-		if( _variant == v_color_red ){
-			data_settings[1] = 0x0f;
-			data_settings[8] = 0x00;
-		} else if( _variant == v_color_yellow ){
-			data_settings[1] = 0x10;
-			data_settings[8] = 0x01;
-		} else if( _variant == v_color_green ){
-			data_settings[1] = 0x11;
-			data_settings[8] = 0x02;
-		} else if( _variant == v_color_blue ){
-			data_settings[1] = 0x12;
-			data_settings[8] = 0x03;
-		} else{
-			return 1;
-		}
+		throw std::invalid_argument("Invalid profile number");
 	}
 	
 	//send data
@@ -666,8 +690,24 @@ int rgb_keyboard::keyboard::write_report_rate(){
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	data_settings[5] = 0x0f;
 	
-	//convert report rate
-	if( _profile == 2 ){
+	//convert report rate	
+	if( _profile == 1 ){
+		if( _report_rate == r_125Hz ){
+			data_settings[1] = 0x16;
+			data_settings[8] = 0x00;
+		} else if( _report_rate == r_250Hz ){
+			data_settings[1] = 0x17;
+			data_settings[8] = 0x01;
+		} else if( _report_rate == r_500Hz ){
+			data_settings[1] = 0x18;
+			data_settings[8] = 0x02;
+		} else if( _report_rate == r_1000Hz ){
+			data_settings[1] = 0x19;
+			data_settings[8] = 0x03;
+		} else{
+			return 1;
+		}
+	} else if( _profile == 2 ){
 		if( _report_rate == r_125Hz ){
 			data_settings[1] = 0x40;
 			data_settings[5] = 0x39;
@@ -687,22 +727,10 @@ int rgb_keyboard::keyboard::write_report_rate(){
 		} else{
 			return 1;
 		}
+	} else if( _profile == 3 ){
+		throw std::invalid_argument("Currently not available");
 	} else{
-		if( _report_rate == r_125Hz ){
-			data_settings[1] = 0x16;
-			data_settings[8] = 0x00;
-		} else if( _report_rate == r_250Hz ){
-			data_settings[1] = 0x17;
-			data_settings[8] = 0x01;
-		} else if( _report_rate == r_500Hz ){
-			data_settings[1] = 0x18;
-			data_settings[8] = 0x02;
-		} else if( _report_rate == r_1000Hz ){
-			data_settings[1] = 0x19;
-			data_settings[8] = 0x03;
-		} else{
-			return 1;
-		}
+		throw std::invalid_argument("Invalid profile number");
 	}
 	
 	//send data
