@@ -681,11 +681,8 @@ int rgb_keyboard::keyboard::write_custom(){
 			//if keycode is stored in _keycodes: set values in data packets
 			
 			//prepare data packet
-			if( _profile == 2 ){
-				/*data_settings[3] = 0x11;
-				data_settings[4] = 0x03;
-				
-				//keycode: different to _profile == 1
+			if( _profile == 1 ){
+				//keycode
 				data_settings[1] = _keycodes.at(element.first)[0];
 				data_settings[5] = _keycodes.at(element.first)[1];
 				data_settings[6] = _keycodes.at(element.first)[2];
@@ -693,13 +690,22 @@ int rgb_keyboard::keyboard::write_custom(){
 				//color
 				data_settings[8] = element.second[0];
 				data_settings[9] = element.second[1];
-				data_settings[10] = element.second[2];*/
-				throw std::invalid_argument("Currently not available with compatibility mode 2");
-			} else{
+				data_settings[10] = element.second[2];
+			} else if( _profile == 2 ){
 				//keycode
-				data_settings[1] = _keycodes.at(element.first)[0];
+				data_settings[1] = _keycodes.at(element.first)[0] + 0x02;
 				data_settings[5] = _keycodes.at(element.first)[1];
-				data_settings[6] = _keycodes.at(element.first)[2];
+				data_settings[6] = _keycodes.at(element.first)[2] + 0x02;
+				
+				//color
+				data_settings[8] = element.second[0];
+				data_settings[9] = element.second[1];
+				data_settings[10] = element.second[2];
+			} else if( _profile == 3 ){
+				//keycode
+				data_settings[1] = _keycodes.at(element.first)[0] + 0x04;
+				data_settings[5] = _keycodes.at(element.first)[1];
+				data_settings[6] = _keycodes.at(element.first)[2] + 0x04;
 				
 				//color
 				data_settings[8] = element.second[0];
