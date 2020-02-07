@@ -1045,7 +1045,7 @@ int rgb_keyboard::keyboard::write_active_profile(){
 		
 	} else if( _active_profile == 2 ){
 		
-		data_remap[7][1] = 0x49;
+		/*data_remap[7][1] = 0x49;
 		data_remap[7][6] = 0x02;
 		data_remap[8][1] = 0x75;
 		data_remap[8][6] = 0x02;
@@ -1058,13 +1058,13 @@ int rgb_keyboard::keyboard::write_active_profile(){
 		data_remap[12][1] = 0x58;
 		data_remap[12][6] = 0x03;
 		data_remap[13][1] = 0x8e;
-		data_remap[13][6] = 0x03;
+		data_remap[13][6] = 0x03;*/
 		data_remap[16][1] = 0xe1;
 		data_remap[16][18] = 0x01;
 		
 	} else if( _active_profile == 3 ){
 		
-		data_remap[7][1] = 0x4b;
+		/*data_remap[7][1] = 0x4b;
 		data_remap[7][6] = 0x04;
 		data_remap[8][1] = 0x77;
 		data_remap[8][6] = 0x04;
@@ -1077,7 +1077,7 @@ int rgb_keyboard::keyboard::write_active_profile(){
 		data_remap[12][1] = 0x5a;
 		data_remap[12][6] = 0x05;
 		data_remap[13][1] = 0x90;
-		data_remap[13][6] = 0x05;
+		data_remap[13][6] = 0x05;*/
 		data_remap[16][1] = 0xe2;
 		data_remap[16][18] = 0x02;
 		
@@ -1086,14 +1086,21 @@ int rgb_keyboard::keyboard::write_active_profile(){
 	}
 	
 	//send data
-	for( int i = 0; i < 17; i++ ){
+	/*for( int i = 0; i < 17; i++ ){
 		//write data packet to endpoint 3
 		res += libusb_interrupt_transfer( _handle, 0x03, data_remap[i], 
 		64, &transferred, 1000);
 		//read from endpoint 2
 		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
 		&transferred, 1000);
-	}
+	}*/
+	
+	//write data packet to endpoint 3
+	res += libusb_interrupt_transfer( _handle, 0x03, data_remap[16], 
+	64, &transferred, 1000);
+	//read from endpoint 2
+	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
+	&transferred, 1000);
 	
 	return res;
 }

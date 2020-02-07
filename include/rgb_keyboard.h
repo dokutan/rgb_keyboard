@@ -118,10 +118,10 @@ class rgb_keyboard::keyboard{
 		int write_speed(); // compatibility done 2 3
 		int write_mode(); // compatibility done 2 3
 		int write_direction(); // compatibility done 2 3
-		int write_color(); // compatibility done 2
-		int write_custom();
-		int write_variant(); // compatibility done 2
-		int write_report_rate(); // compatibility done 2
+		int write_color(); // compatibility done 2 3
+		int write_custom(); // compatibility done 2 3
+		int write_variant(); // compatibility done 2 3
+		int write_report_rate(); // compatibility done 2 3
 		int write_key_mapping();
 		int write_active_profile();
 		
