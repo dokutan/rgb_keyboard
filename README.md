@@ -98,7 +98,7 @@ The gui is not copied to /usr/bin by default, you can do so manually.
 ## TODO
 - [x] Implemented all lighting modes from the official software.
 - [x] Create option to change individual keys in custom mode.
-- [ ] Rewrite the frontend (code is old and messy)
+- [x] Rewrite the frontend (code is old and messy) (improved and cleaned up)
 - [ ] Read current settings from the keyboard
 - [x] Add reprogramming and macro functionality
   - [x] Complete reprogramming

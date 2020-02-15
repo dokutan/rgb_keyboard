@@ -16,6 +16,8 @@ set led_color "#ffffff"
 set led_multi 0
 set led_brightness 9
 set led_speed 0
+set profile_active 1
+set profile_target 1
 
 # main frame
 frame .fr
@@ -58,6 +60,19 @@ button .fr.keymap.apply -text "Apply" -command { applyKeymap }
 pack .fr.keymap.label .fr.keymap.file -padx 5 -pady 5 -side left
 pack .fr.keymap.apply -padx 5 -pady 5 -side right
 
+# profile settings
+frame .fr.profile -borderwidth 1 -relief groove
+pack .fr.profile -fill both -padx 5 -pady 5
+label .fr.profile.label -text "Profile settings"
+label .fr.profile.label_active -text "Active profile"
+spinbox .fr.profile.active -from 1 -to 3 -textvariable profile_active
+label .fr.profile.label_target -text "Apply settings to profile"
+spinbox .fr.profile.target -from 1 -to 3 -textvariable profile_target
+button .fr.profile.apply -text "Apply" -command { applyProfile }
+
+pack .fr.profile.label .fr.profile.label_active .fr.profile.active .fr.profile.label_target .fr.profile.target -padx 5 -pady 5 -side left
+pack .fr.profile.apply -padx 5 -pady 5 -side right
+
 # padding frame
 frame .fr.pad
 pack .fr.pad -expand 1 -fill both -padx 5 -pady 5
@@ -78,14 +93,15 @@ proc checkInstall {} {
 proc applyKeymap {} {
 	
 	global keymap_file
+	global profile_target
 	
 	if { [checkInstall] == 0 } {
 		return
 	}
 	
 	if { $keymap_file != "" } {
-		puts "rgb_keyboard --keymap $keymap_file"
-		exec rgb_keyboard --keymap $keymap_file
+		puts "rgb_keyboard --keymap $keymap_file --profile $profile_target"
+		exec rgb_keyboard --keymap $keymap_file --profile $profile_target
 	}
 	
 }
@@ -99,6 +115,7 @@ proc applyLed {} {
 	global led_multi
 	global led_brightness
 	global led_speed
+	global profile_target
 	
 	if { [checkInstall] == 0 } {
 		return
@@ -108,17 +125,30 @@ proc applyLed {} {
 	set led_color_hex [string range $led_color 1 6]
 	
 	if { $led_multi == 0 } {
-		puts "rgb_keyboard --brightness $led_brightness --$led_pattern --color $led_color_hex --speed $led_speed --direction $led_direction"
-		exec rgb_keyboard --brightness $led_brightness --$led_pattern --color $led_color_hex --speed $led_speed --direction $led_direction
+		puts "rgb_keyboard --brightness $led_brightness --$led_pattern --color $led_color_hex --speed $led_speed --direction $led_direction --profile $profile_target"
+		exec rgb_keyboard --brightness $led_brightness --$led_pattern --color $led_color_hex --speed $led_speed --direction $led_direction --profile $profile_target
 	} else {
-		puts "rgb_keyboard --brightness $led_brightness --$led_pattern --color multi --speed $led_speed --direction $led_direction"
-		exec rgb_keyboard --brightness $led_brightness --$led_pattern --color multi --speed $led_speed --direction $led_direction
+		puts "rgb_keyboard --brightness $led_brightness --$led_pattern --color multi --speed $led_speed --direction $led_direction --profile $profile_target"
+		exec rgb_keyboard --brightness $led_brightness --$led_pattern --color multi --speed $led_speed --direction $led_direction --profile $profile_target
 	}
 	
 	if { $custom_file != "" } {
-		puts "rgb_keyboard --custom-pattern $custom_file"
-		exec rgb_keyboard --custom-pattern $custom_file
+		puts "rgb_keyboard --custom-pattern $custom_file --profile $profile_target"
+		exec rgb_keyboard --custom-pattern $custom_file --profile $profile_target
 	}
+	
+}
+
+proc applyProfile {} {
+	
+	global profile_active
+	
+	if { [checkInstall] == 0 } {
+		return
+	}
+	
+	puts "rgb_keyboard --active $profile_active"
+	exec rgb_keyboard --active $profile_active
 	
 }
 
@@ -126,5 +156,6 @@ proc applyAll {} {
 	
 	applyLed
 	applyKeymap
+	applyProfile
 	
 }

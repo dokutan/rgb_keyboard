@@ -34,7 +34,11 @@
 
 int main( int argc, char **argv ){
 	
+	
+	
 	using namespace std;
+	
+	
 	
 	//command line options
 	static struct option long_options[] = {
@@ -76,6 +80,7 @@ int main( int argc, char **argv ){
 		{0, 0, 0, 0}
 	};
 	
+	// these variables store the commandline options
 	static int mode_flag = 0;
 	static string variant;
 	static bool color_flag = false;
@@ -102,7 +107,7 @@ int main( int argc, char **argv ){
 	bool profile_flag = false;
 	string profile_string;
 	
-	//check commandline options
+	//check number of commandline options
 	if( argc == 1 ){
 		print_help();
 		return 0;
@@ -242,8 +247,12 @@ int main( int argc, char **argv ){
 		
 	}
 	
+	
+	
 	//keyboard object
 	rgb_keyboard::keyboard kbd;
+	
+	
 	
 	//parse list keys flag
 	if( list_keys_flag ){
@@ -271,7 +280,11 @@ int main( int argc, char **argv ){
 	}
 	
 	
+	
+	// open keyboard, apply settigns, close keyboard
 	try{
+		
+		
 		
 		//open keyboard
 		if( bus_flag != device_flag ){ // only -B xor -D: error
@@ -300,6 +313,8 @@ int main( int argc, char **argv ){
 			}
 		}
 		
+		
+		
 		//parse active flag, set active profile
 		if( active_flag ){
 			
@@ -313,7 +328,9 @@ int main( int argc, char **argv ){
 			
 		}
 		
-		//parse profile flag, set profile
+		
+		
+		//parse profile flag, set profile (to which profile settings are applied)
 		if( profile_flag ){
 			
 			if( std::regex_match( profile_string, std::regex("[1-3]") ) ){
@@ -325,7 +342,9 @@ int main( int argc, char **argv ){
 			
 		}
 		
-		//parse mode flag
+		
+		
+		//parse mode flag, set led mode
 		switch( mode_flag ){
 			case 'i':
 				//set sine wave animation
@@ -470,6 +489,7 @@ int main( int argc, char **argv ){
 		}
 		
 		
+		
 		//parse color flag
 		if( color_flag ){
 			
@@ -489,6 +509,8 @@ int main( int argc, char **argv ){
 			
 		}
 		
+		
+		
 		//parse brightness flag
 		if( brightness_flag ){
 			
@@ -502,6 +524,8 @@ int main( int argc, char **argv ){
 			
 		}
 		
+		
+		
 		//parse speed flag
 		if( speed_flag ){
 			
@@ -513,6 +537,8 @@ int main( int argc, char **argv ){
 				std::cerr << "Wrong speed format, expected 0-3.\n";
 			}
 		}
+		
+		
 		
 		//parse direction flag
 		if( direction_flag ){
@@ -527,6 +553,8 @@ int main( int argc, char **argv ){
 				std::cerr << "Unknown direction.\n";
 			}
 		}
+		
+		
 		
 		//parse report rate flag
 		if( r_rate_flag ){
@@ -548,6 +576,8 @@ int main( int argc, char **argv ){
 			}
 		}
 		
+		
+		
 		//parse keymap flag
 		if( keymap_flag ){
 			if( kbd.load_keymap( keymap_file ) == 0 ){
@@ -557,12 +587,18 @@ int main( int argc, char **argv ){
 			}
 		}
 		
+		
+		
+	// catch exception
 	}catch( std::exception &e ){
 		std::cerr << "Caught exception: " << e.what() << "\n";
 		kbd.close_keyboard();
 		return 1;
 	}
 	
+	
+	
+	// close keyboard
 	kbd.close_keyboard();
 	
 	return 0;
