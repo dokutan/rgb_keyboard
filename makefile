@@ -15,3 +15,6 @@ clean:
 upgrade:
 	g++ rgb_keyboard.cpp -o rgb_keyboard -lusb-1.0 && \
 	cp ./rgb_keyboard $(BIN_DIR)/rgb_keyboard
+
+build:
+	g++ rgb_keyboard.cpp -o rgb_keyboard -lusb-1.0 -Wall -O2

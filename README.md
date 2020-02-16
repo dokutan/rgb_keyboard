@@ -1,5 +1,5 @@
 # rgb_keyboard
-Controls the RGB lighting on some keyboards. Only tested on Linux.
+Controls the RGB lighting on some keyboards. Tested on Linux, should work on other operating systems.
 
 ## Supported keyboards
 USB keyboards with VID 0c45 and PID 652f. 
@@ -8,6 +8,8 @@ Tested with:
 - Glorious GMMK full-size ANSI
 
 You can help expand this list by providing information whether this software works correctly or not.
+
+Note on ISO layout: As i do not have access to a compatible keyboard with an ISO layout, remapping and setting the color of the ISO international key (Int_Key) is supported but not tested.
 
 ## Installing
 - Clone this repository
@@ -24,9 +26,15 @@ You can help expand this list by providing information whether this software wor
     ```
 - restart for the udev rule to take effect
 
+### Updating
+- If you have a previous version installed and want to upgrade (this will not add the udev rule), clone the repository and run:
+	```
+    sudo make upgrade
+    ```
+
 ### Manual
 - Compile with:
-    g++ rgb_keyboard.cpp -o rgb_keyboard -lusb-1.0
+    ``g++ rgb_keyboard.cpp -o rgb_keyboard -lusb-1.0 -Wall -O2``
 - (Optionally) add the binary to some place in your PATH variable
 - IMPORTANT: make the keyboard accessible without root rights by adding a udev rule
   - create a file named 'keyboard.rules' in /etc/udev/rules.d/
