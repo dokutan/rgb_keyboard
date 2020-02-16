@@ -954,30 +954,33 @@ int rgb_keyboard::keyboard::write_key_mapping(){
 	std::copy(std::begin(_data_remap_7), std::end(_data_remap_7), std::begin(data_remap[6]));
 	std::copy(std::begin(_data_remap_8), std::end(_data_remap_8), std::begin(data_remap[7]));
 	
+	
+	// change data for correct profile
 	if( _profile == 2 ){
-		/*for( std::pair< std::string, std::string > element : _keymap ){
-			if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&
-				_keymap_options.find( element.second ) != _keymap_options.end() ){
-				data_remap[ _keymap_offsets[element.first][0][0] ][ _keymap_offsets[element.first][0][1] ]
-				= _keymap_options[ element.second ][0];
-				data_remap[ _keymap_offsets[element.first][1][0] ][ _keymap_offsets[element.first][1][1] ]
-				= _keymap_options[ element.second ][1];
-				data_remap[ _keymap_offsets[element.first][2][0] ][ _keymap_offsets[element.first][2][1] ]
-				= _keymap_options[ element.second ][2];
-			}
-		}*/
-		throw std::invalid_argument("Currently not available with compatibility mode 2");
-	} else{
-		for( std::pair< std::string, std::string > element : _keymap ){
-			if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&
-				_keymap_options.find( element.second ) != _keymap_options.end() ){
-				data_remap[ _keymap_offsets[element.first][0][0] ][ _keymap_offsets[element.first][0][1] ]
-				= _keymap_options[ element.second ][0];
-				data_remap[ _keymap_offsets[element.first][1][0] ][ _keymap_offsets[element.first][1][1] ]
-				= _keymap_options[ element.second ][1];
-				data_remap[ _keymap_offsets[element.first][2][0] ][ _keymap_offsets[element.first][2][1] ]
-				= _keymap_options[ element.second ][2];
-			}
+		
+		for( int i = 1; i < 8; i++ ){
+			data_remap[i][1] = data_remap[i][1] + 0x02;
+			data_remap[i][6] = data_remap[i][6] + 0x02;
+		}
+		
+	} else if( _profile == 3 ){
+		
+		for( int i = 1; i < 8; i++ ){
+			data_remap[i][1] = data_remap[i][1] + 0x04;
+			data_remap[i][6] = data_remap[i][6] + 0x04;
+		}
+		
+	}
+	
+	for( std::pair< std::string, std::string > element : _keymap ){
+		if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&
+			_keymap_options.find( element.second ) != _keymap_options.end() ){
+			data_remap[ _keymap_offsets[element.first][0][0] ][ _keymap_offsets[element.first][0][1] ]
+			= _keymap_options[ element.second ][0];
+			data_remap[ _keymap_offsets[element.first][1][0] ][ _keymap_offsets[element.first][1][1] ]
+			= _keymap_options[ element.second ][1];
+			data_remap[ _keymap_offsets[element.first][2][0] ][ _keymap_offsets[element.first][2][1] ]
+			= _keymap_options[ element.second ][2];
 		}
 	}
 	
