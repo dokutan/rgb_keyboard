@@ -76,7 +76,7 @@ to set a custom keymap from a file.
 
 ### Config files (Key mapping and color)
 
-Each line line in the file consists of two fields separated by a tab. The first field is the key name (include/constructor.cpp for a full list), the second field is the color as hexcode without any prefix. Lines starting with # are ignored.
+Each line line in the file consists of two fields separated by a tab. The first field is the name of the physical key (run rgb_keyboard --list-keys for a full list), the second field is the color as hexcode without any prefix or the key function (run rgb_keyboard --list-keys for a full list). Lines starting with # are ignored.
 
 ### Change custom key colors from the commandline
 
