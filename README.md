@@ -92,6 +92,10 @@ In case you have multiple keyboards attached or you suspect a keyboard with a di
 rgb_keyboard --bus ⟨bus id⟩ --device ⟨device number⟩ ...
 ```
 
+### --kernel-driver option
+
+On some systems libusb might no be able to properly detach the kernel driver, an the program will fail to open the keyboard. The --kernel-driver option skips this step and is intended for better compatibility.
+
 ## GUI
 
 A separate frontend written in Tcl/Tk exists, however not all features are implemented. Running the gui:

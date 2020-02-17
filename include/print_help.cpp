@@ -70,6 +70,7 @@ void print_help(){
 	
 	std::cout << "\n\t-D --bus=number\tSpecify USB bus id, must be used with --device\n";
 	std::cout << "\t-D --device=number\tSpecify USB device number, must be used with --bus\n";
+	std::cout << "\t-V --kernel-driver\tDon't try to detach the kernel driver, required on some systems\n";
 	
 	std::cout << "\nColors need to be specified in hexadecimal without "
 	"any prefix.\n\"multi\" can also be used to create a rainbow effect.\n\n";

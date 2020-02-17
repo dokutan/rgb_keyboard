@@ -38,23 +38,25 @@ int rgb_keyboard::keyboard::open_keyboard(){
 		return res;
 	}
 	
-	//detach kernel driver on interface 0 if active 
-	if( libusb_kernel_driver_active( _handle, 0 ) ){
-		res += libusb_detach_kernel_driver( _handle, 0 );
-		if( res == 0 ){
-			_detached_driver_0 = true;
-		} else{
-			return res;
+	if( _detach_kernel_driver ){
+		//detach kernel driver on interface 0 if active 
+		if( libusb_kernel_driver_active( _handle, 0 ) ){
+			res += libusb_detach_kernel_driver( _handle, 0 );
+			if( res == 0 ){
+				_detached_driver_0 = true;
+			} else{
+				return res;
+			}
 		}
-	}
-	
-	//detach kernel driver on interface 1 if active 
-	if( libusb_kernel_driver_active( _handle, 1 ) ){
-		res += libusb_detach_kernel_driver( _handle, 1 );
-		if( res == 0 ){
-			_detached_driver_1 = true;
-		} else{
-			return res;
+		
+		//detach kernel driver on interface 1 if active 
+		if( libusb_kernel_driver_active( _handle, 1 ) ){
+			res += libusb_detach_kernel_driver( _handle, 1 );
+			if( res == 0 ){
+				_detached_driver_1 = true;
+			} else{
+				return res;
+			}
 		}
 	}
 	
@@ -113,23 +115,25 @@ int rgb_keyboard::keyboard::open_keyboard_bus_device( uint8_t bus, uint8_t devic
 	//free device list, unreference devices
 	libusb_free_device_list( dev_list, 1 );
 	
-	//detach kernel driver on interface 0 if active 
-	if( libusb_kernel_driver_active( _handle, 0 ) ){
-		res += libusb_detach_kernel_driver( _handle, 0 );
-		if( res == 0 ){
-			_detached_driver_0 = true;
-		} else{
-			return res;
+	if( _detach_kernel_driver ){
+		//detach kernel driver on interface 0 if active 
+		if( libusb_kernel_driver_active( _handle, 0 ) ){
+			res += libusb_detach_kernel_driver( _handle, 0 );
+			if( res == 0 ){
+				_detached_driver_0 = true;
+			} else{
+				return res;
+			}
 		}
-	}
-	
-	//detach kernel driver on interface 1 if active 
-	if( libusb_kernel_driver_active( _handle, 1 ) ){
-		res += libusb_detach_kernel_driver( _handle, 1 );
-		if( res == 0 ){
-			_detached_driver_1 = true;
-		} else{
-			return res;
+		
+		//detach kernel driver on interface 1 if active 
+		if( libusb_kernel_driver_active( _handle, 1 ) ){
+			res += libusb_detach_kernel_driver( _handle, 1 );
+			if( res == 0 ){
+				_detached_driver_1 = true;
+			} else{
+				return res;
+			}
 		}
 	}
 	

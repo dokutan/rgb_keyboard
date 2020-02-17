@@ -55,3 +55,7 @@ rgb_keyboard::keyboard::mode_variant rgb_keyboard::keyboard::get_variant(){
 rgb_keyboard::keyboard::report_rate rgb_keyboard::keyboard::get_report_rate(){
 	return _report_rate;
 }
+
+bool rgb_keyboard::keyboard::get_detach_kernel_driver(){
+	return _detach_kernel_driver;
+}

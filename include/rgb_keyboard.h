@@ -100,6 +100,7 @@ class rgb_keyboard::keyboard{
 		int set_variant( mode_variant Variant );
 		int set_custom_keys( std::string Keys );
 		int set_report_rate( report_rate Report_rate );
+		int set_detach_kernel_driver( bool detach_kernel_driver );
 		
 		//getter functions
 		mode get_mode();
@@ -112,6 +113,7 @@ class rgb_keyboard::keyboard{
 		bool get_rainbow();
 		mode_variant get_variant();
 		report_rate get_report_rate();
+		bool get_detach_kernel_driver();
 		
 		//writer functions (apply settings to keyboard)
 		int write_brightness(); // compatibility done 2 3
@@ -165,6 +167,7 @@ class rgb_keyboard::keyboard{
 		//usb device vars
 		const uint16_t _keyboard_vid = 0x0c45;
 		const uint16_t _keyboard_pid = 0x652f;
+		bool _detach_kernel_driver = true;
 		bool _detached_driver_0 = false, _detached_driver_1 = false;
 		libusb_device_handle* _handle = NULL;
 		

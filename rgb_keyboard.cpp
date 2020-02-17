@@ -77,6 +77,7 @@ int main( int argc, char **argv ){
 		{"device", required_argument, 0, 'D'},
 		{"profile", required_argument, 0, 'O'},
 		{"active", required_argument, 0, 'A'},
+		{"kernel-driver", no_argument, 0, 'V'},
 		{0, 0, 0, 0}
 	};
 	
@@ -106,6 +107,7 @@ int main( int argc, char **argv ){
 	string active_string;
 	bool profile_flag = false;
 	string profile_string;
+	bool flag_kernel_driver = false;
 	
 	//check number of commandline options
 	if( argc == 1 ){
@@ -115,7 +117,7 @@ int main( int argc, char **argv ){
 	
 	//parse command line options
 	int c, option_index = 0;
-	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:qjP:K:R:M:L:B:D:O:A:",
+	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:qjP:K:R:M:L:B:D:O:A:V",
 	long_options, &option_index ) ) != -1 ){
 		
 		switch( c ){
@@ -239,6 +241,9 @@ int main( int argc, char **argv ){
 				active_flag = true;
 				active_string = optarg;
 				break;
+			case 'V':
+				flag_kernel_driver = true;
+				break;
 			case '?':
 				break;
 			default:
@@ -281,6 +286,12 @@ int main( int argc, char **argv ){
 	
 	
 	
+	// detach kernel driver ?
+	if( flag_kernel_driver )
+		kbd.set_detach_kernel_driver( false );
+	
+	
+	
 	// open keyboard, apply settigns, close keyboard
 	try{
 		
@@ -297,7 +308,7 @@ int main( int argc, char **argv ){
 				std::regex_match( device_string, std::regex("[0-9]+") ) ){
 				
 				if( kbd.open_keyboard_bus_device( stoi(bus_string), stoi(device_string) ) != 0 ){
-					std::cerr << "Could not open keyboard, check hardware and permissions.\n";
+					std::cerr << "Could not open keyboard, check hardware and permissions.\nTry with or without the --kernel-driver option.\n";
 					return 1;
 				}
 			
@@ -308,7 +319,7 @@ int main( int argc, char **argv ){
 			
 		} else{ // open with default vid and pid
 			if( kbd.open_keyboard() != 0 ){
-				std::cerr << "Could not open keyboard, check hardware and permissions.\n";
+				std::cerr << "Could not open keyboard, check hardware and permissions.\nTry with or without the --kernel-driver option.\n";
 				return 1;
 			}
 		}

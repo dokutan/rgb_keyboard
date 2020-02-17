@@ -110,3 +110,8 @@ int rgb_keyboard::keyboard::set_active_profile( int profile ){
 	_active_profile = profile;
 	return 0;
 }
+
+int rgb_keyboard::keyboard::set_detach_kernel_driver( bool detach_kernel_driver ){
+	_detach_kernel_driver = detach_kernel_driver;
+	return 0;
+}
