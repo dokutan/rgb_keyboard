@@ -16,6 +16,10 @@
  * 
  */
 
+#include "rgb_keyboard.h"
+#include "data.cpp"
+#include "data_profile.cpp"
+
 //writer functions (apply changes to keyboard)
 
 int rgb_keyboard::keyboard::write_brightness(){

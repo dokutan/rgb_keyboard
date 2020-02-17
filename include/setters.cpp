@@ -16,6 +16,8 @@
  * 
  */
 
+#include "rgb_keyboard.h"
+
 //setter functions
 
 int rgb_keyboard::keyboard::set_mode( mode Mode ){

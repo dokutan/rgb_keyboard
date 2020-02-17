@@ -20,6 +20,8 @@
  * This file contains the data for switching the active profile
  */
 
+//#include "rgb_keyboard.h"
+
 /* Frame (128 bytes) */
 uint8_t rgb_keyboard::keyboard::_data_profile_1[64] = {
 0x04, 0x2f, 0x00, 0x03, 0x2c, 0x00, 0x00, 0x00, /* ./..,... */

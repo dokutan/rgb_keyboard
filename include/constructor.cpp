@@ -16,6 +16,8 @@
  * 
  */
 
+#include "rgb_keyboard.h"
+
 //constructor
 rgb_keyboard::keyboard::keyboard(){
 	

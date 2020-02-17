@@ -16,6 +16,8 @@
  * 
  */
 
+#include "rgb_keyboard.h"
+
 int rgb_keyboard::keyboard::get_speed(){
 	return _speed;
 }

@@ -16,6 +16,8 @@
  * 
  */
 
+#include "rgb_keyboard.h"
+
 //helper functions
 
 //init libusb and open keyboard with default vid and pid

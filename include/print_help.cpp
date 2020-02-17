@@ -16,6 +16,7 @@
  * 
  */
 
+#include "print_help.h"
 #include <iostream>
 
 //prints a help message

@@ -30,7 +30,7 @@
 #include <getopt.h>
 
 #include "include/rgb_keyboard.h"
-#include "include/print_help.cpp"
+#include "include/print_help.h"
 
 int main( int argc, char **argv ){
 	

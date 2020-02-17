@@ -20,9 +20,9 @@ Note on ISO layout: As i do not have access to a compatible keyboard with an ISO
 - Make sure you have [libusb](https://libusb.info/) installed (on some distros you might need a dev package)
 
 ### Automated (recommended)
-- compile and copy everything to the right place with
+- compile and copy everything to the right place with (not required: replace the 4 with the number of cpu cores you have)
     ```
-    sudo make install
+    sudo make install -j4
     ```
 - restart for the udev rule to take effect
 
@@ -34,7 +34,10 @@ Note on ISO layout: As i do not have access to a compatible keyboard with an ISO
 
 ### Manual
 - Compile with:
-    ``g++ rgb_keyboard.cpp -o rgb_keyboard -lusb-1.0 -Wall -O2``
+	```
+	g++ -c include/constructor.cpp include/fileio.cpp include/getters.cpp include/helpers.cpp include/print_help.cpp include/print_keycodes.cpp include/setters.cpp include/writers.cpp rgb_keyboard.cpp -Wall -Wextra -O2
+	g++ *.o -Wall -Wextra -O2 -lusb-1.0 -o rgb_keyboard
+	```
 - (Optionally) add the binary to some place in your PATH variable
 - IMPORTANT: make the keyboard accessible without root rights by adding a udev rule
   - create a file named 'keyboard.rules' in /etc/udev/rules.d/
@@ -94,7 +97,7 @@ rgb_keyboard --bus ⟨bus id⟩ --device ⟨device number⟩ ...
 
 ### --kernel-driver option
 
-On some systems libusb might no be able to properly detach the kernel driver, an the program will fail to open the keyboard. The --kernel-driver option skips this step and is intended for better compatibility.
+On some systems libusb might no be able to properly detach the kernel driver, and the program will fail to open the keyboard. The --kernel-driver option skips this step and is intended for better compatibility.
 
 ## GUI
 

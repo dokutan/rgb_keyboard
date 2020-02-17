@@ -16,6 +16,8 @@
  * 
  */
 
+//#include "rgb_keyboard.h"
+
 //usb data packets
 
 uint8_t rgb_keyboard::keyboard::_data_start[] =

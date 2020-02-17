@@ -16,6 +16,8 @@
  * 
  */
 
+#include "rgb_keyboard.h"
+
 #include <fstream>
 #include <utility>
 

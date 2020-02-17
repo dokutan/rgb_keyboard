@@ -21,6 +21,7 @@
 #define RGB_KEYBOARD
 
 #include <libusb-1.0/libusb.h>
+#include <iostream>
 #include <map>
 #include <array>
 #include <string>
@@ -217,8 +218,9 @@ class rgb_keyboard::keyboard{
 		std::map < std::string, std::string > _keymap;
 };
 
-#include "data.h"
-#include "data_profile.h"
+
+/*#include "data.cpp"
+#include "data_profile.cpp"
 #include "setters.cpp"
 #include "getters.cpp"
 #include "writers.cpp"
@@ -226,5 +228,6 @@ class rgb_keyboard::keyboard{
 #include "fileio.cpp"
 #include "constructor.cpp"
 #include "print_keycodes.cpp"
+*/
 
 #endif
