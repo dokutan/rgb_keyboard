@@ -11,26 +11,31 @@ To finish the process the _data_send packet is written (containing 0x04 0x02 0x0
 
 The data packets can be found in include/data*.cpp.
 
+When using the official software in many cases some bytes in the beginning of the settings data are changed depending on the particular values for the setting, this appears to be some sort of checksum. However these don't seem to be important and are therefore ignored.
+
 ## Example
 This is a piece from write_brightness() (include/writers.cpp), that shows the whole process.
 
 ```
 //write start data packet to endpoint 3
-	res += libusb_interrupt_transfer( _handle, 0x03, _data_start,	64, &transferred, 1000);
-	
-	//read from endpoint 2
-	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
-	
-	//write brightness data packet to endpoint 3
-	res += libusb_interrupt_transfer( _handle, 0x03, data_settings, 64, &transferred, 1000);
-	
-	//read from endpoint 2
-	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
-	
-	//write end data packet to endpoint 3
-	res += libusb_interrupt_transfer( _handle, 0x03, _data_end, 64, &transferred, 1000);
-	
-	//read from endpoint 2
-	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
-  ```
-  
+res += libusb_interrupt_transfer( _handle, 0x03, _data_start,	64, &transferred, 1000);
+
+//read from endpoint 2
+res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+
+//write brightness data packet to endpoint 3
+res += libusb_interrupt_transfer( _handle, 0x03, data_settings, 64, &transferred, 1000);
+
+//read from endpoint 2
+res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+
+//write end data packet to endpoint 3
+res += libusb_interrupt_transfer( _handle, 0x03, _data_end, 64, &transferred, 1000);
+
+//read from endpoint 2
+res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+```
+
+## Keymapping
+
+On the ANSI version of the software 8 data packets are send, on the ISO version 11, (in addition to that the start and end packets). The function of each key is represented by 3 bytes each, the position of these bytes in the 8 or 11 data packets is specified by the map _keymap_offsets (include/constructor.cpp and include/writers.cpp). The meaning of these bytes can be found in the map _keymap_options (include/constructor.cpp).
