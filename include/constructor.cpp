@@ -237,7 +237,7 @@ rgb_keyboard::keyboard::keyboard(){
 	_keymap_offsets["Num_0"] = {{ { 6, 25 }, { 6, 26 }, { 6, 27 } }};
 	_keymap_offsets["Num_Period"] = {{ { 6, 28 }, { 6, 29 }, { 6, 30 } }};
 	_keymap_offsets["Num_Return"] = {{ { 6, 31 }, { 6, 32 }, { 6, 33 } }};
-	_keymap_offsets["Int_Key"] = {{ { 7, 44 }, { 7, 45 }, { 7, 46 } }};
+	_keymap_offsets["Int_Key"] = {{ { 6, 43 }, { 6, 44 }, { 6, 45 } }};
 	
 	//keymap options (what a key can do when pressed)
 	//top row

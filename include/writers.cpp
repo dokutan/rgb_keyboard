@@ -19,6 +19,7 @@
 #include "rgb_keyboard.h"
 #include "data.cpp"
 #include "data_profile.cpp"
+#include "data_keymap.cpp"
 
 //writer functions (apply changes to keyboard)
 
@@ -948,7 +949,7 @@ int rgb_keyboard::keyboard::write_key_mapping(){
 	uint8_t buffer[64];
 	
 	//prepare data packets
-	uint8_t data_remap[8][64];
+	uint8_t data_remap[11][64];
 	std::copy(std::begin(_data_remap_1), std::end(_data_remap_1), std::begin(data_remap[0]));
 	std::copy(std::begin(_data_remap_2), std::end(_data_remap_2), std::begin(data_remap[1]));
 	std::copy(std::begin(_data_remap_3), std::end(_data_remap_3), std::begin(data_remap[2]));
@@ -957,25 +958,29 @@ int rgb_keyboard::keyboard::write_key_mapping(){
 	std::copy(std::begin(_data_remap_6), std::end(_data_remap_6), std::begin(data_remap[5]));
 	std::copy(std::begin(_data_remap_7), std::end(_data_remap_7), std::begin(data_remap[6]));
 	std::copy(std::begin(_data_remap_8), std::end(_data_remap_8), std::begin(data_remap[7]));
+	std::copy(std::begin(_data_remap_9), std::end(_data_remap_9), std::begin(data_remap[8]));
+	std::copy(std::begin(_data_remap_10), std::end(_data_remap_10), std::begin(data_remap[9]));
+	std::copy(std::begin(_data_remap_11), std::end(_data_remap_11), std::begin(data_remap[10]));
 	
 	
 	// change data for correct profile
 	if( _profile == 2 ){
 		
-		for( int i = 1; i < 8; i++ ){
+		for( int i = 1; i < 11; i++ ){
 			data_remap[i][1] = data_remap[i][1] + 0x02;
 			data_remap[i][6] = data_remap[i][6] + 0x02;
 		}
 		
 	} else if( _profile == 3 ){
 		
-		for( int i = 1; i < 8; i++ ){
+		for( int i = 1; i < 11; i++ ){
 			data_remap[i][1] = data_remap[i][1] + 0x04;
 			data_remap[i][6] = data_remap[i][6] + 0x04;
 		}
 		
 	}
 	
+	// change data according to _keymap
 	for( std::pair< std::string, std::string > element : _keymap ){
 		if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&
 			_keymap_options.find( element.second ) != _keymap_options.end() ){
@@ -1000,7 +1005,7 @@ int rgb_keyboard::keyboard::write_key_mapping(){
 	//write macro data here
 	
 	//write keymap data
-	for( int i = 0; i < 8; i++ ){
+	for( int i = 0; i < 11; i++ ){
 		//write data packet to endpoint 3
 		res += libusb_interrupt_transfer( _handle, 0x03, data_remap[i], 
 		64, &transferred, 1000);

@@ -186,6 +186,7 @@ class rgb_keyboard::keyboard{
 		static uint8_t _data_remap_8[];
 		static uint8_t _data_remap_9[];
 		static uint8_t _data_remap_10[];
+		static uint8_t _data_remap_11[];
 		static uint8_t _data_profile_1[];
 		static uint8_t _data_profile_2[];
 		static uint8_t _data_profile_3[];
