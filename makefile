@@ -1,7 +1,7 @@
 BIN_DIR = /usr/bin
 CC = g++
 
-install: clean build
+install: build
 	cp ./rgb_keyboard $(BIN_DIR)/rgb_keyboard
 	cp ./keyboard.rules /etc/udev/rules.d
 
@@ -12,10 +12,10 @@ uninstall:
 clean:
 	rm ./rgb_keyboard *.o
 
-upgrade: clean build
+upgrade: build
 	cp ./rgb_keyboard $(BIN_DIR)/rgb_keyboard
 
-build: clean rgb_keyboard.o constructor.o fileio.o getters.o helpers.o print_help.o print_keycodes.o setters.o writers.o
+build: rgb_keyboard.o constructor.o fileio.o getters.o helpers.o print_help.o print_keycodes.o setters.o writers.o
 	g++ *.o -o rgb_keyboard -lusb-1.0 -Wall -Wextra -O2
 
 
