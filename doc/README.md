@@ -48,5 +48,6 @@ For this section i am assuming you are running wireshark on linux, and have a VM
 2. identify the USB bus id and device number by running lsusb
 3. open wireshark (may require root) and open the currect usbmon interface
 4. set up the display filter in wireshark (see screenshot for an example)
+5. start the capture, trigger some action, stop the capture, save if needed, repeat
 
 ![wireshark screenshot](https://github.com/dokutan/rgb_keyboard/raw/master/doc/screenshot-wireshark.png "wireshark screenshot")
