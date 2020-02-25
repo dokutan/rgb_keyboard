@@ -39,3 +39,14 @@ res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000)
 ## Keymapping
 
 On the ANSI version of the software 8 data packets are send, on the ISO version 11, (in addition to that the start and end packets). The function of each key is represented by 3 bytes each, the position of these bytes in the 8 or 11 data packets is specified by the map _keymap_offsets (include/constructor.cpp and include/writers.cpp). The meaning of these bytes can be found in the map _keymap_options (include/constructor.cpp).
+
+# Capturing USB data
+
+For this section i am assuming you are running wireshark on linux, and have a VM with the official software set up.
+
+1. load the usbmon kernel module ``sudo modprobe usbmon``
+2. identify the USB bus id and device number by running lsusb
+3. open wireshark (may require root) and open the currect usbmon interface
+4. set up the display filter in wireshark (see screenshot for an example)
+
+![wireshark screenshot](https://github.com/dokutan/rgb_keyboard/raw/master/doc/screenshot-wireshark.png "wireshark screenshot")
