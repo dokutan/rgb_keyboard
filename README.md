@@ -9,7 +9,7 @@ Tested with:
 
 You can help expand this list by providing information whether this software works correctly or not.
 
-Note on ISO layout: As i do not have access to a compatible keyboard with an ISO layout, remapping and setting the color of the ISO international key (Int_Key) is supported but not tested.
+Note on ISO layout: As i do not have access to a compatible keyboard with an ISO layout, ~~remapping and~~ setting the color of the ISO international key (Int_Key) is supported but not tested. Remapping is reported as being broken, it is required to capture the USB communication on an affected keyboard to fix this. Therefore if you are affected and capable of doing this, you can help with this issue.
 
 ## Installing
 - Clone this repository
