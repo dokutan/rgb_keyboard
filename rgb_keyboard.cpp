@@ -14,9 +14,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
  * 
- * To compile run:
- * g++ rgb_keyboard.cpp -o rgb_keyboard -lusb-1.0
- * 
  */
 
 #include <cstdio>
@@ -24,6 +21,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <map>
 #include <exception>
 #include <regex>
 #include <libusb-1.0/libusb.h>
@@ -34,40 +32,17 @@
 
 int main( int argc, char **argv ){
 	
-	
-	
 	using namespace std;
 	
-	
-	
-	//command line options
+	// command line options
 	static struct option long_options[] = {
 		{"help", no_argument, 0, 'h'},
 		{"color", required_argument, 0, 'c'},
 		{"brightness", required_argument, 0, 'b'},
 		{"speed", required_argument, 0, 's'},
-		{"direction", required_argument, 0, 't'},
-		{"sine", no_argument, 0, 'i'},
-		{"rain", no_argument, 0, 'r'},
-		{"waterfall", no_argument, 0, 'w'},
-		{"vortex", no_argument, 0, 'v'},
-		{"diagonal", no_argument, 0, 'd'},
-		{"fixed", no_argument, 0, 'f'},
-		{"swirl", no_argument, 0, 'l'},
-		{"breathing", no_argument, 0, 'e'},
-		{"breathing-color", no_argument, 0, 'a'},
-		{"reactive-ripple", no_argument, 0, 'p'},
-		{"reactive-single", no_argument, 0, 'g'},
-		{"reactive-horizontal", no_argument, 0, 'o'},
-		{"horizontal-wave", no_argument, 0, 'z'},
-		{"vertical-wave", no_argument, 0, 'm'},
-		{"pulse", no_argument, 0, 'u'},
-		{"hurricane", no_argument, 0, 'n'},
-		{"ripple", no_argument, 0, 'x'},
-		{"reactive-color", required_argument, 0, 'y'},
-		{"off", no_argument, 0, 'q'},
-		{"custom", no_argument, 0, 'j'},
-		//{"custom-clear", no_argument, 0, 'C'},
+		{"direction", required_argument, 0, 'd'}, //
+		{"leds", required_argument, 0, 'l'}, //
+		{"variant", required_argument, 0, 'v'}, //
 		{"custom-pattern", required_argument, 0, 'P'},
 		{"custom-keys", required_argument, 0, 'K'},
 		{"report-rate", required_argument, 0, 'R'},
@@ -75,49 +50,55 @@ int main( int argc, char **argv ){
 		{"list-keys", required_argument, 0, 'L'},
 		{"bus", required_argument, 0, 'B'},
 		{"device", required_argument, 0, 'D'},
-		{"profile", required_argument, 0, 'O'},
-		{"active", required_argument, 0, 'A'},
-		{"kernel-driver", no_argument, 0, 'V'},
+		{"profile", required_argument, 0, 'p'}, //
+		{"active", required_argument, 0, 'a'}, //
+		{"kernel-driver", no_argument, 0, 'k'}, //
 		{0, 0, 0, 0}
 	};
 	
 	// these variables store the commandline options
-	static int mode_flag = 0;
-	static string variant;
-	static bool color_flag = false;
-	static string color;
-	static bool brightness_flag = false;
-	static string brightness;
-	static bool speed_flag = false;
-	static string speed;
-	static bool direction_flag = false;
-	static string direction;
-	static string conf_file;
-	static string bg_color;
-	static string keys;
-	static string r_rate;
-	static bool r_rate_flag = false;
-	static string keymap_file;
-	static bool keymap_flag = false;
-	static string list_keys_arg;
-	static bool list_keys_flag = false;
-	bool bus_flag = false, device_flag = false;
-	string bus_string, device_string;
-	bool active_flag = false;
-	string active_string;
-	bool profile_flag = false;
-	string profile_string;
+	bool flag_color = false;
+	bool flag_brightness = false;
+	bool flag_speed = false;
+	bool flag_direction = false;
+	bool flag_leds = false;
+	bool flag_variant = false;
+	bool flag_custom_pattern = false;
+	bool flag_custom_keys = false;
+	bool flag_report_rate = false;
+	bool flag_keymap = false;
+	bool flag_list_keys = false;
+	bool flag_bus = false;
+	bool flag_device = false;
+	bool flag_profile = false;
+	bool flag_active = false;
 	bool flag_kernel_driver = false;
 	
-	//check number of commandline options
+	string string_color;
+	string string_brightness;
+	string string_speed;
+	string string_direction;
+	string string_leds;
+	string string_variant;
+	string string_custom_pattern;
+	string string_custom_keys;
+	string string_report_rate;
+	string string_keymap;
+	string string_list_keys;
+	string string_bus;
+	string string_device;
+	string string_active;
+	string string_profile;
+	
+	// check number of commandline options
 	if( argc == 1 ){
 		print_help();
 		return 0;
 	}
 	
-	//parse command line options
+	// parse command line options
 	int c, option_index = 0;
-	while( (c = getopt_long( argc, argv, "hc:b:s:t:irwvdfleapgozmunxy:qjP:K:R:M:L:B:D:O:A:V",
+	while( (c = getopt_long( argc, argv, "hc:b:s:d:l:v:P:K:R:M:L:B:D:p:a:k",
 	long_options, &option_index ) ) != -1 ){
 		
 		switch( c ){
@@ -125,126 +106,84 @@ int main( int argc, char **argv ){
 				print_help();
 				return 0;
 				break;
+				
 			case 'c':
-				color_flag = true;
-				color = optarg;
+				flag_color = true;
+				string_color = optarg;
 				break;
 			case 'b':
-				brightness_flag = true;
-				brightness = optarg;
+				flag_brightness = true;
+				string_brightness = optarg;
 				break;
 			case 's':
-				speed_flag = true;
-				speed = optarg;
-				break;
-			case 't':
-				direction_flag = true;
-				direction = optarg;
-				break;
-			case 'i':
-				mode_flag = 'i';
-				break;
-			case 'r':
-				mode_flag = 'r';
-				break;
-			case 'w':
-				mode_flag = 'w';
-				break;
-			case 'v':
-				mode_flag = 'v';
+				flag_speed = true;
+				string_speed = optarg;
 				break;
 			case 'd':
-				mode_flag = 'd';
-				break;
-			case 'f':
-				mode_flag = 'f';
+				flag_direction = true;
+				string_direction = optarg;
 				break;
 			case 'l':
-				mode_flag = 'l';
+				flag_leds = true;
+				string_leds = optarg;
 				break;
-			case 'e':
-				mode_flag = 'e';
+			case 'v':
+				flag_leds = true;
+				string_leds = "reactive-color";
+				flag_variant = true;
+				string_variant = optarg;
 				break;
-			case 'a':
-				mode_flag = 'a';
-				break;
-			case 'p':
-				mode_flag = 'p';
-				break;
-			case 'g':
-				mode_flag = 'g';
-				break;
-			case 'o':
-				mode_flag = 'o';
-				break;
-			case 'z':
-				mode_flag = 'z';
-				break;
-			case 'm':
-				mode_flag = 'm';
-				break;
-			case 'u':
-				mode_flag = 'u';
-				break;
-			case 'n':
-				mode_flag = 'n';
-				break;
-			case 'x':
-				mode_flag = 'x';
-				break;
-			case 'y':
-				mode_flag = 'y';
-				variant = optarg;
-				break;
-			case 'q':
-				mode_flag = 'q';
-				break;
-			case 'j':
-				mode_flag = 'j';
-				break;
+				
 			case 'P':
-				mode_flag = 'P';
-				conf_file = optarg;
+				flag_leds = true;
+				string_leds = "custom";
+				flag_custom_pattern = true;
+				string_custom_pattern = optarg;
 				break;
-			/*case 'C':
-				mode_flag = 'C';
-				break;*/
 			case 'K':
-				mode_flag = 'K';
-				keys = optarg;
+				flag_leds = true;
+				string_leds = "custom";
+				flag_custom_keys = true;
+				string_custom_keys = optarg;
 				break;
+				
 			case 'R':
-				r_rate_flag = true;
-				r_rate = optarg;
+				flag_report_rate = true;
+				string_report_rate = optarg;
 				break;
 			case 'M':
-				keymap_flag = true;
-				keymap_file = optarg;
+				flag_keymap = true;
+				string_keymap = optarg;
 				break;
 			case 'L':
-				list_keys_flag = true;
-				list_keys_arg = optarg;
+				flag_list_keys = true;
+				string_list_keys = optarg;
 				break;
+				
 			case 'B':
-				bus_flag = true;
-				bus_string = optarg;
+				flag_bus = true;
+				string_bus = optarg;
 				break;
 			case 'D':
-				device_flag = true;
-				device_string = optarg;
+				flag_device = true;
+				string_device = optarg;
 				break;
-			case 'O':
-				profile_flag = true;
-				profile_string = optarg;
+				
+			case 'p':
+				flag_profile = true;
+				string_profile = optarg;
 				break;
-			case 'A':
-				active_flag = true;
-				active_string = optarg;
+			case 'a':
+				flag_active = true;
+				string_active = optarg;
 				break;
-			case 'V':
+				
+			case 'k':
 				flag_kernel_driver = true;
 				break;
+				
 			case '?':
+				return 1;
 				break;
 			default:
 				break;
@@ -253,25 +192,23 @@ int main( int argc, char **argv ){
 	}
 	
 	
-	
-	//keyboard object
+	// keyboard object
 	rgb_keyboard::keyboard kbd;
 	
 	
-	
 	//parse list keys flag
-	if( list_keys_flag ){
+	if( flag_list_keys ){
 		
-		if( list_keys_arg == "led" || list_keys_arg == "custom" ){
-			//list physical keys for custom led pattern
+		if( string_list_keys == "led" || string_list_keys == "custom" ){
+			// list physical keys for custom led pattern
 			std::cout << "Keynames for custom pattern:\n(Some keys might have multiple names)\n\n";
 			kbd.print_keycodes_led();
-		} else if( list_keys_arg == "map" || list_keys_arg == "keymap" ){
-			//list physical keys for key remapping
+		} else if( string_list_keys == "map" || string_list_keys == "keymap" ){
+			// list physical keys for key remapping
 			std::cout << "Keynames of physical keys for remapping:\n(Some keys might have multiple names)\n\n";
 			kbd.print_keycodes_remap();
-		} else if( list_keys_arg == "function" || list_keys_arg == "option" ){
-			//list options for remapping
+		} else if( string_list_keys == "function" || string_list_keys == "option" ){
+			// list options for remapping
 			std::cout << "Options for key remapping:\n(Some options might have multiple names)\n\n";
 			kbd.print_keycodes_options();
 		} else{
@@ -284,30 +221,25 @@ int main( int argc, char **argv ){
 		return 0;
 	}
 	
-	
-	
 	// detach kernel driver ?
 	if( flag_kernel_driver )
 		kbd.set_detach_kernel_driver( false );
 	
 	
-	
 	// open keyboard, apply settigns, close keyboard
 	try{
 		
-		
-		
-		//open keyboard
-		if( bus_flag != device_flag ){ // only -B xor -D: error
+		// open keyboard
+		if( flag_bus != flag_device ){ // only -B xor -D: error
 			std::cerr << "--bus and --device must be used together\n";
 			return 1;
-		} else if( bus_flag && device_flag ){ // -B and -D
+		} else if( flag_bus && flag_device ){ // -B and -D
 			
 			// check -B and -D arguments
-			if( std::regex_match( bus_string, std::regex("[0-9]+") ) && 
-				std::regex_match( device_string, std::regex("[0-9]+") ) ){
+			if( std::regex_match( string_bus, std::regex("[0-9]+") ) && 
+				std::regex_match( string_device, std::regex("[0-9]+") ) ){
 				
-				if( kbd.open_keyboard_bus_device( stoi(bus_string), stoi(device_string) ) != 0 ){
+				if( kbd.open_keyboard_bus_device( stoi(string_bus), stoi(string_device) ) != 0 ){
 					std::cerr << "Could not open keyboard, check hardware and permissions.\nTry with or without the --kernel-driver option.\n";
 					return 1;
 				}
@@ -325,280 +257,218 @@ int main( int argc, char **argv ){
 		}
 		
 		
-		
-		//parse active flag, set active profile
-		if( active_flag ){
+		// parse active flag, set active profile
+		if( flag_active ){
 			
-			if( std::regex_match( active_string, std::regex("[1-3]") ) ){
-				kbd.set_active_profile( stoi( active_string) );
+			if( std::regex_match( string_active, std::regex("[1-3]") ) ){
+				kbd.set_active_profile( stoi( string_active ) );
 				kbd.write_active_profile();
 			} else{
 				std::cerr << "Invalid profile, expected 1-3\n";
+				kbd.close_keyboard();
 				return 1;
 			}
 			
 		}
 		
 		
-		
-		//parse profile flag, set profile (to which profile settings are applied)
-		if( profile_flag ){
+		// parse profile flag, set profile (to which profile settings are applied)
+		if( flag_profile ){
 			
-			if( std::regex_match( profile_string, std::regex("[1-3]") ) ){
-				kbd.set_profile( stoi( profile_string) );
+			if( std::regex_match( string_profile, std::regex("[1-3]") ) ){
+				kbd.set_profile( stoi( string_profile ) );
 			} else{
 				std::cerr << "Invalid profile, expected 1-3\n";
+				kbd.close_keyboard();
 				return 1;
 			}
 			
 		}
 		
-		
-		
-		//parse mode flag, set led mode
-		switch( mode_flag ){
-			case 'i':
-				//set sine wave animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_sine );
-				kbd.write_mode();
-				break;
-			case 'r':
-				//set raindrop animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_rain );
-				kbd.write_mode();
-				break;
-			case 'w':
-				//set waterfall animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_waterfall );
-				kbd.write_mode();
-				break;
-			case 'v':
-				//set vortex animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_vortex );
-				kbd.write_mode();
-				break;
-			case 'd':
-				//set diagonal wave animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_diagonal_wave );
-				kbd.write_mode();
-				break;
-			case 'f':
-				//set fixed color
-				kbd.set_mode( rgb_keyboard::keyboard::m_fixed );
-				kbd.write_mode();
-				break;
-			case 'l':
-				//set swirl animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_swirl );
-				kbd.write_mode();
-				break;
-			case 'e':
-				//set breathing animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_breathing );
-				kbd.write_mode();
-				break;
-			case 'a':
-				//set colorful breathing animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_breathing_color );
-				kbd.write_mode();
-				break;
-			case 'p':
-				//set reactive ripple animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_reactive_ripple );
-				kbd.write_mode();
-				break;
-			case 'g':
-				//set reactive single-key animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_reactive_single );
-				kbd.write_mode();
-				break;
-			case 'o':
-				//set reactive horizontal animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_reactive_horizontal );
-				kbd.write_mode();
-				break;
-			case 'z':
-				//set horizontal wave animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_horizontal_wave );
-				kbd.write_mode();
-				break;
-			case 'm':
-				//set vertical wave animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_vertical_wave );
-				kbd.write_mode();
-				break;
-			case 'u':
-				//set pulse wave animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_pulse );
-				kbd.write_mode();
-				break;
-			case 'n':
-				//set hurricane animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_hurricane );
-				kbd.write_mode();
-				break;
-			case 'x':
-				//set ripple animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_ripple );
-				kbd.write_mode();
-				break;
-			case 'y':
-				//set reactive color animation
-				kbd.set_mode( rgb_keyboard::keyboard::m_reactive_color );
-				if( variant == "red" ){
-					kbd.set_variant( rgb_keyboard::keyboard::v_color_red );
+		// parse leds flag, set led pattern
+		if( flag_leds ){
+			
+			map< string, rgb_keyboard::keyboard::mode > mode_list{
+				{ "fixed", rgb_keyboard::keyboard::m_fixed },
+				{ "sine", rgb_keyboard::keyboard::m_sine },
+				{ "rain", rgb_keyboard::keyboard::m_rain },
+				{ "waterfall", rgb_keyboard::keyboard::m_waterfall },
+				{ "vortex", rgb_keyboard::keyboard::m_vortex },
+				{ "swirl", rgb_keyboard::keyboard::m_swirl },
+				{ "breathing", rgb_keyboard::keyboard::m_breathing },
+				{ "breathing-color", rgb_keyboard::keyboard::m_breathing_color },
+				{ "reactive-ripple", rgb_keyboard::keyboard::m_reactive_ripple },
+				{ "reactive-single", rgb_keyboard::keyboard::m_reactive_single },
+				{ "reactive-horizontal", rgb_keyboard::keyboard::m_reactive_horizontal },
+				{ "reactive-color", rgb_keyboard::keyboard::m_reactive_color },
+				{ "horizontal-wave", rgb_keyboard::keyboard::m_horizontal_wave },
+				{ "vertical-wave", rgb_keyboard::keyboard::m_vertical_wave },
+				{ "diagonal-wave", rgb_keyboard::keyboard::m_diagonal_wave },
+				{ "pulse", rgb_keyboard::keyboard::m_pulse },
+				{ "hurricane", rgb_keyboard::keyboard::m_hurricane },
+				{ "ripple", rgb_keyboard::keyboard::m_ripple },
+				{ "custom", rgb_keyboard::keyboard::m_custom },
+				{ "off", rgb_keyboard::keyboard::m_off }
+			};
+			
+			if( mode_list.find( string_leds ) != mode_list.end() ){
+				
+				// parse variant flag (variant for reactive-color)
+				if( flag_variant ){
+					
+					if( string_variant == "red" ){
+						kbd.set_variant( rgb_keyboard::keyboard::v_color_red );
+					} else if( string_variant == "yellow" ){
+						kbd.set_variant( rgb_keyboard::keyboard::v_color_yellow );
+					} else if( string_variant == "green" ){
+						kbd.set_variant( rgb_keyboard::keyboard::v_color_green );
+					} else if( string_variant == "blue" ){
+						kbd.set_variant( rgb_keyboard::keyboard::v_color_blue );
+					} else{
+						std::cerr << "Unknown variant for reactive-color.\n";
+						kbd.close_keyboard();
+						return 1;
+					}
+					
 					kbd.write_variant();
-				} else if( variant == "yellow" ){
-					kbd.set_variant( rgb_keyboard::keyboard::v_color_yellow );
-					kbd.write_variant();
-				} else if( variant == "green" ){
-					kbd.set_variant( rgb_keyboard::keyboard::v_color_green );
-					kbd.write_variant();
-				} else if( variant == "blue" ){
-					kbd.set_variant( rgb_keyboard::keyboard::v_color_blue );
-					kbd.write_variant();
-				} else if( variant == "none" ){
-					// do not change variant
-				} else{
-					std::cerr << "Unknown variant for reactive-color.\n";
 				}
-				kbd.write_mode();
-				break;
-			case 'q':
-				// turn leds off
-				kbd.set_mode( rgb_keyboard::keyboard::m_off );
-				kbd.write_mode();
-				break;
-			case 'j':
-				//set custom mode
-				kbd.set_mode( rgb_keyboard::keyboard::m_custom );
-				kbd.write_mode();
-				break;
-			case 'P':
-				//set custom pattern
-				if( kbd.load_custom( conf_file ) == 0 ){
-					kbd.set_mode( rgb_keyboard::keyboard::m_custom );
+				
+				// parse custom pattern flag
+				if( flag_custom_pattern ){
+					
+					//set custom pattern
+					if( kbd.load_custom( string_custom_pattern ) == 0 ){
+						kbd.write_custom();
+					} else{
+						std::cerr << "Couldn't open custom pattern file.\n";
+					}
+					
+				}
+				
+				// parse custom keys flag
+				if( flag_custom_keys ){
+					
+					kbd.set_custom_keys( string_custom_keys );
 					kbd.write_custom();
-					kbd.write_mode();
-				} else{
-					std::cerr << "Couldn't open custom pattern file.\n";
+					
 				}
-				break;
-			/*case 'C':
-				//set and clear custom pattern
-				///clear_custom();
-				break;*/
-			case 'K':
-				//set custom pattern from string
-				kbd.set_custom_keys( keys );
-				kbd.set_mode( rgb_keyboard::keyboard::m_custom );
-				kbd.write_custom();
+				
+				// write led pattern
+				kbd.set_mode( mode_list.at( string_leds ) );
 				kbd.write_mode();
-				break;
-			default:
-				break;
+				
+			} else{
+				std::cerr << "Unknown led pattern\n";
+				kbd.close_keyboard();
+				return 1;
+			}
+			
 		}
-		
 		
 		
 		//parse color flag
-		if( color_flag ){
+		if( flag_color ){
 			
 			//set color
-			if( color == "multi" ){ // multicolor
+			if( string_color == "multi" ){ // multicolor
 				kbd.set_rainbow( true );
 				kbd.write_color();
-			} else if( std::regex_match( color, std::regex("[0-9a-fA-F]{6}") ) ){ // normal color
+			} else if( std::regex_match( string_color, std::regex("[0-9a-fA-F]{6}") ) ){ // normal color
 				kbd.set_rainbow( false );
-				kbd.set_color( stoi( color.substr(0,2), 0, 16 ), 
-					stoi( color.substr(2,2), 0, 16 ),
-					stoi( color.substr(4,2), 0, 16 ) );
+				kbd.set_color( stoi( string_color.substr(0,2), 0, 16 ), 
+					stoi( string_color.substr(2,2), 0, 16 ),
+					stoi( string_color.substr(4,2), 0, 16 ) );
 				kbd.write_color();
 			} else{ // wrong format
-				std::cerr << "Wrong color format, expected rrggbb.\n";
+				std::cerr << "Wrong color format, expected rrggbb or multi.\n";
+				kbd.close_keyboard();
+				return 1;
 			}
 			
 		}
-		
 		
 		
 		//parse brightness flag
-		if( brightness_flag ){
+		if( flag_brightness ){
 			
 			//set brightness
-			if( std::regex_match( brightness, std::regex("[0-9]") ) ){
-				kbd.set_brightness( stoi(brightness) );
+			if( std::regex_match( string_brightness, std::regex("[0-9]") ) ){
+				kbd.set_brightness( stoi(string_brightness) );
 				kbd.write_brightness();
 			} else{
 				std::cerr << "Wrong brightness format, expected 0-9.\n";
+				kbd.close_keyboard();
+				return 1;
 			}
 			
 		}
-		
 		
 		
 		//parse speed flag
-		if( speed_flag ){
+		if( flag_speed ){
 			
 			//set speed
-			if( std::regex_match( speed, std::regex("[0-3]") ) ){
-				kbd.set_speed( stoi(speed) );
+			if( std::regex_match( string_speed, std::regex("[0-3]") ) ){
+				kbd.set_speed( stoi(string_speed) );
 				kbd.write_speed();
 			} else{
 				std::cerr << "Wrong speed format, expected 0-3.\n";
+				kbd.close_keyboard();
+				return 1;
 			}
 		}
 		
 		
-		
 		//parse direction flag
-		if( direction_flag ){
+		if( flag_direction ){
 			//set direction
-			if( direction == "left" || direction == "up" || direction == "inwards" ){
+			if( string_direction == "left" || string_direction == "up" || string_direction == "inwards" ){
 				kbd.set_direction( rgb_keyboard::keyboard::d_left );
 				kbd.write_direction();
-			} else if( direction == "right" || direction == "down" || direction == "outwards" ){
+			} else if( string_direction == "right" || string_direction == "down" || string_direction == "outwards" ){
 				kbd.set_direction( rgb_keyboard::keyboard::d_right );
 				kbd.write_direction();
 			} else{
 				std::cerr << "Unknown direction.\n";
+				kbd.close_keyboard();
+				return 1;
 			}
 		}
 		
 		
-		
 		//parse report rate flag
-		if( r_rate_flag ){
+		if( flag_report_rate ){
 			//set report rate
-			if( r_rate == "125" ){
+			if( string_report_rate == "125" ){
 				kbd.set_report_rate( rgb_keyboard::keyboard::r_125Hz );
 				kbd.write_report_rate();
-			} else if( r_rate == "250" ){
+			} else if( string_report_rate == "250" ){
 				kbd.set_report_rate( rgb_keyboard::keyboard::r_250Hz );
 				kbd.write_report_rate();
-			}  else if( r_rate == "500" ){
+			}  else if( string_report_rate == "500" ){
 				kbd.set_report_rate( rgb_keyboard::keyboard::r_500Hz );
 				kbd.write_report_rate();
-			}  else if( r_rate == "1000" ){
+			}  else if( string_report_rate == "1000" ){
 				kbd.set_report_rate( rgb_keyboard::keyboard::r_1000Hz );
 				kbd.write_report_rate();
 			} else{
 				std::cerr << "Unsupported report rate.\n";
+				kbd.close_keyboard();
+				return 1;
 			}
 		}
-		
 		
 		
 		//parse keymap flag
-		if( keymap_flag ){
-			if( kbd.load_keymap( keymap_file ) == 0 ){
+		if( flag_keymap ){
+			if( kbd.load_keymap( string_keymap ) == 0 ){
 				kbd.write_key_mapping();
 			} else{
 				std::cerr << "Couldn't open keymap file.\n";
+				kbd.close_keyboard();
+				return 1;
 			}
 		}
-		
-		
 		
 	// catch exception
 	}catch( std::exception &e ){
@@ -606,8 +476,6 @@ int main( int argc, char **argv ){
 		kbd.close_keyboard();
 		return 1;
 	}
-	
-	
 	
 	// close keyboard
 	kbd.close_keyboard();
