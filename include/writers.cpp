@@ -18,7 +18,6 @@
 
 #include "rgb_keyboard.h"
 #include "data.cpp"
-#include "data_profile.cpp"
 
 //writer functions (apply changes to keyboard)
 
@@ -1027,24 +1026,8 @@ int rgb_keyboard::keyboard::write_active_profile(){
 	uint8_t buffer[64];
 	
 	//prepare data packets
-	uint8_t data_remap[17][64];
-	std::copy(std::begin(_data_profile_1), std::end(_data_profile_1), std::begin(data_remap[0]));
-	std::copy(std::begin(_data_profile_2), std::end(_data_profile_2), std::begin(data_remap[1]));
-	std::copy(std::begin(_data_profile_3), std::end(_data_profile_3), std::begin(data_remap[2]));
-	std::copy(std::begin(_data_profile_4), std::end(_data_profile_4), std::begin(data_remap[3]));
-	std::copy(std::begin(_data_profile_5), std::end(_data_profile_5), std::begin(data_remap[4]));
-	std::copy(std::begin(_data_profile_6), std::end(_data_profile_6), std::begin(data_remap[5]));
-	std::copy(std::begin(_data_profile_7), std::end(_data_profile_7), std::begin(data_remap[6]));
-	std::copy(std::begin(_data_profile_8), std::end(_data_profile_8), std::begin(data_remap[7]));
-	std::copy(std::begin(_data_profile_9), std::end(_data_profile_9), std::begin(data_remap[8]));
-	std::copy(std::begin(_data_profile_10), std::end(_data_profile_10), std::begin(data_remap[9]));
-	std::copy(std::begin(_data_profile_11), std::end(_data_profile_11), std::begin(data_remap[10]));
-	std::copy(std::begin(_data_profile_12), std::end(_data_profile_12), std::begin(data_remap[11]));
-	std::copy(std::begin(_data_profile_13), std::end(_data_profile_13), std::begin(data_remap[12]));
-	std::copy(std::begin(_data_profile_14), std::end(_data_profile_14), std::begin(data_remap[13]));
-	std::copy(std::begin(_data_profile_15), std::end(_data_profile_15), std::begin(data_remap[14]));
-	std::copy(std::begin(_data_profile_16), std::end(_data_profile_16), std::begin(data_remap[15]));
-	std::copy(std::begin(_data_profile_17), std::end(_data_profile_17), std::begin(data_remap[16]));
+	uint8_t data_profile[64];
+	std::copy(std::begin(_data_profile), std::end(_data_profile), std::begin(data_profile));
 	
 	// change data
 	if( _active_profile == 1 ){
@@ -1053,58 +1036,20 @@ int rgb_keyboard::keyboard::write_active_profile(){
 		
 	} else if( _active_profile == 2 ){
 		
-		/*data_remap[7][1] = 0x49;
-		data_remap[7][6] = 0x02;
-		data_remap[8][1] = 0x75;
-		data_remap[8][6] = 0x02;
-		data_remap[9][1] = 0xb2;
-		data_remap[9][6] = 0x02;
-		data_remap[10][1] = 0xe9;
-		data_remap[10][6] = 0x02;
-		data_remap[11][1] = 0x21;
-		data_remap[11][6] = 0x02;
-		data_remap[12][1] = 0x58;
-		data_remap[12][6] = 0x03;
-		data_remap[13][1] = 0x8e;
-		data_remap[13][6] = 0x03;*/
-		data_remap[16][1] = 0xe1;
-		data_remap[16][18] = 0x01;
+		data_profile[1] = 0xe1;
+		data_profile[18] = 0x01;
 		
 	} else if( _active_profile == 3 ){
 		
-		/*data_remap[7][1] = 0x4b;
-		data_remap[7][6] = 0x04;
-		data_remap[8][1] = 0x77;
-		data_remap[8][6] = 0x04;
-		data_remap[9][1] = 0xb4;
-		data_remap[9][6] = 0x04;
-		data_remap[10][1] = 0xeb;
-		data_remap[10][6] = 0x04;
-		data_remap[11][1] = 0x23;
-		data_remap[11][6] = 0x04;
-		data_remap[12][1] = 0x5a;
-		data_remap[12][6] = 0x05;
-		data_remap[13][1] = 0x90;
-		data_remap[13][6] = 0x05;*/
-		data_remap[16][1] = 0xe2;
-		data_remap[16][18] = 0x02;
+		data_profile[1] = 0xe2;
+		data_profile[18] = 0x02;
 		
 	} else{
 		throw std::invalid_argument("Invalid profile number");
 	}
 	
-	//send data
-	/*for( int i = 0; i < 17; i++ ){
-		//write data packet to endpoint 3
-		res += libusb_interrupt_transfer( _handle, 0x03, data_remap[i], 
-		64, &transferred, 1000);
-		//read from endpoint 2
-		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
-		&transferred, 1000);
-	}*/
-	
 	//write data packet to endpoint 3
-	res += libusb_interrupt_transfer( _handle, 0x03, data_remap[16], 
+	res += libusb_interrupt_transfer( _handle, 0x03, data_profile, 
 	64, &transferred, 1000);
 	//read from endpoint 2
 	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 

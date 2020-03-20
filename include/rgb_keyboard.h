@@ -186,23 +186,7 @@ class rgb_keyboard::keyboard{
 		static uint8_t _data_remap_8[];
 		static uint8_t _data_remap_9[];
 		static uint8_t _data_remap_10[];
-		static uint8_t _data_profile_1[];
-		static uint8_t _data_profile_2[];
-		static uint8_t _data_profile_3[];
-		static uint8_t _data_profile_4[];
-		static uint8_t _data_profile_5[];
-		static uint8_t _data_profile_6[];
-		static uint8_t _data_profile_7[];
-		static uint8_t _data_profile_8[];
-		static uint8_t _data_profile_9[];
-		static uint8_t _data_profile_10[];
-		static uint8_t _data_profile_11[];
-		static uint8_t _data_profile_12[];
-		static uint8_t _data_profile_13[];
-		static uint8_t _data_profile_14[];
-		static uint8_t _data_profile_15[];
-		static uint8_t _data_profile_16[];
-		static uint8_t _data_profile_17[];
+		static uint8_t _data_profile[];
 		
 		//stores key codes for custom colors
 		std::map< std::string, std::array<uint8_t, 3> > _keycodes;
