@@ -169,7 +169,7 @@ class rgb_keyboard::keyboard{
 		const uint16_t _keyboard_vid = 0x0c45;
 		const uint16_t _keyboard_pid = 0x652f;
 		bool _detach_kernel_driver = true;
-		bool _detached_driver_0 = false, _detached_driver_1 = false;
+		bool _detached_driver_1 = false;
 		libusb_device_handle* _handle = NULL;
 		
 		//usb data packets

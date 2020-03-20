@@ -72,7 +72,8 @@ int rgb_keyboard::keyboard::write_brightness(){
 	64, &transferred, 1000);
 	
 	//read from endpoint 2
-	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
+	&transferred, 1000);
 	
 	return res;
 }
