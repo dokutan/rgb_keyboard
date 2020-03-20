@@ -32,9 +32,9 @@ pack .fr.led.top .fr.led.bottom -expand 1 -fill both
 
 label .fr.led.top.label -text "LED settings"
 tk_optionMenu .fr.led.top.pattern led_pattern fixed sine rain waterfall vortex \
-swirl diagonal breathing breathing-color reactive-ripple reactive-single \
+swirl diagonal-wave breathing breathing-color reactive-ripple reactive-single \
 reactive-horizontal horizontal-wave vertical-wave pulse hurricane ripple \
-reactive-color=red reactive-color=yellow reactive-color=green reactive-color=blue custom
+reactive-color custom off
 button .fr.led.top.file -text "Open custom pattern file" -command { set custom_file [tk_getOpenFile] }
 button .fr.led.top.color -text "Select color" -command { set led_color [tk_chooseColor] }
 checkbutton .fr.led.top.multicolor -text "Multicolor" -variable led_multi
@@ -125,8 +125,8 @@ proc applyLed {} {
 	set led_color_hex [string range $led_color 1 6]
 	
 	if { $led_multi == 0 } {
-		puts "rgb_keyboard --brightness $led_brightness --$led_pattern --color $led_color_hex --speed $led_speed --direction $led_direction --profile $profile_target"
-		exec rgb_keyboard --brightness $led_brightness --$led_pattern --color $led_color_hex --speed $led_speed --direction $led_direction --profile $profile_target
+		puts "rgb_keyboard --brightness $led_brightness --leds $led_pattern --color $led_color_hex --speed $led_speed --direction $led_direction --profile $profile_target"
+		exec rgb_keyboard --brightness $led_brightness --leds $led_pattern --color $led_color_hex --speed $led_speed --direction $led_direction --profile $profile_target
 	} else {
 		puts "rgb_keyboard --brightness $led_brightness --$led_pattern --color multi --speed $led_speed --direction $led_direction --profile $profile_target"
 		exec rgb_keyboard --brightness $led_brightness --$led_pattern --color multi --speed $led_speed --direction $led_direction --profile $profile_target

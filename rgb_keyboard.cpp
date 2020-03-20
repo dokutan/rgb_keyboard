@@ -40,9 +40,9 @@ int main( int argc, char **argv ){
 		{"color", required_argument, 0, 'c'},
 		{"brightness", required_argument, 0, 'b'},
 		{"speed", required_argument, 0, 's'},
-		{"direction", required_argument, 0, 'd'}, //
-		{"leds", required_argument, 0, 'l'}, //
-		{"variant", required_argument, 0, 'v'}, //
+		{"direction", required_argument, 0, 'd'},
+		{"leds", required_argument, 0, 'l'},
+		{"variant", required_argument, 0, 'v'},
 		{"custom-pattern", required_argument, 0, 'P'},
 		{"custom-keys", required_argument, 0, 'K'},
 		{"report-rate", required_argument, 0, 'R'},
@@ -50,9 +50,9 @@ int main( int argc, char **argv ){
 		{"list-keys", required_argument, 0, 'L'},
 		{"bus", required_argument, 0, 'B'},
 		{"device", required_argument, 0, 'D'},
-		{"profile", required_argument, 0, 'p'}, //
-		{"active", required_argument, 0, 'a'}, //
-		{"kernel-driver", no_argument, 0, 'k'}, //
+		{"profile", required_argument, 0, 'p'},
+		{"active", required_argument, 0, 'a'},
+		{"kernel-driver", no_argument, 0, 'k'},
 		{0, 0, 0, 0}
 	};
 	
