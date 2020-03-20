@@ -25,54 +25,39 @@ void print_help(){
 	"keyboards.\n";
 	std::cout << "Licensed under the GNU GPL version 3 or later.\n\n";
 	std::cout << "Options:\n";
-	std::cout << "\t-h --help\tDisplays this message\n";
+	std::cout << "\t-h --help\t\tDisplays this message\n";
 	std::cout << "\t-L --list-keys=arg\tList valid keynames (arg: led, map, option)\n";
 	
-	std::cout << "\n\t-O --profile=arg\tSet profile to which the settings are applied (1-3)\n";
-	std::cout << "\t-A --active=arg\tSet currently active profile (1-3)\n";
+	std::cout << "\n\t-p --profile=arg\tSet profile to which the settings are applied (1-3)\n";
+	std::cout << "\t-a --active=arg\t\tSet currently active profile (1-3)\n";
 	
-	std::cout << "\n\t-c --color=color\tSets color of the current animation\n";
+	std::cout << "\n\t-c --color=color\t\tSets color of the current animation\n";
 	std::cout << "\t-b --brightness=brightness\tSets brightness of the current animation.\n"
 	"\t\tInteger from 0 to 9.\n";
-	std::cout << "\t-s --speed=speed\tSets speed of the current animation.\n"
+	std::cout << "\t-s --speed=speed\t\tSets speed of the current animation.\n"
 	"\t\tInteger from 0 to 3.\n";
-	std::cout << "\t-t --direction=direction\tSets direction of the current animation.\n"
+	std::cout << "\t-d --direction=direction\tSets direction of the current animation.\n"
 	"\t\t\"left\", \"right\", \"up\", \"down\", \"inwards\", \"outwards\".\n\n";
 	
-	std::cout << "\t-f --fixed\tSets a fixed color\n";
-	std::cout << "\t-i --sine\tSets a sine wave animation\n";
-	std::cout << "\t-r --rain\tSets a raindrop animation\n";
-	std::cout << "\t-w --waterfall\tSets a waterfall animation\n";
-	std::cout << "\t-v --vortex\tSets a vortex animation\n";
-	std::cout << "\t-l --swirl\tSets a swirl animation\n";
-	std::cout << "\t-d --diagonal\tSets a diagonal wave animation\n";
-	std::cout << "\t-e --breathing\tSets a breathing animation\n";
-	std::cout << "\t-a --breathing-color\tSets a colorful breathing animation\n";
-	std::cout << "\t-p --reactive-ripple\tSets a reactive ripple animation\n";
-	std::cout << "\t-g --reactive-single\tSets a reactive single-key animation\n";
-	std::cout << "\t-o --reactive-horizontal\tSets a reactive horizontal animation\n";
-	std::cout << "\t-z --horizontal-wave\tSets a horizontal wave animation\n";
-	std::cout << "\t-m --vertical-wave\tSets a vertical wave animation\n";
-	std::cout << "\t-u --pulse\tSets a pulse wave animation\n";
-	std::cout << "\t-n --hurricane\tSets a hurricane animation\n";
-	std::cout << "\t-x --ripple\tSets a ripple animation\n";
-	std::cout << "\t-y --reactive-color=variant\tSets a reactive color animation.\n"
-	"\t\"red\", \"yellow\", \"green\", \"blue\", \"none\" (doesn't change color).\n";
-	std::cout << "\t-q --off\tTurn all leds off\n";
+	std::cout << "\t-l --leds=arg\tSets the led mode (pattern), valid values are:\n";
+	std::cout << "\t\tfixed, sine, rain, waterfall, vortex, swirl, breathing, breathing-color,\n";
+	std::cout << "\t\treactive-ripple, reactive-single, reactive-horizontal, reactive-color,\n";
+	std::cout << "\t\thorizontal-wave, vertical-wave, diagonal-wave, pulse, hurricane, ripple, custom, off\n";
 	
-	std::cout << "\n\t-j --custom\tEnables custom mode\n";
-	//std::cout << "\t--custom-clear\tEnables custom mode and clears pattern\n";
-	std::cout << "\t-P --custom-pattern=file\tSets pattern in custom mode\n";
-	std::cout << "\t-K --custom-keys=keys\tSets pattern in custom mode\n";
+	std::cout << "\t-v --variant=arg\tSets the variant of the reactive color mode, valid values are\n";
+	std::cout << "\t\tred, yellow, green, blue\n";
+	
+	std::cout << "\n\t-P --custom-pattern=file\tSets pattern in custom mode\n";
+	std::cout << "\t-K --custom-keys=keys\t\tSets pattern in custom mode\n";
 	
 	std::cout << "\n\t-R --report-rate=rate\tSets USB report rate (125, 250, 500, 1000) Hz\n";
 
 	std::cout << "\n\t-M --keymap=file\tLoad keymap from specified file\n";
 	
-	std::cout << "\n\t-D --bus=number\tSpecify USB bus id, must be used with --device\n";
+	std::cout << "\n\t-B --bus=number\t\tSpecify USB bus id, must be used with --device\n";
 	std::cout << "\t-D --device=number\tSpecify USB device number, must be used with --bus\n";
-	std::cout << "\t-V --kernel-driver\tDon't try to detach the kernel driver, required on some systems\n";
+	std::cout << "\t-k --kernel-driver\tDon't try to detach the kernel driver, required on some systems\n";
 	
 	std::cout << "\nColors need to be specified in hexadecimal without "
-	"any prefix.\n\"multi\" can also be used to create a rainbow effect.\n\n";
+	"any prefix (rrggbb).\n\"multi\" can also be used to create a rainbow effect.\n\n";
 }
