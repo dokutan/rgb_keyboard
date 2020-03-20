@@ -42,7 +42,8 @@ On the ANSI version of the software 8 data packets are send, on the ISO version 
 
 # Capturing USB data
 
-For this section i am assuming you are running wireshark on linux, and have a VM with the official software set up.
+For this section i am assuming you are running wireshark on linux, and have a VM with the official software and USB passthrough set up. The process is identical if you want to capture the communication of any Linux software.
+For further questions and if you are on Windows consult the wireshark documentation.
 
 1. load the usbmon kernel module ``sudo modprobe usbmon``
 2. identify the USB bus id and device number by running lsusb
