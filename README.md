@@ -22,13 +22,15 @@ cd ./rgb_keyboard
 ### Automated (recommended)
 - compile and copy everything to the right place with (not required: replace the 4 with the number of cpu cores you have)
 ```
-sudo make install -j4
+make -j4
+sudo make install
 ```
-- restart for the udev rule to take effect
+- restart for the udev rule to take effect (without this you probably won't be able to use this softwate without root)
 
 ### Updating
 - If you have a previous version installed and want to upgrade (this will not add the udev rule), clone the repository and run:
 ```
+make
 sudo make upgrade
 ```
 
