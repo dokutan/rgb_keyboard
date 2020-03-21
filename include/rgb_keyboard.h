@@ -169,7 +169,7 @@ class rgb_keyboard::keyboard{
 		report_rate _report_rate;
 		
 		//min and max values
-		const int _brightness_min = 0, _brightness_max = 9;
+		int _brightness_min = 0, _brightness_max = 9;
 		const int _speed_min = 0, _speed_max = 3;
 		
 		//usb device vars

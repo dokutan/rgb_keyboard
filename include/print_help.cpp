@@ -33,7 +33,7 @@ void print_help(){
 	
 	std::cout << "\n\t-c --color=color\t\tSets color of the current animation\n";
 	std::cout << "\t-b --brightness=brightness\tSets brightness of the current animation.\n"
-	"\t\tInteger from 0 to 9.\n";
+	"\t\tInteger from 0 to 9 (0-5 for AjazzAK33).\n";
 	std::cout << "\t-s --speed=speed\t\tSets speed of the current animation.\n"
 	"\t\tInteger from 0 to 3.\n";
 	std::cout << "\t-d --direction=direction\tSets direction of the current animation.\n"

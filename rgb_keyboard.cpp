@@ -403,10 +403,17 @@ int main( int argc, char **argv ){
 			
 			//set brightness
 			if( std::regex_match( string_brightness, std::regex("[0-9]") ) ){
-				kbd.set_brightness( stoi(string_brightness) );
-				kbd.write_brightness();
+				
+				if( kbd.set_brightness( stoi(string_brightness) ) == 0 ){
+					kbd.write_brightness();
+				} else{
+					std::cerr << "Wrong brightness format, expected 0-9 (0-5 for AjazzAK33).\n";
+					kbd.close_keyboard();
+					return 1;
+				}
+				
 			} else{
-				std::cerr << "Wrong brightness format, expected 0-9.\n";
+				std::cerr << "Wrong brightness format, expected 0-9 (0-5 for AjazzAK33).\n";
 				kbd.close_keyboard();
 				return 1;
 			}
