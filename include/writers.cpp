@@ -50,29 +50,49 @@ int rgb_keyboard::keyboard::write_brightness(){
 	
 	//send data
 	
-	//write start data packet to endpoint 3
-	res += libusb_interrupt_transfer( _handle, 0x03, _data_start, 
-	64, &transferred, 1000);
+	if( _ajazzak33_compatibility ){
+		
+		//write start data packet to endpoint 0
+		libusb_control_transfer( _handle, 0x21, 0x09, 0x0204, 0x0001, _data_start, 64, 1000 );
+		//read from endpoint 2
+		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+		
+		//write data packet to endpoint 0
+		libusb_control_transfer( _handle, 0x21, 0x09, 0x0204, 0x0001, data_settings, 64, 1000 );
+		//read from endpoint 2
+		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+		
+		//write end data packet to endpoint 0
+		libusb_control_transfer( _handle, 0x21, 0x09, 0x0204, 0x0001, _data_end, 64, 1000 );
+		//read from endpoint 2
+		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+		
+	} else{
+		
+		//write start data packet to endpoint 3
+		res += libusb_interrupt_transfer( _handle, 0x03, _data_start, 
+		64, &transferred, 1000);
+		
+		//read from endpoint 2
+		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
+		&transferred, 1000);
+		
+		//write data packet to endpoint 3
+		res += libusb_interrupt_transfer( _handle, 0x03, data_settings, 
+		64, &transferred, 1000);
+		
+		//read from endpoint 2
+		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
+		&transferred, 1000);
+		
+		//write end data packet to endpoint 3
+		res += libusb_interrupt_transfer( _handle, 0x03, _data_end, 
+		64, &transferred, 1000);
+		
+		//read from endpoint 2
+		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
 	
-	//read from endpoint 2
-	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
-	&transferred, 1000);
-	
-	//write brightness data packet to endpoint 3
-	res += libusb_interrupt_transfer( _handle, 0x03, data_settings, 
-	64, &transferred, 1000);
-	
-	//read from endpoint 2
-	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
-	&transferred, 1000);
-	
-	//write end data packet to endpoint 3
-	res += libusb_interrupt_transfer( _handle, 0x03, _data_end, 
-	64, &transferred, 1000);
-	
-	//read from endpoint 2
-	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
-	&transferred, 1000);
+	}
 	
 	return res;
 }
@@ -534,29 +554,49 @@ int rgb_keyboard::keyboard::write_mode(){
 	}
 	
 	//send data
+	if( _ajazzak33_compatibility ){
+		
+		//write start data packet to endpoint 0
+		libusb_control_transfer( _handle, 0x21, 0x09, 0x0204, 0x0001, _data_start, 64, 1000 );
+		//read from endpoint 2
+		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+		
+		//write data packet to endpoint 0
+		libusb_control_transfer( _handle, 0x21, 0x09, 0x0204, 0x0001, data_settings, 64, 1000 );
+		//read from endpoint 2
+		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+		
+		//write end data packet to endpoint 0
+		libusb_control_transfer( _handle, 0x21, 0x09, 0x0204, 0x0001, _data_end, 64, 1000 );
+		//read from endpoint 2
+		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+		
+	} else{
+		
+		//write start data packet to endpoint 3
+		res += libusb_interrupt_transfer( _handle, 0x03, _data_start, 
+		64, &transferred, 1000);
+		
+		//read from endpoint 2
+		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
+		&transferred, 1000);
+		
+		//write data packet to endpoint 3
+		res += libusb_interrupt_transfer( _handle, 0x03, data_settings, 
+		64, &transferred, 1000);
+		
+		//read from endpoint 2
+		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
+		&transferred, 1000);
+		
+		//write end data packet to endpoint 3
+		res += libusb_interrupt_transfer( _handle, 0x03, _data_end, 
+		64, &transferred, 1000);
+		
+		//read from endpoint 2
+		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
 	
-	//write start data packet to endpoint 3
-	res += libusb_interrupt_transfer( _handle, 0x03, _data_start, 
-	64, &transferred, 1000);
-	
-	//read from endpoint 2
-	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
-	&transferred, 1000);
-	
-	//write data packet to endpoint 3
-	res += libusb_interrupt_transfer( _handle, 0x03, data_settings, 
-	64, &transferred, 1000);
-	
-	//read from endpoint 2
-	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
-	&transferred, 1000);
-	
-	//write end data packet to endpoint 3
-	res += libusb_interrupt_transfer( _handle, 0x03, _data_end, 
-	64, &transferred, 1000);
-	
-	//read from endpoint 2
-	res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+	}
 	
 	return res;
 }
