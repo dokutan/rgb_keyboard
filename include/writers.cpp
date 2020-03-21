@@ -1016,16 +1016,41 @@ int rgb_keyboard::keyboard::write_key_mapping(){
 		
 	}
 	
+	// change data to include keycodes at the right positions
 	for( std::pair< std::string, std::string > element : _keymap ){
+		
+		// is key name and key function known?
 		if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&
 			_keymap_options.find( element.second ) != _keymap_options.end() ){
+				
 			data_remap[ _keymap_offsets[element.first][0][0] ][ _keymap_offsets[element.first][0][1] ]
 			= _keymap_options[ element.second ][0];
 			data_remap[ _keymap_offsets[element.first][1][0] ][ _keymap_offsets[element.first][1][1] ]
 			= _keymap_options[ element.second ][1];
 			data_remap[ _keymap_offsets[element.first][2][0] ][ _keymap_offsets[element.first][2][1] ]
 			= _keymap_options[ element.second ][2];
+			
+			// is key name known and function is a macro?
+		} else if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&
+			std::regex_match( element.second, std::regex("macro[0-9]+") ) ){
+			
+			std::string macroname = element.second;
+			int macronumber = std::stoi( macroname.erase(0, 5) );
+			
+			// check for range of macronumber
+			if( macronumber <= 100 && macronumber >= 1 ){
+			
+				data_remap[ _keymap_offsets[element.first][0][0] ][ _keymap_offsets[element.first][0][1] ]
+				= 0x05;
+				data_remap[ _keymap_offsets[element.first][1][0] ][ _keymap_offsets[element.first][1][1] ]
+				= 0x01;
+				data_remap[ _keymap_offsets[element.first][2][0] ][ _keymap_offsets[element.first][2][1] ]
+				= macronumber-1;
+				
+			}
+			
 		}
+		
 	}
 	
 	//send data
@@ -1038,6 +1063,16 @@ int rgb_keyboard::keyboard::write_key_mapping(){
 	&transferred, 1000);
 	
 	//write macro data here
+	for( int i = 0; i < _num_macro_packets; i++ ){
+		
+		//write data packet to endpoint 3
+		res += libusb_interrupt_transfer( _handle, 0x03, _data_macros[i], 
+		64, &transferred, 1000);
+		//read from endpoint 2
+		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
+		&transferred, 1000);
+		
+	}
 	
 	//write keymap data
 	for( int i = 0; i < 8; i++ ){

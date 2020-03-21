@@ -24,9 +24,11 @@
 #include <iostream>
 #include <map>
 #include <array>
+#include <vector>
 #include <string>
 #include <algorithm>
 #include <exception>
+#include <regex>
 //#include <assert.h>
 
 namespace rgb_keyboard{
@@ -202,6 +204,10 @@ class rgb_keyboard::keyboard{
 		std::map < std::string, std::array<uint8_t, 3> > _keymap_options;
 		//stores current keymapping ( key → option)
 		std::map < std::string, std::string > _keymap;
+		
+		// stores the usb packets for macros
+		int _num_macro_packets = 0;
+		uint8_t _data_macros[19][64];
 };
 
 
