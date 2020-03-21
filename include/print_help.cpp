@@ -58,6 +58,8 @@ void print_help(){
 	std::cout << "\t-D --device=number\tSpecify USB device number, must be used with --bus\n";
 	std::cout << "\t-k --kernel-driver\tDon't try to detach the kernel driver, required on some systems\n";
 	
+	std::cout << "\n\t-A --ajazzak33\tEnable experimental support for the AjazzAK33\n";
+	
 	std::cout << "\nColors need to be specified in hexadecimal without "
 	"any prefix (rrggbb).\n\"multi\" can also be used to create a rainbow effect.\n\n";
 }

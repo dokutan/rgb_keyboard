@@ -53,6 +53,7 @@ int main( int argc, char **argv ){
 		{"profile", required_argument, 0, 'p'},
 		{"active", required_argument, 0, 'a'},
 		{"kernel-driver", no_argument, 0, 'k'},
+		{"ajazzak33", no_argument, 0, 'A'},
 		{0, 0, 0, 0}
 	};
 	
@@ -73,6 +74,7 @@ int main( int argc, char **argv ){
 	bool flag_profile = false;
 	bool flag_active = false;
 	bool flag_kernel_driver = false;
+	bool flag_ajazzak33 = false;
 	
 	string string_color;
 	string string_brightness;
@@ -98,7 +100,7 @@ int main( int argc, char **argv ){
 	
 	// parse command line options
 	int c, option_index = 0;
-	while( (c = getopt_long( argc, argv, "hc:b:s:d:l:v:P:K:R:M:L:B:D:p:a:k",
+	while( (c = getopt_long( argc, argv, "hc:b:s:d:l:v:P:K:R:M:L:B:D:p:a:kA",
 	long_options, &option_index ) ) != -1 ){
 		
 		switch( c ){
@@ -182,6 +184,10 @@ int main( int argc, char **argv ){
 				flag_kernel_driver = true;
 				break;
 				
+			case 'A':
+				flag_ajazzak33 = true;
+				break;
+				
 			case '?':
 				return 1;
 				break;
@@ -195,6 +201,10 @@ int main( int argc, char **argv ){
 	// keyboard object
 	rgb_keyboard::keyboard kbd;
 	
+	// set compatbility mode
+	if( flag_ajazzak33 ){
+		kbd.set_ajazzak33_compatibility( true );
+	}
 	
 	//parse list keys flag
 	if( flag_list_keys ){

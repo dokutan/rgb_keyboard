@@ -92,6 +92,7 @@ class rgb_keyboard::keyboard{
 		keyboard();
 		
 		//setter functions
+		int set_ajazzak33_compatibility( bool compatibility );
 		int set_profile( int profile );
 		int set_active_profile( int profile );
 		int set_mode( mode Mode );
@@ -119,16 +120,16 @@ class rgb_keyboard::keyboard{
 		bool get_detach_kernel_driver();
 		
 		//writer functions (apply settings to keyboard)
-		int write_brightness(); // compatibility done 2 3
-		int write_speed(); // compatibility done 2 3
-		int write_mode(); // compatibility done 2 3
-		int write_direction(); // compatibility done 2 3
-		int write_color(); // compatibility done 2 3
-		int write_custom(); // compatibility done 2 3
-		int write_variant(); // compatibility done 2 3
-		int write_report_rate(); // compatibility done 2 3
-		int write_key_mapping();
-		int write_active_profile();
+		int write_brightness(); // compatibility done 2 3 A
+		int write_speed(); // compatibility done 2 3 A
+		int write_mode(); // compatibility done 2 3 A
+		int write_direction(); // compatibility done 2 3 A
+		int write_color(); // compatibility done 2 3 A
+		int write_custom(); // compatibility done 2 3 A
+		int write_variant(); // compatibility done 2 3 A
+		int write_report_rate(); // compatibility done 2 3 A
+		int write_key_mapping(); // compatibility done A
+		int write_active_profile(); // compatibility done A
 		
 		//helper functions
 		int open_keyboard(); // open keyboard with default vid and pid
@@ -146,7 +147,9 @@ class rgb_keyboard::keyboard{
 		
 	private:
 		
-		bool _ajazzak33_compatibility = true;
+		// id this is set to true usb control transfers are used for sending
+		// this enables compatibility woth other keyboards 
+		bool _ajazzak33_compatibility = false;
 		
 		// profile (1-3): this changes the profile to which the settings
 		// are applied
@@ -171,7 +174,7 @@ class rgb_keyboard::keyboard{
 		
 		//usb device vars
 		const uint16_t _keyboard_vid = 0x0c45;
-		const uint16_t _keyboard_pid = 0x652f;
+		uint16_t _keyboard_pid = 0x652f;
 		bool _detach_kernel_driver = true;
 		bool _detached_driver_0 = false, _detached_driver_1 = false;
 		libusb_device_handle* _handle = NULL;

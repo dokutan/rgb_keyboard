@@ -20,6 +20,12 @@
 
 //setter functions
 
+int rgb_keyboard::keyboard::set_ajazzak33_compatibility( bool compatibility ){
+	_ajazzak33_compatibility = compatibility;
+	_keyboard_pid = 0x7903;
+	return 0;
+}
+
 int rgb_keyboard::keyboard::set_mode( mode Mode ){
 	_mode = Mode;
 	return 0;

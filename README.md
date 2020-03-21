@@ -2,7 +2,7 @@
 Controls the RGB lighting on some keyboards. Tested on Linux, should work on other operating systems.
 
 ## Supported keyboards
-USB keyboards with VID 0c45 and PID 652f. 
+USB keyboards with VID 0x0c45 and PID 0x652f.
 Tested with:
 - Tecware Phantom RGB TKL
 - Glorious GMMK full-size ANSI
@@ -117,6 +117,10 @@ rgb_keyboard --bus ⟨bus id⟩ --device ⟨device number⟩ ...
 ### --kernel-driver option
 
 On some systems libusb might no be able to properly detach the kernel driver, and the program will fail to open the keyboard. The --kernel-driver option skips this step and is intended for better compatibility.
+
+### --ajazzak33 option
+
+This enables experimental support for the AjazzAK33 Keyboard.
 
 ## GUI
 
