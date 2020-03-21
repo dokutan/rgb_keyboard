@@ -139,7 +139,7 @@ int rgb_keyboard::keyboard::load_keymap( std::string File ){
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 	};
 	std::copy(std::begin(_data_macros_0), std::end(_data_macros_0), std::begin(_data_macros[0]));
-	_num_macro_packets = 1;
+	_num_macro_packets = 0; // IMPORTANT
 	
 	return 0;
 }

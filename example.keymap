@@ -10,14 +10,14 @@
 Fn=Int_Key
 ScrLk=Fn
 
-# define macro 1
+# define macro 1 (doesn't do anything at the moment)
 [macro1]
 a
 b
 c
 d
 
-# define macro 2
+# define macro 2 (doesn't do anything at the moment)
 [macro2]
 x
 y
