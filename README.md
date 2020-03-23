@@ -1,6 +1,8 @@
 # rgb_keyboard
 Controls the RGB lighting on some keyboards. Tested on Linux, should work on other operating systems.
 
+**Disclaimer: This software is not supported by the manufacturer of the hardware in any way, and relies completely on information from reverse-engineering. There is no warranty, especially in case of damage to the hardware.**
+
 ## Supported keyboards
 USB keyboards with VID 0x0c45 and PID 0x652f.
 Tested with:
@@ -140,3 +142,7 @@ The gui is not copied to /usr/bin by default, you can do so manually.
   - [ ] Add macros to reprogramming
 - [x] Complete profile support
 - [ ] Add a manpage
+
+# License
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+

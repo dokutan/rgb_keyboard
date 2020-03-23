@@ -119,27 +119,67 @@ int rgb_keyboard::keyboard::load_keymap( std::string File ){
 		
 	}
 	
-	/*
-	for( int i = 0; i < macro_commands.size(); i++ ){
-		std::cout << i+1 << " macro\n";
-		for( auto j : macro_commands[i] ){
-			std::cout << j << "\n";
-		}
-	}*/
 	
-	// prepare usb packets for macros (test data)
-	uint8_t _data_macros_0[] = {
-		0x04, 0x5d, 0x06, 0x0a, 0x2a, 0x00, 0x00, 0x00,
-		0xaa, 0x55, 0x32, 0x00, 0x01, 0x00, 0x01, 0x00,
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-		0x12, 0x00, 0x02, 0x00, 0x01, 0x06, 0x05, 0xa0,
-		0x02, 0x08, 0x00, 0x20, 0x02, 0x08, 0x00, 0x00,
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	};
-	std::copy(std::begin(_data_macros_0), std::end(_data_macros_0), std::begin(_data_macros[0]));
-	_num_macro_packets = 0; // IMPORTANT
+	// macro commands → macro bytes
+	for( unsigned int i = 0; i < macro_commands.size(); i++ ){ // for each macro
+		
+		// is macro defined ?
+		if( macro_commands[i].size() == 0 )
+			continue;
+		
+		uint8_t num_repeats = 1; // how many times the commands get executed
+		
+		// push back _macro_bytes
+		_macro_bytes.push_back( std::deque< uint8_t >() );
+		
+		// for each macro command
+		for( auto &command : macro_commands[i] ){
+			
+			// repeat specification ?
+			if( std::regex_match( command, std::regex("repeat=[0-9]+") ) ){
+				num_repeats = std::stoi( std::regex_replace( command, std::regex("repeat="), "" ) );
+				
+				if( num_repeats == 0 ){
+					num_repeats = 1;
+				}
+				
+			}
+			
+			// action=key=delay
+			std::string m_action = std::regex_replace( command, std::regex("=[[:print:]]+"), "" );
+			std::string m_delay = std::regex_replace( command, std::regex("[[:print:]]+="), "" );
+			std::string m_key = std::regex_replace( command, std::regex("[[:print:]]+?="), "", std::regex_constants::format_first_only );
+			m_key = std::regex_replace( m_key, std::regex("=[[:print:]]+"), "" );
+			
+			uint8_t delay = 1;
+			if( std::regex_match( line, std::regex("[0-9]+") ) ){
+				delay = (uint8_t)stoi( m_delay, 0, 10 );
+			}
+			
+			// everything valid? store bytes for event	
+			if( (m_action == "up" || m_action == "down") && 
+				_keymap_options.find( m_key ) != _keymap_options.end() ){
+				
+				_macro_bytes.back().push_back( delay );
+				if( m_action == "up" ){
+					_macro_bytes.back().push_back( 0x20 );
+				} else{
+					_macro_bytes.back().push_back( 0xa0 );
+				}
+				_macro_bytes.back().push_back( 0x02 );
+				_macro_bytes.back().push_back( _keymap_options.at(m_key)[2] );
+			}
+			
+			
+		}
+		
+		// add macro header
+		_macro_bytes.back().push_front( 0x06 );
+		_macro_bytes.back().push_front( num_repeats );
+		_macro_bytes.back().push_front( 0x00 );
+		_macro_bytes.back().push_front( (_macro_bytes.back().size()-3)/4 ); // number of events
+		_macro_bytes.back().push_front( 0x00 );
+	}
 	
 	return 0;
 }
