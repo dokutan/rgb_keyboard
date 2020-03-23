@@ -29,6 +29,7 @@
 #include <algorithm>
 #include <exception>
 #include <regex>
+#include <deque>
 //#include <assert.h>
 
 namespace rgb_keyboard{
@@ -189,6 +190,7 @@ class rgb_keyboard::keyboard{
 		static uint8_t _data_remap_9[];
 		static uint8_t _data_remap_10[];
 		static uint8_t _data_profile[];
+		static uint8_t _data_macros[];
 		
 		//stores key codes for custom colors
 		std::map< std::string, std::array<uint8_t, 3> > _keycodes;
@@ -203,9 +205,8 @@ class rgb_keyboard::keyboard{
 		//stores current keymapping ( key → option)
 		std::map < std::string, std::string > _keymap;
 		
-		// stores the usb packets for macros
-		int _num_macro_packets = 0;
-		uint8_t _data_macros[19][64];
+		// this holds the bytes for all macros
+		std::vector< std::deque<uint8_t> > _macro_bytes;
 };
 
 
