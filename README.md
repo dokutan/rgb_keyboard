@@ -14,7 +14,7 @@ You can help expand this list by providing information whether this software wor
 
 **Note on ISO-layout boards:**: As i do not have access to a compatible keyboard with an ISO layout, ~~remapping and~~ setting the color of the ISO international key (Int_Key) is supported but not tested. **Remapping is broken (all keys are shifted around)**, it is required to capture the USB communication on an affected keyboard to fix this. Therefore if you are affected and capable of doing this, you can help with this issue.
 
-**Note on the Ajazz AK33:** Changing the lighting has been confirmed to work (except for setting the reactive-color variant), setting the report rate is untested, remapping the keys suffers from the same issue as ISO boards. It appears however, that there are multiple firmware versions wit incompatibilities. **Therefore be extra careful if you have this board.** As this keyboard requires a slightly different method of sending data, the ``--ajazzak33`` must be used.
+**Note on the Ajazz AK33:** Changing the lighting has been confirmed to work (except for setting the reactive-color variant), setting the report rate is untested, **remapping the keys suffers from the same issue as ISO boards**. It appears however, that there are multiple firmware versions with incompatibilities. **Therefore be extra careful if you have this board.** As this keyboard requires a slightly different method of sending data, the ``--ajazzak33`` must be used.
 
 ## Installing
 - Clone this repository
