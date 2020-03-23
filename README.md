@@ -4,7 +4,7 @@ Controls the RGB lighting on some keyboards. Tested on Linux, should work on oth
 **Disclaimer: This software is not supported by the manufacturer of the hardware in any way, and relies completely on information from reverse-engineering. There is no warranty, especially in case of damage to the hardware.**
 
 ## Supported keyboards
-USB keyboards with VID 0c45 and PID 652f. 
+USB keyboards with VID 0x0c45 and PID 0x652f.
 Tested with:
 - Tecware Phantom RGB TKL
 - Glorious GMMK full-size ANSI
@@ -97,8 +97,7 @@ rgb_keyboard --keymap example.keymap
 to set a custom keymap from a file.
 
 ### Config files (Key mapping and color)
-
-Each line line in the file consists of two fields separated by a tab. The first field is the name of the physical key (run ``rgb_keyboard --list-keys`` for a full list), the second field is the color as hexcode without any prefix or the key function (run ``rgb_keyboard --list-keys`` for a full list). Lines starting with # are ignored.
+Take a look at example.conf and example.keymap.
 
 ### Change custom key colors from the commandline
 
@@ -119,6 +118,10 @@ rgb_keyboard --bus ⟨bus id⟩ --device ⟨device number⟩ ...
 ### --kernel-driver option
 
 On some systems libusb might no be able to properly detach the kernel driver, and the program will fail to open the keyboard. The --kernel-driver option skips this step and is intended for better compatibility.
+
+### --ajazzak33 option
+
+This enables experimental support for the AjazzAK33 Keyboard.
 
 ## GUI
 
