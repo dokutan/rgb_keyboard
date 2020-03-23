@@ -4,14 +4,17 @@ Controls the RGB lighting on some keyboards. Tested on Linux, should work on oth
 **Disclaimer: This software is not supported by the manufacturer of the hardware in any way, and relies completely on information from reverse-engineering. There is no warranty, especially in case of damage to the hardware.**
 
 ## Supported keyboards
-USB keyboards with VID 0x0c45 and PID 0x652f.
+USB keyboards with VID 0x0c45 and PID 0x652f or 0x7903, maybe others.
 Tested with:
-- Tecware Phantom RGB TKL
-- Glorious GMMK full-size ANSI
+- Tecware Phantom RGB TKL (PID 0x652f)
+- Glorious GMMK full-size ANSI (PID 0x652f)
+- Ajazz AK33 (PID 0x7903) (thanks to [diogotr7](https://github.com/diogotr7))
 
 You can help expand this list by providing information whether this software works correctly or not.
 
-Note on ISO layout: As i do not have access to a compatible keyboard with an ISO layout, ~~remapping and~~ setting the color of the ISO international key (Int_Key) is supported but not tested. Remapping is reported as being broken, it is required to capture the USB communication on an affected keyboard to fix this. Therefore if you are affected and capable of doing this, you can help with this issue.
+**Note on ISO-layout boards:**: As i do not have access to a compatible keyboard with an ISO layout, ~~remapping and~~ setting the color of the ISO international key (Int_Key) is supported but not tested. **Remapping is broken (all keys are shifted around)**, it is required to capture the USB communication on an affected keyboard to fix this. Therefore if you are affected and capable of doing this, you can help with this issue.
+
+**Note on the Ajazz AK33:** Changing the lighting has been confirmed to work (except for setting the reactive-color variant), setting the report rate is untested, remapping the keys suffers from the same issue as ISO boards. It appears however, that there are multiple firmware versions wit incompatibilities. **Therefore be extra careful if you have this board.** As this keyboard requires a slightly different method of sending data, the ``--ajazzak33`` must be used.
 
 ## Installing
 - Clone this repository
@@ -110,18 +113,15 @@ rgb_keyboard --custom-keys "key_name=color;key_name=color;"
 ### --bus and --device options
 
 In case you have multiple keyboards attached or you suspect a keyboard with a different vendor id or product id might be compatible, the keyboard can also be opened by specifying the bus number and device id. These can be found by running lsusb.
-
 ```
 rgb_keyboard --bus ⟨bus id⟩ --device ⟨device number⟩ ...
 ```
 
 ### --kernel-driver option
-
 On some systems libusb might no be able to properly detach the kernel driver, and the program will fail to open the keyboard. The --kernel-driver option skips this step and is intended for better compatibility.
 
 ### --ajazzak33 option
-
-This enables experimental support for the AjazzAK33 Keyboard.
+This is required for the Ajazz AK33 keyboard, as it uses a slightly different method of transmitting data.
 
 ## GUI
 
