@@ -1248,7 +1248,7 @@ int rgb_keyboard::keyboard::write_key_mapping(){
 	}
 	
 	//write macro data here
-	for( int i = 0; i < _num_macro_packets; i++ ){
+	for( int i = 0; i <= packet_index; i++ ){
 		
 		if( _ajazzak33_compatibility ){
 			
