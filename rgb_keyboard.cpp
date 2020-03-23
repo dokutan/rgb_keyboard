@@ -461,12 +461,26 @@ int main( int argc, char **argv ){
 		
 		//parse keymap flag
 		if( flag_keymap ){
-			if( kbd.load_keymap( string_keymap ) == 0 ){
-				kbd.write_key_mapping();
+			
+			// ask user for confirmation?
+			std::cout << "Remapping the keys is experimental and potentially dangerous.\n";
+			std::cout << "On ISO-layout boards and on the Ajazz AK33 this has been reported to mess up all keys.\n";
+			std::cout << "If you accept the risk of permanent damage to the keyboard, type YES and press enter to continue.\n";
+			std::cout << "Anything else will cancel this process.\n";
+			
+			std::string user_input;
+			std::cin >> user_input;
+			
+			if( user_input == "YES" ){
+				if( kbd.load_keymap( string_keymap ) == 0 ){
+					kbd.write_key_mapping();
+				} else{
+					std::cerr << "Couldn't open keymap file.\n";
+					kbd.close_keyboard();
+					return 1;
+				}
 			} else{
-				std::cerr << "Couldn't open keymap file.\n";
-				kbd.close_keyboard();
-				return 1;
+				std::cout << "Not remapping the keys.\n";
 			}
 		}
 		
