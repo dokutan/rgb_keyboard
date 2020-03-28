@@ -1,0 +1,84 @@
+.TH RGB_KEYBOARD 1
+.SH NAME
+rgb_keyboard \- Controls the RGB lighting on some keyboards.
+.SH SYNOPSIS
+.B rgb_keyboard
+[\fIOPTIONS\fR]...
+.SH DESCRIPTION
+Controls the RGB lighting on keyboards with VID 0x0c45 and PID 0x652f or 0x7903.
+.SH OPTIONS
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print a help message.
+.TP
+\fB\-L\fR, \fB\-\-list\-keys\fR=\fIARGUMENT\fR
+List valid keynames (argument: led, map, option)
+.TP
+\fB\-p\fR, \fB\-\-profile\fR=\fINUMBER\fR
+Set profile to which the settings are applied (1-3)
+.TP
+\fB\-a\fR, \fB\-\-active\fR=\fINUMBER\fR
+Set currently active profile (1-3)
+.TP
+\fB\-c\fR, \fB\-\-color\fR=\fICOLOR\fR
+Sets color of the current animation (format: rrggbb or "multi")
+.TP
+\fB\-b\fR, \fB\-\-brightness\fR=\fINUMBER\fR
+Sets brightness of the current animation (0-9, 0-5 for Ajazz AK33)
+.TP
+\fB\-s\fR, \fB\-\-speed\fR=\fINUMBER\fR
+Sets speed of the current animation (0-3)
+.TP
+\fB\-d\fR, \fB\-\-direction\fR=\fIARGUMENT\fR
+Sets direction of the current animation ("left", "right", "up", "down", "inwards", "outwards")
+.TP
+\fB\-l\fR, \fB\-\-leds\fR=\fIARGUMENT\fR
+Sets the led mode (pattern), valid values are: fixed, sine, rain, waterfall, vortex, swirl, breathing, breathing\-color, reactive\-ripple, reactive\-single, reactive\-horizontal, reactive-color, horizontal\-wave, vertical\-wave, diagonal\-wave, pulse, hurricane, ripple, custom, off
+.TP
+\fB\-v\fR, \fB\-\-variant\fR=\fIARGUMENT\fR
+Sets the variant of the reactive color mode ("red", "yellow", "green", "blue")
+.TP
+\fB\-P\fR, \fB\-\-custom\-pattern\fR=\fIFILE\fR
+Sets pattern in custom mode from specified file
+.TP
+\fB\-K\fR, \fB\-\-custom\-keys\fR=\fIARGUMENT\fR
+Sets pattern in custom mode from commandline
+.TP
+\fB\-R\fR, \fB\-\-report\-rate\fR=\fINUMBER\fR
+Sets USB report rate (125, 250, 500, 1000) Hz
+.TP
+\fB\-M\fR, \fB\-\-keymap\fR=\fIFILE\fR
+Load keymap from specified file (WARNING: this risks permanent damage to the keyboard)
+.TP
+\fB\-B\fR, \fB\-\-bus\fR=\fINUMBER\fR
+Specify USB bus id, must be used with --device
+.TP
+\fB\-D\fR, \fB\-\-device\fR=\fINUMBER\fR
+Specify USB device number, must be used with --bus
+.TP
+\fB\-k\fR, \fB\-\-kernel\-driver\fR
+Do not attempt to detach the kernel drivers. Useful for compatibility on some systems.
+.TP
+\fB\-A\fR, \fB\-\-ajazzak33\fR
+Enables experimental support for the Ajazz AK33 keyboard (PID 0x7903).
+.SH EXAMPLES
+To set a specific led mode, color, speed and brightness.
+.PP
+.nf
+.RS
+rgb_keyboard --brightness 5 --speed 2 --color 00ff00 --leds rain
+.RE
+.fi
+.PP
+To set a custom pattern from a file,
+.PP
+.nf
+.RS
+rgb_keyboard --custom-pattern example.conf
+.RE
+.fi
+.PP
+.SH FILES
+Examples can be found in \fI/usr/share/doc/rgb_keyboard\fR.
+.SH COPYRIGHT
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.

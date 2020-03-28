@@ -22,7 +22,7 @@ You can help expand this list by providing information whether this software wor
 git clone https://github.com/dokutan/rgb_keyboard
 cd ./rgb_keyboard
 ```
-- Make sure you have [libusb](https://libusb.info/) installed (on some distros you might need a dev package)
+- Make sure you have [libusb](https://libusb.info/) installed (on some distros (e.g. Ubuntu) you might need a dev package)
 
 ### Automated (recommended)
 - compile and copy everything to the right place with (not required: replace the 4 with the number of cpu cores you have)
@@ -31,13 +31,6 @@ make -j4
 sudo make install
 ```
 - restart for the udev rule to take effect (without this you probably won't be able to use this softwate without root)
-
-### Updating
-- If you have a previous version installed and want to upgrade (this will not add the udev rule), clone the repository and run:
-```
-make
-sudo make upgrade
-```
 
 ### Manual
 - Compile with:
@@ -141,7 +134,7 @@ The gui is not copied to /usr/bin by default, you can do so manually.
   - [x] Complete reprogramming
   - [ ] Add macros to reprogramming
 - [x] Complete profile support
-- [ ] Add a manpage
+- [x] Add a manpage
 
 # License
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.

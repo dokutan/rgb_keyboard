@@ -1,23 +1,27 @@
-BIN_DIR = /usr/bin
+PREFIX = /usr
+BIN_DIR = $(PREFIX)/bin
+DOC_DIR = $(PREFIX)/share/doc
+MAN_DIR = $(PREFIX)/share/man/man1
 CC = g++
 
 build: rgb_keyboard.o constructor.o fileio.o getters.o helpers.o print_help.o print_keycodes.o setters.o writers.o
-	g++ *.o -o rgb_keyboard -lusb-1.0 -Wall -Wextra -O2
+	$(CC) *.o -o rgb_keyboard -lusb-1.0 -Wall -Wextra -O2
 
 install:
 	cp ./rgb_keyboard $(BIN_DIR)/rgb_keyboard
 	cp ./keyboard.rules /etc/udev/rules.d
+	mkdir $(DOC_DIR)/rgb_keyboard | true
+	cp ./example.conf $(DOC_DIR)/rgb_keyboard/
+	cp ./rgb_keyboard.1 $(MAN_DIR)/
 
 uninstall:
-	rm $(BIN_DIR)/rgb_keyboard && \
+	rm $(BIN_DIR)/rgb_keyboard
 	rm /etc/udev/rules.d/keyboard.rules
+	rm -rf $(DOC_DIR)/rgb_keyboard
+	rm -f $(MAN_DIR)/rgb_keyboard.1
 
 clean:
 	rm ./rgb_keyboard *.o
-
-upgrade: build
-	cp ./rgb_keyboard $(BIN_DIR)/rgb_keyboard
-
 
 # individual .cpp files
 constructor.o:
