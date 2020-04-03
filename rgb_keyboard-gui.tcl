@@ -52,13 +52,17 @@ spinbox .fr.led.bottom.speed -from 0 -to 3 -textvariable led_speed
 pack .fr.led.bottom.direction .fr.led.bottom.label_brightness .fr.led.bottom.brightness .fr.led.bottom.label_speed .fr.led.bottom.speed -padx 5 -pady 5 -side left
 
 # keymap settings
-frame .fr.keymap -borderwidth 1 -relief groove
-pack .fr.keymap -fill both -padx 5 -pady 5
-label .fr.keymap.label -text "Keymap settings"
-button .fr.keymap.file -text "Open Keymap file" -command { set keymap_file [tk_getOpenFile] }
-button .fr.keymap.apply -text "Apply" -command { applyKeymap }
-pack .fr.keymap.label .fr.keymap.file -padx 5 -pady 5 -side left
-pack .fr.keymap.apply -padx 5 -pady 5 -side right
+#
+# this part is disabled for now, as remapping the keys is potentially
+# dangerous and requires user confirmation on the commandline
+#
+# frame .fr.keymap -borderwidth 1 -relief groove
+# pack .fr.keymap -fill both -padx 5 -pady 5
+# label .fr.keymap.label -text "Keymap settings"
+# button .fr.keymap.file -text "Open Keymap file" -command { set keymap_file [tk_getOpenFile] }
+# button .fr.keymap.apply -text "Apply" -command { applyKeymap }
+# pack .fr.keymap.label .fr.keymap.file -padx 5 -pady 5 -side left
+# pack .fr.keymap.apply -padx 5 -pady 5 -side right
 
 # profile settings
 frame .fr.profile -borderwidth 1 -relief groove
@@ -128,8 +132,8 @@ proc applyLed {} {
 		puts "rgb_keyboard --brightness $led_brightness --leds $led_pattern --color $led_color_hex --speed $led_speed --direction $led_direction --profile $profile_target"
 		exec rgb_keyboard --brightness $led_brightness --leds $led_pattern --color $led_color_hex --speed $led_speed --direction $led_direction --profile $profile_target
 	} else {
-		puts "rgb_keyboard --brightness $led_brightness --$led_pattern --color multi --speed $led_speed --direction $led_direction --profile $profile_target"
-		exec rgb_keyboard --brightness $led_brightness --$led_pattern --color multi --speed $led_speed --direction $led_direction --profile $profile_target
+		puts "rgb_keyboard --brightness $led_brightness --leds $led_pattern --color multi --speed $led_speed --direction $led_direction --profile $profile_target"
+		exec rgb_keyboard --brightness $led_brightness --leds $led_pattern --color multi --speed $led_speed --direction $led_direction --profile $profile_target
 	}
 	
 	if { $custom_file != "" } {
