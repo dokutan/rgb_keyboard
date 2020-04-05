@@ -54,6 +54,7 @@ int main( int argc, char **argv ){
 		{"active", required_argument, 0, 'a'},
 		{"kernel-driver", no_argument, 0, 'k'},
 		{"ajazzak33", no_argument, 0, 'A'},
+		{"interface0", no_argument, 0, 'I'},
 		{0, 0, 0, 0}
 	};
 	
@@ -75,6 +76,7 @@ int main( int argc, char **argv ){
 	bool flag_active = false;
 	bool flag_kernel_driver = false;
 	bool flag_ajazzak33 = false;
+	bool flag_interface0 = false;
 	
 	string string_color;
 	string string_brightness;
@@ -100,7 +102,7 @@ int main( int argc, char **argv ){
 	
 	// parse command line options
 	int c, option_index = 0;
-	while( (c = getopt_long( argc, argv, "hc:b:s:d:l:v:P:K:R:M:L:B:D:p:a:kA",
+	while( (c = getopt_long( argc, argv, "hc:b:s:d:l:v:P:K:R:M:L:B:D:p:a:kAI",
 	long_options, &option_index ) ) != -1 ){
 		
 		switch( c ){
@@ -188,6 +190,10 @@ int main( int argc, char **argv ){
 				flag_ajazzak33 = true;
 				break;
 				
+			case 'I':
+				flag_interface0 = true;
+				break;
+				
 			case '?':
 				return 1;
 				break;
@@ -235,6 +241,9 @@ int main( int argc, char **argv ){
 	if( flag_kernel_driver )
 		kbd.set_detach_kernel_driver( false );
 	
+	// open interface 0 ?
+	if( flag_interface0 )
+		kbd.set_open_interface_0( false );
 	
 	// open keyboard, apply settigns, close keyboard
 	try{

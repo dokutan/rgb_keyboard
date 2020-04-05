@@ -41,13 +41,16 @@ int rgb_keyboard::keyboard::open_keyboard(){
 	}
 	
 	if( _detach_kernel_driver ){
-		//detach kernel driver on interface 0 if active 
-		if( libusb_kernel_driver_active( _handle, 0 ) ){
-			res += libusb_detach_kernel_driver( _handle, 0 );
-			if( res == 0 ){
-				_detached_driver_0 = true;
-			} else{
-				return res;
+		
+		if( _open_interface_0 ){
+			//detach kernel driver on interface 0 if active 
+			if( libusb_kernel_driver_active( _handle, 0 ) ){
+				res += libusb_detach_kernel_driver( _handle, 0 );
+				if( res == 0 ){
+					_detached_driver_0 = true;
+				} else{
+					return res;
+				}
 			}
 		}
 		
@@ -62,10 +65,12 @@ int rgb_keyboard::keyboard::open_keyboard(){
 		}
 	}
 	
-	//claim interface 0
-	res += libusb_claim_interface( _handle, 0 );
-	if( res != 0 ){
-		return res;
+	if( _open_interface_0 ){
+		//claim interface 0
+		res += libusb_claim_interface( _handle, 0 );
+		if( res != 0 ){
+			return res;
+		}
 	}
 	
 	//claim interface 1
@@ -118,13 +123,16 @@ int rgb_keyboard::keyboard::open_keyboard_bus_device( uint8_t bus, uint8_t devic
 	libusb_free_device_list( dev_list, 1 );
 	
 	if( _detach_kernel_driver ){
-		//detach kernel driver on interface 0 if active 
-		if( libusb_kernel_driver_active( _handle, 0 ) ){
-			res += libusb_detach_kernel_driver( _handle, 0 );
-			if( res == 0 ){
-				_detached_driver_0 = true;
-			} else{
-				return res;
+		
+		if( _open_interface_0){
+			//detach kernel driver on interface 0 if active 
+			if( libusb_kernel_driver_active( _handle, 0 ) ){
+				res += libusb_detach_kernel_driver( _handle, 0 );
+				if( res == 0 ){
+					_detached_driver_0 = true;
+				} else{
+					return res;
+				}
 			}
 		}
 		
@@ -139,10 +147,12 @@ int rgb_keyboard::keyboard::open_keyboard_bus_device( uint8_t bus, uint8_t devic
 		}
 	}
 	
-	//claim interface 0
-	res += libusb_claim_interface( _handle, 0 );
-	if( res != 0 ){
-		return res;
+	if( _open_interface_0 ){
+		//claim interface 0
+		res += libusb_claim_interface( _handle, 0 );
+		if( res != 0 ){
+			return res;
+		}
 	}
 	
 	//claim interface 1
@@ -158,11 +168,13 @@ int rgb_keyboard::keyboard::open_keyboard_bus_device( uint8_t bus, uint8_t devic
 int rgb_keyboard::keyboard::close_keyboard(){
 	
 	//release interface 0 and 1
-	libusb_release_interface( _handle, 0 );
+	if( _open_interface_0 ){
+		libusb_release_interface( _handle, 0 );
+	}
 	libusb_release_interface( _handle, 1 );
 	
 	//attach kernel driver for interface 0
-	if( _detached_driver_0 ){
+	if( _detached_driver_0 && _open_interface_0 ){
 		libusb_attach_kernel_driver( _handle, 0 );
 	}
 	

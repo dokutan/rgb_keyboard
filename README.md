@@ -113,6 +113,9 @@ rgb_keyboard --bus ⟨bus id⟩ --device ⟨device number⟩ ...
 ### --kernel-driver option
 On some systems libusb might no be able to properly detach the kernel driver, and the program will fail to open the keyboard. The --kernel-driver option skips this step and is intended for better compatibility.
 
+### --interface0 option
+Don't open usb interface 0 on the keyboard. This allows input to happen while settings are applied, and is primarily intended for scripting purposes. Because compatibility is untested, this needs to be specifically enabled with this option.
+
 ### --ajazzak33 option
 This is required for the Ajazz AK33 keyboard, as it uses a slightly different method of transmitting data.
 

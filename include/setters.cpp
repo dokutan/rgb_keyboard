@@ -126,3 +126,8 @@ int rgb_keyboard::keyboard::set_detach_kernel_driver( bool detach_kernel_driver 
 	_detach_kernel_driver = detach_kernel_driver;
 	return 0;
 }
+
+int rgb_keyboard::keyboard::set_open_interface_0( bool open_interface_0 ){
+	_open_interface_0 = open_interface_0;
+	return 0;
+}

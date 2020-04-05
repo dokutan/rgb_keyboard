@@ -61,3 +61,7 @@ rgb_keyboard::keyboard::report_rate rgb_keyboard::keyboard::get_report_rate(){
 bool rgb_keyboard::keyboard::get_detach_kernel_driver(){
 	return _detach_kernel_driver;
 }
+
+bool rgb_keyboard::keyboard::get_open_interface_0(){
+	return _open_interface_0;
+}

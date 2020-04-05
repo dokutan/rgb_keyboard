@@ -57,6 +57,7 @@ void print_help(){
 	std::cout << "\n\t-B --bus=number\t\tSpecify USB bus id, must be used with --device\n";
 	std::cout << "\t-D --device=number\tSpecify USB device number, must be used with --bus\n";
 	std::cout << "\t-k --kernel-driver\tDon't try to detach the kernel driver, required on some systems\n";
+	std::cout << "\t-I --interface0\t\tDon't open usb interface 0\n";
 	
 	std::cout << "\n\t-A --ajazzak33\tEnable experimental support for the AjazzAK33\n";
 	
