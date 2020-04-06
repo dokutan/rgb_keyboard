@@ -145,8 +145,8 @@ int main( int argc, char **argv ){
 				string_custom_pattern = optarg;
 				break;
 			case 'K':
-				flag_leds = true;
-				string_leds = "custom";
+				//flag_leds = true;
+				//string_leds = "custom";
 				flag_custom_keys = true;
 				string_custom_keys = optarg;
 				break;
@@ -364,14 +364,6 @@ int main( int argc, char **argv ){
 					
 				}
 				
-				// parse custom keys flag
-				if( flag_custom_keys ){
-					
-					kbd.set_custom_keys( string_custom_keys );
-					kbd.write_custom();
-					
-				}
-				
 				// write led pattern
 				kbd.set_mode( mode_list.at( string_leds ) );
 				kbd.write_mode();
@@ -384,6 +376,15 @@ int main( int argc, char **argv ){
 			
 		}
 		
+		
+		// parse custom keys flag
+		if( flag_custom_keys ){
+			
+			kbd.set_custom_keys( string_custom_keys );
+			kbd.write_custom();
+			
+		}
+					
 		
 		//parse color flag
 		if( flag_color ){
