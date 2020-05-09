@@ -55,6 +55,7 @@ int main( int argc, char **argv ){
 		{"kernel-driver", no_argument, 0, 'k'},
 		{"ajazzak33", no_argument, 0, 'A'},
 		{"interface0", no_argument, 0, 'I'},
+		{"read", no_argument, 0, 'r'},
 		{0, 0, 0, 0}
 	};
 	
@@ -77,6 +78,7 @@ int main( int argc, char **argv ){
 	bool flag_kernel_driver = false;
 	bool flag_ajazzak33 = false;
 	bool flag_interface0 = false;
+	bool flag_read = false;
 	
 	string string_color;
 	string string_brightness;
@@ -102,7 +104,7 @@ int main( int argc, char **argv ){
 	
 	// parse command line options
 	int c, option_index = 0;
-	while( (c = getopt_long( argc, argv, "hc:b:s:d:l:v:P:K:R:M:L:B:D:p:a:kAI",
+	while( (c = getopt_long( argc, argv, "hc:b:s:d:l:v:P:K:R:M:L:B:D:p:a:kAIr",
 	long_options, &option_index ) ) != -1 ){
 		
 		switch( c ){
@@ -194,6 +196,10 @@ int main( int argc, char **argv ){
 				flag_interface0 = true;
 				break;
 				
+			case 'r':
+				flag_read = true;
+				break;
+				
 			case '?':
 				return 1;
 				break;
@@ -275,6 +281,18 @@ int main( int argc, char **argv ){
 			}
 		}
 		
+		// read settings from keyboard
+		if( flag_read && flag_ajazzak33 ){
+			std::cout << "This feature is currently not supported for the Ajazz AK33\n";
+			std::cout << "You can help to implement it by capturing USB communication, for more information open an issue on Github.\n";
+		} else if( flag_read ){
+			
+			std::cout << "This feature is experimental, not everything is read, please report bugs\n";
+			
+			kbd.read_active_profile();
+			std::cout << "Active profile: " << kbd.get_active_profile() << "\n";
+			
+		}
 		
 		// parse active flag, set active profile
 		if( flag_active ){
@@ -492,6 +510,7 @@ int main( int argc, char **argv ){
 			// ask user for confirmation?
 			std::cout << "Remapping the keys is experimental and potentially dangerous.\n";
 			std::cout << "On ISO-layout boards and on the Ajazz AK33 this has been reported to mess up all keys.\n";
+			std::cout << "You can help to improve it by capturing USB communication, for more information open an issue on Github.\n";
 			std::cout << "If you accept the risk of permanent damage to the keyboard, type YES and press enter to continue.\n";
 			std::cout << "Anything else will cancel this process.\n";
 			

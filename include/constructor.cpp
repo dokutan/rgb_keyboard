@@ -21,9 +21,13 @@
 //constructor
 rgb_keyboard::keyboard::keyboard(){
 	
+	
+	// default settings
 	_direction = d_undefined;
-	_mode = m_undefined;
+	_mode = m_fixed;
 	_variant = v_undefined;
+	_profile = 1;
+	_active_profile = 1;
 	
 	//keycodes for custom key color
 	_keycodes["Esc"] = { 0x57, 0x03, 0x00 };

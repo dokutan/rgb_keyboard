@@ -17,7 +17,6 @@
  */
 
 #include "rgb_keyboard.h"
-#include "data.cpp"
 
 //writer functions (apply changes to keyboard)
 

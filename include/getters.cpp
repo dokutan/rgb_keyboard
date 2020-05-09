@@ -65,3 +65,7 @@ bool rgb_keyboard::keyboard::get_detach_kernel_driver(){
 bool rgb_keyboard::keyboard::get_open_interface_0(){
 	return _open_interface_0;
 }
+
+int rgb_keyboard::keyboard::get_active_profile(){
+	return _active_profile;
+}
