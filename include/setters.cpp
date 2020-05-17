@@ -58,14 +58,14 @@ int rgb_keyboard::keyboard::set_brightness( int Brightness ){
 }
 
 int rgb_keyboard::keyboard::set_color( uint8_t Color_r, uint8_t Color_g, uint8_t Color_b ){
-	_color_r = Color_r;
-	_color_g = Color_g;
-	_color_b = Color_b;
+	_color_r[_profile-1] = Color_r;
+	_color_g[_profile-1] = Color_g;
+	_color_b[_profile-1] = Color_b;
 	return 0;
 }
 
 int rgb_keyboard::keyboard::set_rainbow( bool Rainbow ){
-	_rainbow = Rainbow;
+	_rainbow[_profile-1] = Rainbow;
 	return 0;
 }
 

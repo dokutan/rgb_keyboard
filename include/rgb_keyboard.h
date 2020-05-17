@@ -92,7 +92,7 @@ class rgb_keyboard::keyboard{
 		//constructor
 		keyboard();
 		
-		//setter functions
+		//setter functions: set values for current _profile
 		int set_ajazzak33_compatibility( bool compatibility );
 		int set_profile( int profile );
 		int set_active_profile( int profile );
@@ -122,6 +122,7 @@ class rgb_keyboard::keyboard{
 		bool get_detach_kernel_driver();
 		bool get_open_interface_0();
 		int get_active_profile();
+		int get_profile();
 		
 		//writer functions (apply settings to keyboard)
 		int write_brightness(); // compatibility done 2 3 A
@@ -171,8 +172,8 @@ class rgb_keyboard::keyboard{
 		direction _direction;
 		int _brightness;
 		int _speed;
-		uint8_t _color_r, _color_g, _color_b;
-		bool _rainbow;
+		std::array< uint8_t, 3 > _color_r, _color_g, _color_b;
+		std::array< bool, 3 > _rainbow;
 		mode_variant _variant;
 		report_rate _report_rate;
 		

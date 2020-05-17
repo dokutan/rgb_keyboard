@@ -657,7 +657,7 @@ int rgb_keyboard::keyboard::write_color(){
 	if( _profile == 1 ){
 		data_settings_1[1] = 0x0b;
 		data_settings_1[5] = 0x04;
-		if( _rainbow ){
+		if( _rainbow[_profile-1] ){
 			data_settings_1[1] = 0x0c;
 			data_settings_1[8] = 0x01;
 		}
@@ -665,13 +665,13 @@ int rgb_keyboard::keyboard::write_color(){
 		data_settings_2[2] = 0x02;
 		data_settings_2[4] = 0x03;
 		data_settings_2[5] = 0x05;
-		data_settings_2[8] = _color_r;
-		data_settings_2[9] = _color_g;
-		data_settings_2[10] = _color_b;
+		data_settings_2[8] = _color_r[_profile-1];
+		data_settings_2[9] = _color_g[_profile-1];
+		data_settings_2[10] = _color_b[_profile-1];
 	} else if( _profile == 2 ){
 		data_settings_1[1] = 0x35;
 		data_settings_1[5] = 0x2e;
-		if( _rainbow ){
+		if( _rainbow[_profile-1] ){
 			data_settings_1[1] = 0x36;
 			data_settings_1[5] = 0x2e;
 			data_settings_1[8] = 0x01;
@@ -679,13 +679,13 @@ int rgb_keyboard::keyboard::write_color(){
 		
 		data_settings_2[4] = 0x03;
 		data_settings_2[5] = 0x2f;
-		data_settings_2[8] = _color_r;
-		data_settings_2[9] = _color_g;
-		data_settings_2[10] = _color_b;
+		data_settings_2[8] = _color_r[_profile-1];
+		data_settings_2[9] = _color_g[_profile-1];
+		data_settings_2[10] = _color_b[_profile-1];
 	} else if( _profile == 3 ){
 		data_settings_1[1] = 0x5f;
 		data_settings_1[5] = 0x58;
-		if( _rainbow ){
+		if( _rainbow[_profile-1] ){
 			data_settings_1[1] = 0x60;
 			data_settings_1[5] = 0x58;
 			data_settings_1[8] = 0x01;
@@ -693,9 +693,9 @@ int rgb_keyboard::keyboard::write_color(){
 		
 		data_settings_2[4] = 0x03;
 		data_settings_2[5] = 0x59;
-		data_settings_2[8] = _color_r;
-		data_settings_2[9] = _color_g;
-		data_settings_2[10] = _color_b;
+		data_settings_2[8] = _color_r[_profile-1];
+		data_settings_2[9] = _color_g[_profile-1];
+		data_settings_2[10] = _color_b[_profile-1];
 	} else{
 		throw std::invalid_argument("Invalid profile number");
 	}

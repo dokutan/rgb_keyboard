@@ -1,0 +1,25 @@
+- [ ] change internal state variables to include full profile support (setters, getters, writers)
+	- [x] color and rainbow
+	- [ ] mode
+	- [ ] direction
+	- [ ] brightness
+	- [ ] reactive variant
+	- [ ] speed
+	- [ ] report rate
+	- [ ] custom key colors
+	- [ ] key mapping ?
+- [ ] reading settings
+	- [ ] complete all led settings
+		- [x] color and rainbow
+		- [ ] mode
+		- [ ] direction
+		- [ ] brightness
+		- [ ] reactive variant
+		- [ ] speed
+		- [ ] report rate
+		- [ ] custom key colors
+	- [ ] complete keymap/macros
+	- [x] Update documentation
+	- [ ] Add finer control to what is read
+- [ ] fix and complete keymapping and macros
+- [ ] Add source code documentation

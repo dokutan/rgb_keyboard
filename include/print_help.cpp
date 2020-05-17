@@ -54,6 +54,8 @@ void print_help(){
 
 	std::cout << "\n\t-M --keymap=file\tLoad keymap from specified file\n";
 	
+	std::cout << "\n\t-r --read\tRead and print stored settings from the keyboard (experimental)\n";
+	
 	std::cout << "\n\t-B --bus=number\t\tSpecify USB bus id, must be used with --device\n";
 	std::cout << "\t-D --device=number\tSpecify USB device number, must be used with --bus\n";
 	std::cout << "\t-k --kernel-driver\tDon't try to detach the kernel driver, required on some systems\n";

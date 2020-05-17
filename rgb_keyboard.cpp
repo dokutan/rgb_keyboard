@@ -20,6 +20,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <map>
 #include <exception>
@@ -287,10 +288,34 @@ int main( int argc, char **argv ){
 			std::cout << "You can help to implement it by capturing USB communication, for more information open an issue on Github.\n";
 		} else if( flag_read ){
 			
+			// a copy of the main kbd object, this prevents unintentional behaviour
+			rgb_keyboard::keyboard kbd_in = kbd;
+			
 			std::cout << "This feature is experimental, not everything is read, please report bugs\n";
 			
-			kbd.read_active_profile();
-			std::cout << "Active profile: " << kbd.get_active_profile() << "\n";
+			// active profile
+			kbd_in.read_active_profile();
+			std::cout << "Active profile: " << kbd_in.get_active_profile() << "\n";
+			
+			// read settings
+			kbd_in.read_color();
+			
+			// iterate over profiles and print settings
+			for( int i = 1; i < 4; i++ ){
+				kbd_in.set_profile( i );
+				std::cout << "\nProfile " << kbd_in.get_profile() << ":\n";
+				
+				// color
+				if( kbd_in.get_rainbow() ){
+					std::cout << "Color: multi\n";
+				} else{
+					std::cout << "Color: ";
+					std::cout << std::hex << std::setfill('0') << std::setw(2) << (int)kbd_in.get_color_r();
+					std::cout << std::hex << std::setfill('0') << std::setw(2) << (int)kbd_in.get_color_g();
+					std::cout << std::hex << std::setfill('0') << std::setw(2) << (int)kbd_in.get_color_b();
+					std::cout << "\n" << std::dec << std::setfill(' ') << std::setw(0);
+				}
+			}
 			
 		}
 		
