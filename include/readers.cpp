@@ -51,12 +51,12 @@ int rgb_keyboard::keyboard::read_active_profile(){
 	}
 }
 
-int rgb_keyboard::keyboard::read_color(){
+int rgb_keyboard::keyboard::read_led_settings(){
 	
 	// vars
 	int res = 0;
 	int transferred = 0;
-	uint8_t buffer_1[64], buffer_2[64], buffer_3[64];
+	uint8_t input_buffer[3][64];
 	
 	// prepare data packets
 	uint8_t data_read_1[64], data_read_2[64], data_read_3[64];
@@ -84,7 +84,7 @@ int rgb_keyboard::keyboard::read_color(){
 	64, &transferred, 1000);
 	
 	// read from endpoint 2
-	res += libusb_interrupt_transfer( _handle, 0x82, buffer_1, 64, 
+	res += libusb_interrupt_transfer( _handle, 0x82, input_buffer[0], 64, 
 	&transferred, 1000);
 	
 	// write data packet 2 to endpoint 3
@@ -92,7 +92,7 @@ int rgb_keyboard::keyboard::read_color(){
 	64, &transferred, 1000);
 	
 	// read from endpoint 2
-	res += libusb_interrupt_transfer( _handle, 0x82, buffer_2, 64, 
+	res += libusb_interrupt_transfer( _handle, 0x82, input_buffer[1], 64, 
 	&transferred, 1000);
 	
 	// write data packet 3 to endpoint 3
@@ -100,37 +100,23 @@ int rgb_keyboard::keyboard::read_color(){
 	64, &transferred, 1000);
 	
 	// read from endpoint 2
-	res += libusb_interrupt_transfer( _handle, 0x82, buffer_3, 64, 
+	res += libusb_interrupt_transfer( _handle, 0x82, input_buffer[2], 64, 
 	&transferred, 1000);
 	
-	// extract information (profile 1)
-	_color_r[0] = buffer_1[13];
-	_color_g[0] = buffer_1[14];
-	_color_b[0] = buffer_1[15];
-	if( buffer_1[12] == 1 ){
-		_rainbow[0] = true;
-	} else{
-		_rainbow[0] = false;
-	}
-	
-	// extract information (profile 2)
-	_color_r[1] = buffer_2[13];
-	_color_g[1] = buffer_2[14];
-	_color_b[1] = buffer_2[15];
-	if( buffer_2[12] == 1 ){
-		_rainbow[1] = true;
-	} else{
-		_rainbow[1] = false;
-	}
-	
-	// extract information (profile 3)
-	_color_r[2] = buffer_3[13];
-	_color_g[2] = buffer_3[14];
-	_color_b[2] = buffer_3[15];
-	if( buffer_3[12] == 1 ){
-		_rainbow[2] = true;
-	} else{
-		_rainbow[2] = false;
+	// extract information
+	for( int i = 0; i < 3; i++ ){
+		_color_r[i] = input_buffer[i][13];
+		_color_g[i] = input_buffer[i][14];
+		_color_b[i] = input_buffer[i][15];
+		if( input_buffer[i][12] == 1 ){
+			_rainbow[i] = true;
+		} else{
+			_rainbow[i] = false;
+		}
+		
+		if( input_buffer[i][9] >= _brightness_min && input_buffer[i][9] <= _brightness_max )
+			_brightness[i] = input_buffer[i][9];
+		
 	}
 	
 	return 0;

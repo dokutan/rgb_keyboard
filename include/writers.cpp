@@ -32,16 +32,16 @@ int rgb_keyboard::keyboard::write_brightness(){
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
 	if( _profile == 1 ){
-		data_settings[1] = 0x08 + _brightness;
-		data_settings[8] = _brightness;
+		data_settings[1] = 0x08 + _brightness[_profile-1];
+		data_settings[8] = _brightness[_profile-1];
 		data_settings[5] = 0x01;
 	} else if( _profile == 2 ){
-		data_settings[1] = 0x32 + _brightness;
-		data_settings[8] = _brightness;
+		data_settings[1] = 0x32 + _brightness[_profile-1];
+		data_settings[8] = _brightness[_profile-1];
 		data_settings[5] = 0x2b;
 	} else if( _profile == 3 ){
-		data_settings[1] = 0x5c + _brightness;
-		data_settings[8] = _brightness;
+		data_settings[1] = 0x5c + _brightness[_profile-1];
+		data_settings[8] = _brightness[_profile-1];
 		data_settings[5] = 0x55;
 	} else{
 		throw std::invalid_argument("Invalid profile number");

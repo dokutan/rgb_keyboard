@@ -50,7 +50,7 @@ int rgb_keyboard::keyboard::set_speed( int Speed ){
 
 int rgb_keyboard::keyboard::set_brightness( int Brightness ){
 	if( Brightness >= _brightness_min && Brightness <= _brightness_max ){
-		_brightness = Brightness;
+		_brightness[_profile-1] = Brightness;
 		return 0;
 	} else{
 		return 1;

@@ -23,7 +23,7 @@ int rgb_keyboard::keyboard::get_speed(){
 }
 
 int rgb_keyboard::keyboard::get_brightness(){
-	return _brightness;
+	return _brightness[_profile-1];
 }
 
 rgb_keyboard::keyboard::mode rgb_keyboard::keyboard::get_mode(){

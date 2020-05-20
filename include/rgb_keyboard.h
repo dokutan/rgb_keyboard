@@ -138,7 +138,7 @@ class rgb_keyboard::keyboard{
 		
 		//reader functions
 		int read_active_profile();
-		int read_color();
+		int read_led_settings();
 		
 		//helper functions
 		int open_keyboard(); // open keyboard with default vid and pid
@@ -170,7 +170,7 @@ class rgb_keyboard::keyboard{
 		//rgb control vars
 		mode _mode;
 		direction _direction;
-		int _brightness;
+		std::array< int, 3 > _brightness;
 		int _speed;
 		std::array< uint8_t, 3 > _color_r, _color_g, _color_b;
 		std::array< bool, 3 > _rainbow;

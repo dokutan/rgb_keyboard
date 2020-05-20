@@ -2,7 +2,7 @@
 	- [x] color and rainbow
 	- [ ] mode
 	- [ ] direction
-	- [ ] brightness
+	- [x] brightness
 	- [ ] reactive variant
 	- [ ] speed
 	- [ ] report rate
@@ -13,7 +13,7 @@
 		- [x] color and rainbow
 		- [ ] mode
 		- [ ] direction
-		- [ ] brightness
+		- [x] brightness
 		- [ ] reactive variant
 		- [ ] speed
 		- [ ] report rate

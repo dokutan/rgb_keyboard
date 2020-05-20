@@ -298,7 +298,7 @@ int main( int argc, char **argv ){
 			std::cout << "Active profile: " << kbd_in.get_active_profile() << "\n";
 			
 			// read settings
-			kbd_in.read_color();
+			kbd_in.read_led_settings();
 			
 			// iterate over profiles and print settings
 			for( int i = 1; i < 4; i++ ){
@@ -315,6 +315,8 @@ int main( int argc, char **argv ){
 					std::cout << std::hex << std::setfill('0') << std::setw(2) << (int)kbd_in.get_color_b();
 					std::cout << "\n" << std::dec << std::setfill(' ') << std::setw(0);
 				}
+				
+				std::cout << "Brightness: " << kbd_in.get_brightness() << "\n";
 			}
 			
 		}
