@@ -23,9 +23,15 @@ rgb_keyboard::keyboard::keyboard(){
 	
 	
 	// default settings
-	_direction = d_undefined;
-	_mode = m_fixed;
-	_variant = v_undefined;
+	_direction[0] = d_undefined;
+	_direction[1] = d_undefined;
+	_direction[2] = d_undefined;
+	_mode[0] = m_fixed;
+	_mode[1] = m_fixed;
+	_mode[2] = m_fixed;
+	_variant[0] = v_undefined;
+	_variant[1] = v_undefined;
+	_variant[2] = v_undefined;
 	_profile = 1;
 	_active_profile = 1;
 	

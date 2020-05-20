@@ -19,7 +19,7 @@
 #include "rgb_keyboard.h"
 
 int rgb_keyboard::keyboard::get_speed(){
-	return _speed;
+	return _speed[_profile-1];
 }
 
 int rgb_keyboard::keyboard::get_brightness(){
@@ -27,11 +27,11 @@ int rgb_keyboard::keyboard::get_brightness(){
 }
 
 rgb_keyboard::keyboard::mode rgb_keyboard::keyboard::get_mode(){
-	return _mode;
+	return _mode[_profile-1];
 }
 
 rgb_keyboard::keyboard::direction rgb_keyboard::keyboard::get_direction(){
-	return _direction;
+	return _direction[_profile-1];
 }
 
 uint8_t rgb_keyboard::keyboard::get_color_r(){
@@ -51,11 +51,11 @@ bool rgb_keyboard::keyboard::get_rainbow(){
 }
 
 rgb_keyboard::keyboard::mode_variant rgb_keyboard::keyboard::get_variant(){
-	return _variant;
+	return _variant[_profile-1];
 }
 
 rgb_keyboard::keyboard::report_rate rgb_keyboard::keyboard::get_report_rate(){
-	return _report_rate;
+	return _report_rate[_profile-1];
 }
 
 bool rgb_keyboard::keyboard::get_detach_kernel_driver(){

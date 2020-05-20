@@ -168,14 +168,14 @@ class rgb_keyboard::keyboard{
 		int _active_profile;
 		
 		//rgb control vars
-		mode _mode;
-		direction _direction;
+		std::array< mode, 3 > _mode;
+		std::array< direction, 3 > _direction;
 		std::array< int, 3 > _brightness;
-		int _speed;
+		std::array< int, 3 > _speed;
 		std::array< uint8_t, 3 > _color_r, _color_g, _color_b;
 		std::array< bool, 3 > _rainbow;
-		mode_variant _variant;
-		report_rate _report_rate;
+		std::array< mode_variant, 3 > _variant;
+		std::array< report_rate, 3 > _report_rate;
 		
 		//min and max values
 		int _brightness_min = 0, _brightness_max = 9;

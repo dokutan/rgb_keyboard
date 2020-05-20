@@ -1,11 +1,11 @@
 - [ ] change internal state variables to include full profile support (setters, getters, writers)
 	- [x] color and rainbow
-	- [ ] mode
-	- [ ] direction
+	- [x] mode
+	- [x] direction
 	- [x] brightness
-	- [ ] reactive variant
-	- [ ] speed
-	- [ ] report rate
+	- [x] reactive variant
+	- [x] speed
+	- [x] report rate
 	- [ ] custom key colors
 	- [ ] key mapping ?
 - [ ] reading settings
