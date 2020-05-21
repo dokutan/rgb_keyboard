@@ -19,7 +19,7 @@
 #ifndef PRINT_HELP
 #define PRINT_HELP
 
-//prints a help message
+/// Prints the help message (usage information)
 void print_help();
 
 #endif

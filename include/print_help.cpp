@@ -19,7 +19,6 @@
 #include "print_help.h"
 #include <iostream>
 
-//prints a help message
 void print_help(){
 	std::cout << "This software controls the RGB lighting on some "
 	"keyboards.\n";

@@ -11,7 +11,8 @@ install:
 	cp ./rgb_keyboard $(BIN_DIR)/rgb_keyboard
 	cp ./keyboard.rules /etc/udev/rules.d
 	mkdir $(DOC_DIR)/rgb_keyboard | true
-	cp ./example.conf $(DOC_DIR)/rgb_keyboard/
+	cp ./examples/example.conf $(DOC_DIR)/rgb_keyboard/
+	cp ./examples/example.keymap $(DOC_DIR)/rgb_keyboard/
 	cp ./README.md $(DOC_DIR)/rgb_keyboard/
 	cp ./rgb_keyboard.1 $(MAN_DIR)/
 
