@@ -4,7 +4,7 @@ DOC_DIR = $(PREFIX)/share/doc
 MAN_DIR = $(PREFIX)/share/man/man1
 CC = g++
 
-build: rgb_keyboard.o constructor.o fileio.o getters.o helpers.o print_help.o print_keycodes.o setters.o writers.o
+build: rgb_keyboard.o constructor.o fileio.o getters.o helpers.o print_help.o print_keycodes.o setters.o writers.o readers.o data.o
 	$(CC) *.o -o rgb_keyboard -lusb-1.0 -Wall -Wextra -O2
 
 install:
@@ -25,6 +25,9 @@ clean:
 	rm ./rgb_keyboard *.o
 
 # individual .cpp files
+data.o:
+	$(CC) -c include/data.cpp -Wall -Wextra -O2
+
 constructor.o:
 	$(CC) -c include/constructor.cpp -Wall -Wextra -O2
 
@@ -51,3 +54,7 @@ writers.o:
 
 rgb_keyboard.o:
 	$(CC) -c rgb_keyboard.cpp -Wall -Wextra -O2
+
+readers.o:
+	$(CC) -c include/readers.cpp -Wall -Wextra -O2
+

@@ -17,7 +17,6 @@
  */
 
 #include "rgb_keyboard.h"
-#include "data.cpp"
 
 //writer functions (apply changes to keyboard)
 
@@ -33,16 +32,16 @@ int rgb_keyboard::keyboard::write_brightness(){
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
 	if( _profile == 1 ){
-		data_settings[1] = 0x08 + _brightness;
-		data_settings[8] = _brightness;
+		data_settings[1] = 0x08 + _brightness[_profile-1];
+		data_settings[8] = _brightness[_profile-1];
 		data_settings[5] = 0x01;
 	} else if( _profile == 2 ){
-		data_settings[1] = 0x32 + _brightness;
-		data_settings[8] = _brightness;
+		data_settings[1] = 0x32 + _brightness[_profile-1];
+		data_settings[8] = _brightness[_profile-1];
 		data_settings[5] = 0x2b;
 	} else if( _profile == 3 ){
-		data_settings[1] = 0x5c + _brightness;
-		data_settings[8] = _brightness;
+		data_settings[1] = 0x5c + _brightness[_profile-1];
+		data_settings[8] = _brightness[_profile-1];
 		data_settings[5] = 0x55;
 	} else{
 		throw std::invalid_argument("Invalid profile number");
@@ -109,16 +108,16 @@ int rgb_keyboard::keyboard::write_speed(){
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
 	if( _profile == 1 ){
-		data_settings[1] = 0x0d - _speed;
-		data_settings[8] = 0x04 - _speed;
+		data_settings[1] = 0x0d - _speed[_profile-1];
+		data_settings[8] = 0x04 - _speed[_profile-1];
 		data_settings[5] = 0x02;
 	} else if( _profile == 2 ){
-		data_settings[1] = 0x37 - _speed;
-		data_settings[8] = 0x04 - _speed;
+		data_settings[1] = 0x37 - _speed[_profile-1];
+		data_settings[8] = 0x04 - _speed[_profile-1];
 		data_settings[5] = 0x2c;
 	} else if( _profile == 3 ){
-		data_settings[1] = 0x61 - _speed;
-		data_settings[8] = 0x04 - _speed;
+		data_settings[1] = 0x61 - _speed[_profile-1];
+		data_settings[8] = 0x04 - _speed[_profile-1];
 		data_settings[5] = 0x56;
 	} else{
 		throw std::invalid_argument("Invalid profile number");
@@ -185,7 +184,7 @@ int rgb_keyboard::keyboard::write_direction(){
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
 	if( _profile == 1 ){
-		switch( _direction ){
+		switch( _direction[_profile-1] ){
 			case d_left:
 				data_settings[1] = 0x09;
 				data_settings[2] = 0x01;
@@ -201,7 +200,7 @@ int rgb_keyboard::keyboard::write_direction(){
 				break;
 		}
 	} else if( _profile == 2 ){
-		switch( _direction ){
+		switch( _direction[_profile-1] ){
 			case d_left:
 				data_settings[1] = 0x33;
 				data_settings[2] = 0x01;
@@ -217,7 +216,7 @@ int rgb_keyboard::keyboard::write_direction(){
 				break;
 		}
 	} else if( _profile == 3 ){
-		switch( _direction ){
+		switch( _direction[_profile-1] ){
 			case d_left:
 				data_settings[1] = 0x5d;
 				data_settings[2] = 0x01;
@@ -296,7 +295,7 @@ int rgb_keyboard::keyboard::write_mode(){
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
 	if( _profile == 1 ){
-		switch( _mode ){
+		switch( _mode[_profile-1] ){
 			case m_horizontal_wave://ok
 				data_settings[1] = 0x08;
 				data_settings[8] = 0x01;
@@ -381,7 +380,7 @@ int rgb_keyboard::keyboard::write_mode(){
 				break;
 		}
 	} else if( _profile == 2 ){
-		switch( _mode ){
+		switch( _mode[_profile-1] ){
 			case m_horizontal_wave://ok
 				data_settings[1] = 0x32;
 				data_settings[5] = 0x2a;
@@ -486,7 +485,7 @@ int rgb_keyboard::keyboard::write_mode(){
 				break;
 		}
 	} else if( _profile == 3 ){
-		switch( _mode ){
+		switch( _mode[_profile-1] ){
 			case m_horizontal_wave://ok
 				data_settings[1] = 0x5c;
 				data_settings[5] = 0x54;
@@ -658,7 +657,7 @@ int rgb_keyboard::keyboard::write_color(){
 	if( _profile == 1 ){
 		data_settings_1[1] = 0x0b;
 		data_settings_1[5] = 0x04;
-		if( _rainbow ){
+		if( _rainbow[_profile-1] ){
 			data_settings_1[1] = 0x0c;
 			data_settings_1[8] = 0x01;
 		}
@@ -666,13 +665,13 @@ int rgb_keyboard::keyboard::write_color(){
 		data_settings_2[2] = 0x02;
 		data_settings_2[4] = 0x03;
 		data_settings_2[5] = 0x05;
-		data_settings_2[8] = _color_r;
-		data_settings_2[9] = _color_g;
-		data_settings_2[10] = _color_b;
+		data_settings_2[8] = _color_r[_profile-1];
+		data_settings_2[9] = _color_g[_profile-1];
+		data_settings_2[10] = _color_b[_profile-1];
 	} else if( _profile == 2 ){
 		data_settings_1[1] = 0x35;
 		data_settings_1[5] = 0x2e;
-		if( _rainbow ){
+		if( _rainbow[_profile-1] ){
 			data_settings_1[1] = 0x36;
 			data_settings_1[5] = 0x2e;
 			data_settings_1[8] = 0x01;
@@ -680,13 +679,13 @@ int rgb_keyboard::keyboard::write_color(){
 		
 		data_settings_2[4] = 0x03;
 		data_settings_2[5] = 0x2f;
-		data_settings_2[8] = _color_r;
-		data_settings_2[9] = _color_g;
-		data_settings_2[10] = _color_b;
+		data_settings_2[8] = _color_r[_profile-1];
+		data_settings_2[9] = _color_g[_profile-1];
+		data_settings_2[10] = _color_b[_profile-1];
 	} else if( _profile == 3 ){
 		data_settings_1[1] = 0x5f;
 		data_settings_1[5] = 0x58;
-		if( _rainbow ){
+		if( _rainbow[_profile-1] ){
 			data_settings_1[1] = 0x60;
 			data_settings_1[5] = 0x58;
 			data_settings_1[8] = 0x01;
@@ -694,9 +693,9 @@ int rgb_keyboard::keyboard::write_color(){
 		
 		data_settings_2[4] = 0x03;
 		data_settings_2[5] = 0x59;
-		data_settings_2[8] = _color_r;
-		data_settings_2[9] = _color_g;
-		data_settings_2[10] = _color_b;
+		data_settings_2[8] = _color_r[_profile-1];
+		data_settings_2[9] = _color_g[_profile-1];
+		data_settings_2[10] = _color_b[_profile-1];
 	} else{
 		throw std::invalid_argument("Invalid profile number");
 	}
@@ -893,35 +892,35 @@ int rgb_keyboard::keyboard::write_variant(){
 	
 	//convert variant	
 	if( _profile == 1 ){
-		if( _variant == v_color_red ){
+		if( _variant[_profile-1] == v_color_red ){
 			data_settings[1] = 0x0f;
 			data_settings[8] = 0x00;
-		} else if( _variant == v_color_yellow ){
+		} else if( _variant[_profile-1] == v_color_yellow ){
 			data_settings[1] = 0x10;
 			data_settings[8] = 0x01;
-		} else if( _variant == v_color_green ){
+		} else if( _variant[_profile-1] == v_color_green ){
 			data_settings[1] = 0x11;
 			data_settings[8] = 0x02;
-		} else if( _variant == v_color_blue ){
+		} else if( _variant[_profile-1] == v_color_blue ){
 			data_settings[1] = 0x12;
 			data_settings[8] = 0x03;
 		} else{
 			return 1;
 		}
 	} else if( _profile == 2 ){
-		if( _variant == v_color_red ){
+		if( _variant[_profile-1] == v_color_red ){
 			data_settings[1] = 0x39;
 			data_settings[5] = 0x32;
 			data_settings[8] = 0x00;
-		} else if( _variant == v_color_yellow ){
+		} else if( _variant[_profile-1] == v_color_yellow ){
 			data_settings[1] = 0x3a;
 			data_settings[5] = 0x32;
 			data_settings[8] = 0x01;
-		} else if( _variant == v_color_green ){
+		} else if( _variant[_profile-1] == v_color_green ){
 			data_settings[1] = 0x3b;
 			data_settings[5] = 0x32;
 			data_settings[8] = 0x02;
-		} else if( _variant == v_color_blue ){
+		} else if( _variant[_profile-1] == v_color_blue ){
 			data_settings[1] = 0x3c;
 			data_settings[5] = 0x32;
 			data_settings[8] = 0x03;
@@ -929,19 +928,19 @@ int rgb_keyboard::keyboard::write_variant(){
 			return 1;
 		}
 	} else if( _profile == 3 ){
-		if( _variant == v_color_red ){
+		if( _variant[_profile-1] == v_color_red ){
 			data_settings[1] = 0x63;
 			data_settings[5] = 0x5c;
 			data_settings[8] = 0x00;
-		} else if( _variant == v_color_yellow ){
+		} else if( _variant[_profile-1] == v_color_yellow ){
 			data_settings[1] = 0x64;
 			data_settings[5] = 0x5c;
 			data_settings[8] = 0x01;
-		} else if( _variant == v_color_green ){
+		} else if( _variant[_profile-1] == v_color_green ){
 			data_settings[1] = 0x65;
 			data_settings[5] = 0x5c;
 			data_settings[8] = 0x02;
-		} else if( _variant == v_color_blue ){
+		} else if( _variant[_profile-1] == v_color_blue ){
 			data_settings[1] = 0x66;
 			data_settings[5] = 0x5c;
 			data_settings[8] = 0x03;
@@ -1012,35 +1011,35 @@ int rgb_keyboard::keyboard::write_report_rate(){
 	
 	//convert report rate	
 	if( _profile == 1 ){
-		if( _report_rate == r_125Hz ){
+		if( _report_rate[_profile-1] == r_125Hz ){
 			data_settings[1] = 0x16;
 			data_settings[8] = 0x00;
-		} else if( _report_rate == r_250Hz ){
+		} else if( _report_rate[_profile-1] == r_250Hz ){
 			data_settings[1] = 0x17;
 			data_settings[8] = 0x01;
-		} else if( _report_rate == r_500Hz ){
+		} else if( _report_rate[_profile-1] == r_500Hz ){
 			data_settings[1] = 0x18;
 			data_settings[8] = 0x02;
-		} else if( _report_rate == r_1000Hz ){
+		} else if( _report_rate[_profile-1] == r_1000Hz ){
 			data_settings[1] = 0x19;
 			data_settings[8] = 0x03;
 		} else{
 			return 1;
 		}
 	} else if( _profile == 2 ){
-		if( _report_rate == r_125Hz ){
+		if( _report_rate[_profile-1] == r_125Hz ){
 			data_settings[1] = 0x40;
 			data_settings[5] = 0x39;
 			data_settings[8] = 0x00;
-		} else if( _report_rate == r_250Hz ){
+		} else if( _report_rate[_profile-1] == r_250Hz ){
 			data_settings[1] = 0x41;
 			data_settings[5] = 0x39;
 			data_settings[8] = 0x01;
-		} else if( _report_rate == r_500Hz ){
+		} else if( _report_rate[_profile-1] == r_500Hz ){
 			data_settings[1] = 0x42;
 			data_settings[5] = 0x39;
 			data_settings[8] = 0x02;
-		} else if( _report_rate == r_1000Hz ){
+		} else if( _report_rate[_profile-1] == r_1000Hz ){
 			data_settings[1] = 0x43;
 			data_settings[5] = 0x39;
 			data_settings[8] = 0x03;
@@ -1048,19 +1047,19 @@ int rgb_keyboard::keyboard::write_report_rate(){
 			return 1;
 		}
 	} else if( _profile == 3 ){
-		if( _report_rate == r_125Hz ){
+		if( _report_rate[_profile-1] == r_125Hz ){
 			data_settings[1] = 0x6a;
 			data_settings[5] = 0x63;
 			data_settings[8] = 0x00;
-		} else if( _report_rate == r_250Hz ){
+		} else if( _report_rate[_profile-1] == r_250Hz ){
 			data_settings[1] = 0x6b;
 			data_settings[5] = 0x63;
 			data_settings[8] = 0x01;
-		} else if( _report_rate == r_500Hz ){
+		} else if( _report_rate[_profile-1] == r_500Hz ){
 			data_settings[1] = 0x6c;
 			data_settings[5] = 0x63;
 			data_settings[8] = 0x02;
-		} else if( _report_rate == r_1000Hz ){
+		} else if( _report_rate[_profile-1] == r_1000Hz ){
 			data_settings[1] = 0x6d;
 			data_settings[5] = 0x63;
 			data_settings[8] = 0x03;

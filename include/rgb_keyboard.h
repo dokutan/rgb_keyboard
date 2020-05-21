@@ -92,7 +92,7 @@ class rgb_keyboard::keyboard{
 		//constructor
 		keyboard();
 		
-		//setter functions
+		//setter functions: set values for current _profile
 		int set_ajazzak33_compatibility( bool compatibility );
 		int set_profile( int profile );
 		int set_active_profile( int profile );
@@ -121,6 +121,8 @@ class rgb_keyboard::keyboard{
 		report_rate get_report_rate();
 		bool get_detach_kernel_driver();
 		bool get_open_interface_0();
+		int get_active_profile();
+		int get_profile();
 		
 		//writer functions (apply settings to keyboard)
 		int write_brightness(); // compatibility done 2 3 A
@@ -133,6 +135,10 @@ class rgb_keyboard::keyboard{
 		int write_report_rate(); // compatibility done 2 3 A
 		int write_key_mapping(); // compatibility done A
 		int write_active_profile(); // compatibility done A
+		
+		//reader functions
+		int read_active_profile();
+		int read_led_settings();
 		
 		//helper functions
 		int open_keyboard(); // open keyboard with default vid and pid
@@ -150,26 +156,26 @@ class rgb_keyboard::keyboard{
 		
 	private:
 		
-		// id this is set to true usb control transfers are used for sending
-		// this enables compatibility woth other keyboards 
+		// if this is set to true usb control transfers are used for sending
+		// this enables compatibility with other keyboards 
 		bool _ajazzak33_compatibility = false;
 		
 		// profile (1-3): this changes the profile to which the settings
 		// are applied
-		int _profile = 1;
+		int _profile;
 		
 		// currently active profile
-		int _active_profile = 1;
+		int _active_profile;
 		
 		//rgb control vars
-		mode _mode = m_fixed;
-		direction _direction;
-		int _brightness;
-		int _speed;
-		uint8_t _color_r, _color_g, _color_b;
-		bool _rainbow;
-		mode_variant _variant;
-		report_rate _report_rate;
+		std::array< mode, 3 > _mode;
+		std::array< direction, 3 > _direction;
+		std::array< int, 3 > _brightness;
+		std::array< int, 3 > _speed;
+		std::array< uint8_t, 3 > _color_r, _color_g, _color_b;
+		std::array< bool, 3 > _rainbow;
+		std::array< mode_variant, 3 > _variant;
+		std::array< report_rate, 3 > _report_rate;
 		
 		//min and max values
 		int _brightness_min = 0, _brightness_max = 9;
@@ -194,21 +200,22 @@ class rgb_keyboard::keyboard{
 		
 		
 		//usb data packets
-		static uint8_t _data_start[];
-		static uint8_t _data_end[];
-		static uint8_t _data_settings[];
-		static uint8_t _data_remap_1[];
-		static uint8_t _data_remap_2[];
-		static uint8_t _data_remap_3[];
-		static uint8_t _data_remap_4[];
-		static uint8_t _data_remap_5[];
-		static uint8_t _data_remap_6[];
-		static uint8_t _data_remap_7[];
-		static uint8_t _data_remap_8[];
-		static uint8_t _data_remap_9[];
-		static uint8_t _data_remap_10[];
-		static uint8_t _data_profile[];
-		static uint8_t _data_macros[];
+		static uint8_t _data_start[64];
+		static uint8_t _data_end[64];
+		static uint8_t _data_settings[64];
+		static uint8_t _data_remap_1[64];
+		static uint8_t _data_remap_2[64];
+		static uint8_t _data_remap_3[64];
+		static uint8_t _data_remap_4[64];
+		static uint8_t _data_remap_5[64];
+		static uint8_t _data_remap_6[64];
+		static uint8_t _data_remap_7[64];
+		static uint8_t _data_remap_8[64];
+		static uint8_t _data_remap_9[64];
+		static uint8_t _data_remap_10[64];
+		static uint8_t _data_profile[64];
+		static uint8_t _data_macros[64];
+		static uint8_t _data_read[64];
 		
 		//stores key codes for custom colors
 		std::map< std::string, std::array<uint8_t, 3> > _keycodes;

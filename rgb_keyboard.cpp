@@ -20,6 +20,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <map>
 #include <exception>
@@ -55,6 +56,7 @@ int main( int argc, char **argv ){
 		{"kernel-driver", no_argument, 0, 'k'},
 		{"ajazzak33", no_argument, 0, 'A'},
 		{"interface0", no_argument, 0, 'I'},
+		{"read", no_argument, 0, 'r'},
 		{0, 0, 0, 0}
 	};
 	
@@ -77,6 +79,7 @@ int main( int argc, char **argv ){
 	bool flag_kernel_driver = false;
 	bool flag_ajazzak33 = false;
 	bool flag_interface0 = false;
+	bool flag_read = false;
 	
 	string string_color;
 	string string_brightness;
@@ -102,7 +105,7 @@ int main( int argc, char **argv ){
 	
 	// parse command line options
 	int c, option_index = 0;
-	while( (c = getopt_long( argc, argv, "hc:b:s:d:l:v:P:K:R:M:L:B:D:p:a:kAI",
+	while( (c = getopt_long( argc, argv, "hc:b:s:d:l:v:P:K:R:M:L:B:D:p:a:kAIr",
 	long_options, &option_index ) ) != -1 ){
 		
 		switch( c ){
@@ -194,6 +197,10 @@ int main( int argc, char **argv ){
 				flag_interface0 = true;
 				break;
 				
+			case 'r':
+				flag_read = true;
+				break;
+				
 			case '?':
 				return 1;
 				break;
@@ -275,6 +282,95 @@ int main( int argc, char **argv ){
 			}
 		}
 		
+		// read settings from keyboard
+		if( flag_read && flag_ajazzak33 ){
+			std::cout << "This feature is currently not supported for the Ajazz AK33\n";
+			std::cout << "You can help to implement it by capturing USB communication, for more information open an issue on Github.\n";
+		} else if( flag_read ){
+			
+			// a copy of the main kbd object, this prevents unintentional behaviour
+			rgb_keyboard::keyboard kbd_in = kbd;
+			
+			std::cout << "This feature is experimental, not everything is read, please report bugs\n";
+			
+			// active profile
+			kbd_in.read_active_profile();
+			std::cout << "Active profile: " << kbd_in.get_active_profile() << "\n";
+			
+			// read settings
+			kbd_in.read_led_settings();
+			
+			// iterate over profiles and print settings
+			for( int i = 1; i < 4; i++ ){
+				kbd_in.set_profile( i );
+				std::cout << "\nProfile " << kbd_in.get_profile() << ":\n";
+				
+				// led mode
+				std::cout << "Led mode: ";
+				switch( kbd_in.get_mode() ){
+					case rgb_keyboard::keyboard::m_horizontal_wave: std::cout << "horizontal-wave\n"; break;
+					case rgb_keyboard::keyboard::m_pulse: std::cout << "pulse\n"; break;
+					case rgb_keyboard::keyboard::m_hurricane: std::cout << "hurricane\n"; break;
+					case rgb_keyboard::keyboard::m_breathing_color: std::cout << "breathing-color\n"; break;
+					case rgb_keyboard::keyboard::m_breathing: std::cout << "breathing\n"; break;
+					case rgb_keyboard::keyboard::m_fixed: std::cout << "fixed\n"; break;
+					case rgb_keyboard::keyboard::m_reactive_single: std::cout << "reactive-single\n"; break;
+					case rgb_keyboard::keyboard::m_reactive_ripple: std::cout << "reactive-ripple\n"; break;
+					case rgb_keyboard::keyboard::m_reactive_horizontal: std::cout << "reactive-horizontal\n"; break;
+					case rgb_keyboard::keyboard::m_waterfall: std::cout << "waterfall\n"; break;
+					case rgb_keyboard::keyboard::m_swirl: std::cout << "swirl\n"; break;
+					case rgb_keyboard::keyboard::m_vertical_wave: std::cout << "vertical-wave\n"; break;
+					case rgb_keyboard::keyboard::m_sine: std::cout << "sine\n"; break;
+					case rgb_keyboard::keyboard::m_vortex: std::cout << "vortex\n"; break;
+					case rgb_keyboard::keyboard::m_rain: std::cout << "rain\n"; break;
+					case rgb_keyboard::keyboard::m_diagonal_wave: std::cout << "diagonal-wave\n"; break;
+					case rgb_keyboard::keyboard::m_reactive_color: std::cout << "reactive-color\n"; break;
+					case rgb_keyboard::keyboard::m_ripple: std::cout << "ripple\n"; break;
+					case rgb_keyboard::keyboard::m_off: std::cout << "off\n"; break;
+					case rgb_keyboard::keyboard::m_custom: std::cout << "custom\n"; break;
+					default: std::cout << "unknown\n"; break;
+				}
+				
+				// reactive-color variant
+				if( kbd_in.get_mode() == rgb_keyboard::keyboard::m_reactive_color ){
+					
+					std::cout << "Variant: ";
+					switch( kbd_in.get_variant() ){
+						case rgb_keyboard::keyboard::v_color_red: std::cout << "red\n"; break;
+						case rgb_keyboard::keyboard::v_color_yellow: std::cout << "yellow\n"; break;
+						case rgb_keyboard::keyboard::v_color_green: std::cout << "green\n"; break;
+						case rgb_keyboard::keyboard::v_color_blue: std::cout << "blue\n"; break;
+						default: std::cout << "unknown\n"; break;
+					}
+					
+				}
+				
+				// direction
+				if( kbd_in.get_direction() == rgb_keyboard::keyboard::d_left )
+					std::cout << "Direction: left\n";
+				else if( kbd_in.get_direction() == rgb_keyboard::keyboard::d_right )
+					std::cout << "Direction: right\n";
+				
+				// color
+				if( kbd_in.get_rainbow() ){
+					std::cout << "Color: multi\n";
+				} else{
+					std::cout << "Color: ";
+					std::cout << std::hex << std::setfill('0') << std::setw(2) << (int)kbd_in.get_color_r();
+					std::cout << std::hex << std::setfill('0') << std::setw(2) << (int)kbd_in.get_color_g();
+					std::cout << std::hex << std::setfill('0') << std::setw(2) << (int)kbd_in.get_color_b();
+					std::cout << "\n" << std::dec << std::setfill(' ') << std::setw(0);
+				}
+				
+				// brightness
+				std::cout << "Brightness: " << kbd_in.get_brightness() << "\n";
+				
+				// speed
+				std::cout << "Speed: " << kbd_in.get_speed() << "\n";
+				
+			}
+			
+		}
 		
 		// parse active flag, set active profile
 		if( flag_active ){
@@ -492,6 +588,7 @@ int main( int argc, char **argv ){
 			// ask user for confirmation?
 			std::cout << "Remapping the keys is experimental and potentially dangerous.\n";
 			std::cout << "On ISO-layout boards and on the Ajazz AK33 this has been reported to mess up all keys.\n";
+			std::cout << "You can help to improve it by capturing USB communication, for more information open an issue on Github.\n";
 			std::cout << "If you accept the risk of permanent damage to the keyboard, type YES and press enter to continue.\n";
 			std::cout << "Anything else will cancel this process.\n";
 			

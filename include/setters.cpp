@@ -30,18 +30,18 @@ int rgb_keyboard::keyboard::set_ajazzak33_compatibility( bool compatibility ){
 }
 
 int rgb_keyboard::keyboard::set_mode( mode Mode ){
-	_mode = Mode;
+	_mode[_profile-1] = Mode;
 	return 0;
 }
 
 int rgb_keyboard::keyboard::set_direction( direction Direction ){
-	_direction = Direction;
+	_direction[_profile-1] = Direction;
 	return 0;
 }
 
 int rgb_keyboard::keyboard::set_speed( int Speed ){
 	if( Speed >= _speed_min && Speed <= _speed_max ){
-		_speed = Speed;
+		_speed[_profile-1] = Speed;
 		return 0;
 	} else{
 		return 1;
@@ -50,7 +50,7 @@ int rgb_keyboard::keyboard::set_speed( int Speed ){
 
 int rgb_keyboard::keyboard::set_brightness( int Brightness ){
 	if( Brightness >= _brightness_min && Brightness <= _brightness_max ){
-		_brightness = Brightness;
+		_brightness[_profile-1] = Brightness;
 		return 0;
 	} else{
 		return 1;
@@ -58,19 +58,19 @@ int rgb_keyboard::keyboard::set_brightness( int Brightness ){
 }
 
 int rgb_keyboard::keyboard::set_color( uint8_t Color_r, uint8_t Color_g, uint8_t Color_b ){
-	_color_r = Color_r;
-	_color_g = Color_g;
-	_color_b = Color_b;
+	_color_r[_profile-1] = Color_r;
+	_color_g[_profile-1] = Color_g;
+	_color_b[_profile-1] = Color_b;
 	return 0;
 }
 
 int rgb_keyboard::keyboard::set_rainbow( bool Rainbow ){
-	_rainbow = Rainbow;
+	_rainbow[_profile-1] = Rainbow;
 	return 0;
 }
 
 int rgb_keyboard::keyboard::set_variant( mode_variant Variant ){
-	_variant = Variant;
+	_variant[_profile-1] = Variant;
 	return 0;
 }
 
@@ -108,7 +108,7 @@ int rgb_keyboard::keyboard::keyboard::set_custom_keys( std::string Keys ){
 }
 
 int rgb_keyboard::keyboard::set_report_rate( report_rate Report_rate ){
-	_report_rate = Report_rate;
+	_report_rate[_profile-1] = Report_rate;
 	return 0;
 }
 
