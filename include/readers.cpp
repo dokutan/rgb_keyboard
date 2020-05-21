@@ -105,6 +105,8 @@ int rgb_keyboard::keyboard::read_led_settings(){
 	
 	// extract information
 	for( int i = 0; i < 3; i++ ){
+		
+		// color
 		_color_r[i] = input_buffer[i][13];
 		_color_g[i] = input_buffer[i][14];
 		_color_b[i] = input_buffer[i][15];
@@ -114,8 +116,57 @@ int rgb_keyboard::keyboard::read_led_settings(){
 			_rainbow[i] = false;
 		}
 		
+		// brightness
 		if( input_buffer[i][9] >= _brightness_min && input_buffer[i][9] <= _brightness_max )
 			_brightness[i] = input_buffer[i][9];
+		
+		// speed
+		if( 3-input_buffer[i][10] >= _speed_min && 3-input_buffer[i][10] <= _speed_max )
+			_speed[i] = 3-input_buffer[i][10];
+		
+		// direction
+		if( input_buffer[i][11] == 0xff )
+			_direction[i] = d_left;
+		else if( input_buffer[i][11] == 0x00 )
+			_direction[i] = d_right;
+		
+		// led mode
+		switch( input_buffer[i][8] ){
+			case 0x01: _mode[i] = m_horizontal_wave; break;
+			case 0x02: _mode[i] = m_pulse; break;
+			case 0x03: _mode[i] = m_hurricane; break;
+			case 0x04: _mode[i] = m_breathing_color; break;
+			case 0x05: _mode[i] = m_breathing; break;
+			case 0x06: _mode[i] = m_fixed; break;
+			case 0x07: _mode[i] = m_reactive_single; break;
+			case 0x08: _mode[i] = m_reactive_ripple; break;
+			case 0x09: _mode[i] = m_reactive_horizontal; break;
+			case 0x0a: _mode[i] = m_waterfall; break;
+			case 0x0b: _mode[i] = m_swirl; break;
+			case 0x0c: _mode[i] = m_vertical_wave; break;
+			case 0x0d: _mode[i] = m_sine; break;
+			case 0x0e: _mode[i] = m_vortex; break;
+			case 0x0f: _mode[i] = m_rain; break;
+			case 0x10: _mode[i] = m_diagonal_wave; break;
+			case 0x11: _mode[i] = m_reactive_color; break;
+			case 0x12: _mode[i] = m_ripple; break;
+			case 0x13: _mode[i] = m_off; break;
+			case 0x14: _mode[i] = m_custom; break;
+			default: _mode[i] = m_undefined; break;
+		}
+		
+		// reactive-color variant
+		if( _mode[i] == m_reactive_color ){
+			
+			switch( input_buffer[i][16] ){
+				case 0x00: _variant[i] = v_color_red; break;
+				case 0x01: _variant[i] = v_color_yellow; break;
+				case 0x02: _variant[i] = v_color_green; break;
+				case 0x03: _variant[i] = v_color_blue; break;
+				default: _variant[i] = v_undefined; break;
+			}
+			
+		}
 		
 	}
 	

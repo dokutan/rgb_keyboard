@@ -305,6 +305,52 @@ int main( int argc, char **argv ){
 				kbd_in.set_profile( i );
 				std::cout << "\nProfile " << kbd_in.get_profile() << ":\n";
 				
+				// led mode
+				std::cout << "Led mode: ";
+				switch( kbd_in.get_mode() ){
+					case rgb_keyboard::keyboard::m_horizontal_wave: std::cout << "horizontal-wave\n"; break;
+					case rgb_keyboard::keyboard::m_pulse: std::cout << "pulse\n"; break;
+					case rgb_keyboard::keyboard::m_hurricane: std::cout << "hurricane\n"; break;
+					case rgb_keyboard::keyboard::m_breathing_color: std::cout << "breathing-color\n"; break;
+					case rgb_keyboard::keyboard::m_breathing: std::cout << "breathing\n"; break;
+					case rgb_keyboard::keyboard::m_fixed: std::cout << "fixed\n"; break;
+					case rgb_keyboard::keyboard::m_reactive_single: std::cout << "reactive-single\n"; break;
+					case rgb_keyboard::keyboard::m_reactive_ripple: std::cout << "reactive-ripple\n"; break;
+					case rgb_keyboard::keyboard::m_reactive_horizontal: std::cout << "reactive-horizontal\n"; break;
+					case rgb_keyboard::keyboard::m_waterfall: std::cout << "waterfall\n"; break;
+					case rgb_keyboard::keyboard::m_swirl: std::cout << "swirl\n"; break;
+					case rgb_keyboard::keyboard::m_vertical_wave: std::cout << "vertical-wave\n"; break;
+					case rgb_keyboard::keyboard::m_sine: std::cout << "sine\n"; break;
+					case rgb_keyboard::keyboard::m_vortex: std::cout << "vortex\n"; break;
+					case rgb_keyboard::keyboard::m_rain: std::cout << "rain\n"; break;
+					case rgb_keyboard::keyboard::m_diagonal_wave: std::cout << "diagonal-wave\n"; break;
+					case rgb_keyboard::keyboard::m_reactive_color: std::cout << "reactive-color\n"; break;
+					case rgb_keyboard::keyboard::m_ripple: std::cout << "ripple\n"; break;
+					case rgb_keyboard::keyboard::m_off: std::cout << "off\n"; break;
+					case rgb_keyboard::keyboard::m_custom: std::cout << "custom\n"; break;
+					default: std::cout << "unknown\n"; break;
+				}
+				
+				// reactive-color variant
+				if( kbd_in.get_mode() == rgb_keyboard::keyboard::m_reactive_color ){
+					
+					std::cout << "Variant: ";
+					switch( kbd_in.get_variant() ){
+						case rgb_keyboard::keyboard::v_color_red: std::cout << "red\n"; break;
+						case rgb_keyboard::keyboard::v_color_yellow: std::cout << "yellow\n"; break;
+						case rgb_keyboard::keyboard::v_color_green: std::cout << "green\n"; break;
+						case rgb_keyboard::keyboard::v_color_blue: std::cout << "blue\n"; break;
+						default: std::cout << "unknown\n"; break;
+					}
+					
+				}
+				
+				// direction
+				if( kbd_in.get_direction() == rgb_keyboard::keyboard::d_left )
+					std::cout << "Direction: left\n";
+				else if( kbd_in.get_direction() == rgb_keyboard::keyboard::d_right )
+					std::cout << "Direction: right\n";
+				
 				// color
 				if( kbd_in.get_rainbow() ){
 					std::cout << "Color: multi\n";
@@ -316,7 +362,12 @@ int main( int argc, char **argv ){
 					std::cout << "\n" << std::dec << std::setfill(' ') << std::setw(0);
 				}
 				
+				// brightness
 				std::cout << "Brightness: " << kbd_in.get_brightness() << "\n";
+				
+				// speed
+				std::cout << "Speed: " << kbd_in.get_speed() << "\n";
+				
 			}
 			
 		}

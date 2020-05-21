@@ -11,11 +11,11 @@
 - [ ] reading settings
 	- [ ] complete all led settings
 		- [x] color and rainbow
-		- [ ] mode
-		- [ ] direction
+		- [x] mode
+		- [x] direction
 		- [x] brightness
-		- [ ] reactive variant
-		- [ ] speed
+		- [x] reactive color variant
+		- [x] speed
 		- [ ] report rate
 		- [ ] custom key colors
 	- [ ] complete keymap/macros
