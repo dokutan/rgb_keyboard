@@ -129,15 +129,7 @@ chmod +x rgb_keyboard-gui.tcl
 The gui is not copied to /usr/bin by default, you can do so manually.
 
 ## TODO
-- [x] Implemented all lighting modes from the official software.
-- [x] Create option to change individual keys in custom mode.
-- [x] Rewrite the frontend (code is old and messy) (improved and cleaned up, changed options)
-- [ ] Read current settings from the keyboard
-- [x] Add reprogramming and macro functionality
-  - [x] Complete reprogramming
-  - [ ] Add macros to reprogramming
-- [x] Complete profile support
-- [x] Add a manpage
+[TODO.md](https://github.com/dokutan/rgb_keyboard/blob/master/TODO.md)
 
 # License
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
