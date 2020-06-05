@@ -1,6 +1,11 @@
-This file will contain a description of the usb protocol used.
+# Source code documentation
+Doxygen is used to document the source code, if you have it installed run
+```
+doxygen Doxyfile
+```
+to generate the documentation in html format. The files will be placed in a new directory called documentation.
 
-# Basic information
+# Basic information about the USB protocol
 
 The individual data packets send to the keyboard have a length of 64 bytes + 64 bytes of usb header (this can be ignored, they show up as length 128 in wireshark though).
 Data is written to usb endpoint 3, and read from usb endpoint 2. After each write, 64 bytes must be read.
