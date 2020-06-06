@@ -16,10 +16,10 @@
 		- [x] brightness
 		- [x] reactive color variant
 		- [x] speed
-		- [ ] report rate
 		- [ ] custom key colors
-	- [ ] complete keymap/macros
+	- [ ] report rate
+	- [ ] keymap/macros
 	- [x] Update documentation
 	- [ ] Add finer control to what is read
 - [ ] fix and complete keymapping and macros
-- [ ] Add source code documentation
+- [x] Add source code documentation
