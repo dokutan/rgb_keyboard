@@ -168,7 +168,18 @@ int rgb_keyboard::keyboard::read_led_settings(){
 			
 		}
 		
+		// USB poll rate
+		if( input_buffer[i][23] == 0x00 )
+			_report_rate[i] = r_125Hz;
+		else if( input_buffer[i][23] == 0x01 )
+			_report_rate[i] = r_250Hz;
+		else if( input_buffer[i][23] == 0x02 )
+			_report_rate[i] = r_500Hz;
+		else if( input_buffer[i][23] == 0x03 )
+			_report_rate[i] = r_1000Hz;
+		
 	}
 	
 	return 0;
 }
+

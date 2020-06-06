@@ -210,8 +210,8 @@ class rgb_keyboard::keyboard{
 		/// Read the active profile from the keyboard
 		int read_active_profile();
 		/** Read the LED settings from the keyboard
-		 * These are LED mode, brightness, color, speed, direction and
-		 * reactive_color variant
+		 * These are LED mode, brightness, color, speed, direction,
+		 * reactive_color variant and the usb poll rate
 		 */
 		int read_led_settings();
 		

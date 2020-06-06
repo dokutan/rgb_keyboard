@@ -368,6 +368,19 @@ int main( int argc, char **argv ){
 				// speed
 				std::cout << "Speed: " << kbd_in.get_speed() << "\n";
 				
+				// usb poll rate
+				std::cout << "Report rate: ";
+				if( kbd_in.get_report_rate() == rgb_keyboard::keyboard::r_125Hz )
+					std::cout << "125 Hz\n";
+				else if( kbd_in.get_report_rate() == rgb_keyboard::keyboard::r_250Hz )
+					std::cout << "250 Hz\n";
+				else if( kbd_in.get_report_rate() == rgb_keyboard::keyboard::r_500Hz )
+					std::cout << "500 Hz\n";
+				else if( kbd_in.get_report_rate() == rgb_keyboard::keyboard::r_1000Hz )
+					std::cout << "1000 Hz\n";
+				else
+					std::cout << "unknown\n";
+				
 			}
 			
 		}
