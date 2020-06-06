@@ -334,14 +334,14 @@ class rgb_keyboard::keyboard{
 		static uint8_t _data_read[64];
 		
 		/// Stores the key names for custom colors
-		std::map< std::string, std::array<uint8_t, 3> > _keycodes;
+		static std::map< std::string, std::array<uint8_t, 3> > _keycodes;
 		/// Stores custom key colors
 		std::map < std::string, std::array<uint8_t, 3> > _key_colors;
 		
 		/// Offsets for key remapping ( key → data positon ) ["string":[ [x,y], [x,y], [x,y] ]]
-		std::map < std::string, std::array< std::array<uint8_t, 2>, 3 > > _keymap_offsets;
+		static std::map < std::string, std::array< std::array<uint8_t, 2>, 3 > > _keymap_offsets;
 		/// Keymap options (what a key can do when pressed)  ( option → code )
-		std::map < std::string, std::array<uint8_t, 3> > _keymap_options;
+		static std::map < std::string, std::array<uint8_t, 3> > _keymap_options;
 		/// Stores current keymapping ( key → option)
 		std::map < std::string, std::string > _keymap;
 		
