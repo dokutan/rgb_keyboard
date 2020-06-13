@@ -17,7 +17,7 @@ You can help expand this list by providing information whether this software wor
 **Note on the Ajazz AK33:** Changing the lighting has been confirmed to work (except for setting the reactive-color variant), setting the report rate is untested, **remapping the keys suffers from the same issue as ISO boards**. It appears however, that there are multiple firmware versions with incompatibilities. **Therefore be extra careful if you have this board.** As this keyboard requires a slightly different method of sending data, the ``--ajazzak33`` option must be used.
 
 ## Installing
-- Clone this repository
+- Clone this repository or download a release
 ```
 git clone https://github.com/dokutan/rgb_keyboard
 cd ./rgb_keyboard
