@@ -1,25 +1,12 @@
-- [x] change internal state variables to include full profile support (setters, getters, writers)
-	- [x] color and rainbow
-	- [x] mode
-	- [x] direction
-	- [x] brightness
-	- [x] reactive variant
-	- [x] speed
-	- [x] report rate
-	- [x] custom key colors
-	- [x] key mapping ? → yes
-- [ ] reading settings
-	- [ ] complete all led settings
-		- [x] color and rainbow
-		- [x] mode
-		- [x] direction
-		- [x] brightness
-		- [x] reactive color variant
-		- [x] speed
-		- [ ] custom key colors
-	- [x] report rate
-	- [ ] keymap/macros
-	- [x] Update documentation
-	- [ ] Add finer control to what is read
-- [ ] fix and complete keymapping and macros
-- [x] Add source code documentation
+# Missing features
+
+## Not possible without provided USB captures
+- Fix keymapping on ISO boards and the Ajazz AK33
+- Fix reactive_color variants on the AjazzAK33
+
+## Not planned for now (until keymapping works on all boards)
+- Read keymapping and macros if possible
+- Macros
+
+## Not supported in the official software
+- Reading custom led pattern (most likely not possible)
