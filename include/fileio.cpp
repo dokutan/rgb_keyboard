@@ -52,7 +52,7 @@ int rgb_keyboard::keyboard::load_custom( std::string File ){
 					val_g = stoi( value2.substr(2,2), 0, 16 );
 					val_b = stoi( value2.substr(4,2), 0, 16 );
 					val_rgb = { val_r, val_g, val_b };
-					_key_colors[value1] = val_rgb;
+					_key_colors[_profile-1][value1] = val_rgb;
 				}
 			}
 		}
@@ -99,7 +99,7 @@ int rgb_keyboard::keyboard::load_keymap( std::string File ){
 			
 			// key=value ?
 			if( std::regex_match( line, std::regex("[[:print:]]+=[[:print:]]+") ) ){
-				_keymap.emplace( std::regex_replace( line, std::regex("=[[:print:]]+"), "" ),
+				_keymap[_profile-1].emplace( std::regex_replace( line, std::regex("=[[:print:]]+"), "" ),
 					std::regex_replace( line, std::regex("[[:print:]]+="), "" ) );
 			}
 			

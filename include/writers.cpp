@@ -798,7 +798,7 @@ int rgb_keyboard::keyboard::write_custom(){
 	}
 	
 	//process loaded config and send data
-	for( std::pair< std::string, std::array<uint8_t, 3> > element : _key_colors ){
+	for( std::pair< std::string, std::array<uint8_t, 3> > element : _key_colors[_profile-1] ){
 		if( _keycodes.find( element.first ) != _keycodes.end() ){
 			//if keycode is stored in _keycodes: set values in data packets
 			
@@ -1153,7 +1153,7 @@ int rgb_keyboard::keyboard::write_key_mapping(){
 	}
 	
 	// change data to include keycodes at the right positions
-	for( std::pair< std::string, std::string > element : _keymap ){
+	for( std::pair< std::string, std::string > element : _keymap[_profile-1] ){
 		
 		// is key name and key function known?
 		if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&

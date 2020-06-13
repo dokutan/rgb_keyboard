@@ -97,7 +97,7 @@ int rgb_keyboard::keyboard::keyboard::set_custom_keys( std::string Keys ){
 				val_g = stoi( value2.substr(2,2), 0, 16 );
 				val_b = stoi( value2.substr(4,2), 0, 16 );
 				val_rgb = { val_r, val_g, val_b };
-				_key_colors[value1] = val_rgb;
+				_key_colors[_profile-1][value1] = val_rgb;
 			}
 		} else{
 			break;

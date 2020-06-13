@@ -53,8 +53,8 @@ namespace rgb_keyboard{
  * 3. Call get_*() to get the state of the private variables
  * 4. Close the keyboard
  * 
- * Due to legacy reasons, the get_* and set_* functions act on the value
- * for the profile indicated by _profile (1 by default).
+ * Due to legacy reasons, the get_*, set_* and most write_* functions act on
+ * the profile indicated by _profile (1 by default).
  */
 class rgb_keyboard::keyboard{
 	
@@ -333,17 +333,17 @@ class rgb_keyboard::keyboard{
 		static uint8_t _data_macros[64];
 		static uint8_t _data_read[64];
 		
-		/// Stores the key names for custom colors
+		/// Stores the key names for custom key colors
 		static std::map< std::string, std::array<uint8_t, 3> > _keycodes;
 		/// Stores custom key colors
-		std::map < std::string, std::array<uint8_t, 3> > _key_colors;
+		std::array< std::map < std::string, std::array<uint8_t, 3> >, 3> _key_colors;
 		
 		/// Offsets for key remapping ( key → data positon ) ["string":[ [x,y], [x,y], [x,y] ]]
 		static std::map < std::string, std::array< std::array<uint8_t, 2>, 3 > > _keymap_offsets;
 		/// Keymap options (what a key can do when pressed)  ( option → code )
 		static std::map < std::string, std::array<uint8_t, 3> > _keymap_options;
 		/// Stores current keymapping ( key → option)
-		std::map < std::string, std::string > _keymap;
+		std::array< std::map < std::string, std::string >, 3> _keymap;
 		
 		/// This holds the bytes for all macros
 		std::vector< std::deque<uint8_t> > _macro_bytes;
