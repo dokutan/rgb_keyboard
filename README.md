@@ -7,7 +7,7 @@ Controls the RGB lighting on some keyboards. Tested on Linux, should work on oth
 USB keyboards with VID 0x0c45 and PID 0x652f or 0x7903, maybe others.
 Tested with:
 - Tecware Phantom RGB TKL (PID 0x652f)
-- Glorious GMMK full-size ANSI (PID 0x652f)
+- Glorious GMMK full-size ANSI and TKL ANSI (PID 0x652f)
 - Ajazz AK33 (PID 0x7903) (thanks to [diogotr7](https://github.com/diogotr7))
 
 You can help expand this list by providing information whether this software works correctly or not.
