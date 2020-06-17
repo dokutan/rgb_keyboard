@@ -146,6 +146,7 @@ class rgb_keyboard::keyboard{
 		int set_rainbow( bool Rainbow );
 		/// Set the variant of the reactive_color led mode
 		int set_variant( mode_variant Variant );
+		/// Set custom color of individual keys
 		int set_custom_keys( std::string Keys );
 		/// Set the USB poll rate
 		int set_report_rate( report_rate Report_rate );

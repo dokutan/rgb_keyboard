@@ -1,3 +1,6 @@
+###########################################################
+## Keymapping is broken on ISO boards and the Ajazz AK33 ##
+###########################################################
 # Example for remapping the keys
 # Note: the file format has changed from previous versions
 #
@@ -10,6 +13,10 @@
 Fn=Int_Key
 ScrLk=Fn
 
+
+#################################
+## Macros are currently broken ##
+#################################
 # define macro 1
 # all macro names have to start with "macro" and end with a number
 # each event is as follows: action=key=delay
