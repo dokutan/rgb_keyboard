@@ -10,3 +10,8 @@
 
 ## Not supported in the official software
 - Reading custom led pattern (most likely not possible)
+
+## TODO
+- move macro storage to string based format
+	- update fileio
+	- update write_key_mapping_ansi

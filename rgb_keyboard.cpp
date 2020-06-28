@@ -596,7 +596,7 @@ int main( int argc, char **argv ){
 		
 		
 		//parse keymap flag
-		if( flag_keymap ){
+		if( flag_keymap && !flag_ajazzak33 ){
 			
 			// ask user for confirmation?
 			std::cout << "Remapping the keys is experimental and potentially dangerous.\n";
@@ -610,7 +610,7 @@ int main( int argc, char **argv ){
 			
 			if( user_input == "YES" ){
 				if( kbd.load_keymap( string_keymap ) == 0 ){
-					kbd.write_key_mapping();
+					kbd.write_key_mapping_ansi();
 				} else{
 					std::cerr << "Couldn't open keymap file.\n";
 					kbd.close_keyboard();

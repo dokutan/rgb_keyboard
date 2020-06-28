@@ -73,3 +73,7 @@ int rgb_keyboard::keyboard::get_active_profile(){
 int rgb_keyboard::keyboard::get_profile(){
 	return _profile;
 }
+
+bool rgb_keyboard::keyboard::get_ajazzak33_compatibility(){
+	return _ajazzak33_compatibility;
+}

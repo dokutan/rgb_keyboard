@@ -184,6 +184,8 @@ class rgb_keyboard::keyboard{
 		int get_active_profile();
 		/// Get profile to which settings are applied
 		int get_profile();
+		/// Get whether Ajazz AK33 compatibility is enabled
+		bool get_ajazzak33_compatibility();
 		
 		//writer functions (apply settings to keyboard)
 		/// Write the brightness to the keyboard
@@ -202,8 +204,8 @@ class rgb_keyboard::keyboard{
 		int write_variant();
 		/// Write the USB poll rate to the keyboard
 		int write_report_rate();
-		/// Write the keymapping to the keyboard
-		int write_key_mapping();
+		/// Write the keymapping to the keyboard, (ANSI layout only)
+		int write_key_mapping_ansi();
 		/// Write the active profile to the keyboard
 		int write_active_profile();
 		

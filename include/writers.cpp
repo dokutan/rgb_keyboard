@@ -761,7 +761,11 @@ int rgb_keyboard::keyboard::write_report_rate(){
 	return res;
 }
 
-int rgb_keyboard::keyboard::write_key_mapping(){
+int rgb_keyboard::keyboard::write_key_mapping_ansi(){
+	
+	// sanity check, this function does not support the Ajazz AK33
+	if( _ajazzak33_compatibility )
+		throw std::invalid_argument("Not supported on the Ajazz AK33");
 	
 	//vars
 	int res = 0;
