@@ -769,8 +769,6 @@ int rgb_keyboard::keyboard::write_key_mapping_ansi(){
 	
 	//vars
 	int res = 0;
-	int transferred = 0;
-	uint8_t buffer[64];
 	
 	//prepare data packets
 	uint8_t data_remap[8][64];
@@ -877,23 +875,7 @@ int rgb_keyboard::keyboard::write_key_mapping_ansi(){
 	}*/
 		
 	//send start data
-	if( _ajazzak33_compatibility ){
-		
-		//write start data packet to endpoint 0
-		libusb_control_transfer( _handle, 0x21, 0x09, 0x0204, 0x0001, _data_start, 64, 1000 );
-		//read from endpoint 2
-		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
-	
-	} else{
-		
-		//write start data packet to endpoint 3
-		res += libusb_interrupt_transfer( _handle, 0x03, _data_start, 
-		64, &transferred, 1000);
-		//read from endpoint 2
-		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, 
-		&transferred, 1000);
-		
-	}
+	res += _write_data( _data_start, 64 );
 	
 	//write macro data here
 	/*for( int i = 0; i <= packet_index; i++ ){
@@ -917,41 +899,11 @@ int rgb_keyboard::keyboard::write_key_mapping_ansi(){
 	}*/
 	
 	//write keymap data
-	if( _ajazzak33_compatibility ){
-		
-		for( int i = 0; i < 8; i++ ){
-			//write data packet to endpoint 0
-			libusb_control_transfer( _handle, 0x21, 0x09, 0x0204, 0x0001, data_remap[i], 64, 1000 );
-			//read from endpoint 2
-			res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
-		}
-	
-	} else{
-		
-		for( int i = 0; i < 8; i++ ){
-			//write data packet to endpoint 3
-			res += libusb_interrupt_transfer( _handle, 0x03, data_remap[i], 64, &transferred, 1000);
-			//read from endpoint 2
-			res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
-		}
-	}
+	for( int i = 0; i < 8; i++ )
+		res += _write_data( data_remap[i], 64 );
 	
 	// write end data
-	if( _ajazzak33_compatibility ){
-		
-		//write end data packet to endpoint 0
-		libusb_control_transfer( _handle, 0x21, 0x09, 0x0204, 0x0001, _data_end, 64, 1000 );
-		//read from endpoint 2
-		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
-	
-	} else{
-		
-		//write end data packet to endpoint 3
-		res += libusb_interrupt_transfer( _handle, 0x03, _data_end, 
-		64, &transferred, 1000);
-		//read from endpoint 2
-		res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
-	}
+	res += _write_data( _data_end, 64 );
 	
 	return res;
 }
@@ -985,7 +937,7 @@ int rgb_keyboard::keyboard::write_active_profile(){
 	}
 	
 	// write data
-	res = _write_data( data_profile, 64 );
+	res += _write_data( data_profile, 64 );
 	
 	return res;
 }

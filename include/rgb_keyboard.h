@@ -32,6 +32,8 @@
 #include <deque>
 //#include <assert.h>
 
+#include "macro.h"
+
 namespace rgb_keyboard{
 	class keyboard;
 }
@@ -351,8 +353,8 @@ class rgb_keyboard::keyboard{
 		/// Stores current keymapping ( key → option)
 		std::array< std::map < std::string, std::string >, 3> _keymap;
 		
-		/// This holds the bytes for all macros
-		std::vector< std::deque<uint8_t> > _macro_bytes;
+		/// All macros
+		std::array< rgb_keyboard::macro, 100 > _macros;
 };
 
 

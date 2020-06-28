@@ -13,5 +13,5 @@
 
 ## TODO
 - move macro storage to string based format
-	- update fileio
 	- update write_key_mapping_ansi
+	- Determine maximum amount of actions in one macro
