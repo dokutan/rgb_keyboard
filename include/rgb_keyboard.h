@@ -251,6 +251,9 @@ class rgb_keyboard::keyboard{
 		
 	private:
 		
+		/// Wrapper around libusb for sending data
+		int _write_data( unsigned char* data, int length );
+		
 		/** If this is variable is set to true, usb control transfers are used for sending data.
 		 *  This enables compatibility with other keyboards (Ajazz AK 33).
 		 */

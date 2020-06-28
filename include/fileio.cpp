@@ -73,8 +73,8 @@ int rgb_keyboard::keyboard::load_keymap( std::string File ){
 	
 	// read file
 	std::string line, current_section = "";
-	std::vector< std::vector< std::string > > macro_commands;
-	macro_commands.resize( 100 );
+	//std::vector< std::vector< std::string > > macro_commands;
+	//macro_commands.resize( 100 );
 	while( std::getline(config_in, line) ){
 		
 		// is empty?
@@ -104,7 +104,7 @@ int rgb_keyboard::keyboard::load_keymap( std::string File ){
 			}
 			
 		// is section a macro definition ?
-		} else if( std::regex_match( current_section, std::regex("macro[0-9]+") ) ){
+		} /*else if( std::regex_match( current_section, std::regex("macro[0-9]+") ) ){
 			
 			// get number of macro
 			std::string macroname = current_section;
@@ -115,13 +115,13 @@ int rgb_keyboard::keyboard::load_keymap( std::string File ){
 				macro_commands[macronumber-1].push_back(line);
 			}
 			
-		}
+		}*/
 		
 	}
 	
 	
 	// macro commands → macro bytes
-	for( unsigned int i = 0; i < macro_commands.size(); i++ ){ // for each macro
+	/*for( unsigned int i = 0; i < macro_commands.size(); i++ ){ // for each macro
 		
 		// is macro defined ?
 		if( macro_commands[i].size() == 0 )
@@ -179,7 +179,7 @@ int rgb_keyboard::keyboard::load_keymap( std::string File ){
 		_macro_bytes.back().push_front( 0x00 );
 		_macro_bytes.back().push_front( (_macro_bytes.back().size()-3)/4 ); // number of events
 		_macro_bytes.back().push_front( 0x00 );
-	}
+	}*/
 	
 	return 0;
 }

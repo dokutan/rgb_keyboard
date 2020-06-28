@@ -188,3 +188,29 @@ int rgb_keyboard::keyboard::close_keyboard(){
 	
 	return 0;
 }
+
+// send data
+int rgb_keyboard::keyboard::_write_data( unsigned char* data, int length ){
+	
+	int result = 0; // return value
+	int transferred = 0; // transferred bytes, gets ignored for now
+	uint8_t buffer[64]; // buffer to receive data
+	
+	if( _ajazzak33_compatibility ){
+		
+		//write data packet to endpoint 0
+		result += libusb_control_transfer( _handle, 0x21, 0x09, 0x0204, 0x0001, data, length, 1000 );
+		//read from endpoint 2
+		result += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+	
+	} else{
+		
+		//write data packet to endpoint 3
+		result += libusb_interrupt_transfer( _handle, 0x03, data, length, &transferred, 1000);
+		//read from endpoint 2
+		result += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+		
+	}
+	
+	return result;
+}
