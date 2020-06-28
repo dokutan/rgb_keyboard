@@ -16,7 +16,7 @@
  * 
  */
 
-//main class
+//macro class
 #ifndef RGB_KEYBOARD_MACRO
 #define RGB_KEYBOARD_MACRO
 

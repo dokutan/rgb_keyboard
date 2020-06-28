@@ -12,6 +12,9 @@
 - Reading custom led pattern (most likely not possible)
 
 ## TODO
-- move macro storage to string based format
-	- update write_key_mapping_ansi
+- move macro storage to string based format:
 	- Determine maximum amount of actions in one macro
+
+## Where to implement missing features
+- Macros: write_key_mapping_ansi() (writers.cpp)
+- Keymapping on ISO or Ajazz AK33: new function in writers.cpp (similar to write_key_mapping_ansi()) and appropriate selection code in main
