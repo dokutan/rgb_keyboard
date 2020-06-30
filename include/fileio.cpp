@@ -108,6 +108,13 @@ int rgb_keyboard::keyboard::load_keymap( std::string File ){
 			std::string macroname = current_section;
 			int macronumber = std::stoi( macroname.erase(0, 5) );
 			
+			// number of repeats ?
+			if( std::regex_match( line, std::regex("repeat=[0-9]+") ) ){
+				uint8_t repeats = std::stoi( std::regex_replace( line, std::regex("repeat="), "" ) );
+				_macros.at(macronumber).set_repeats( repeats );
+				continue;
+			}
+			
 			// invalid macro command? → continue
 			if( !std::regex_match( line, std::regex("[[:print:]]+=[[:print:]]+=[[:print:]]+") ) )
 				continue;

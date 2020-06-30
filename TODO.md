@@ -14,6 +14,7 @@
 ## TODO
 - move macro storage to string based format:
 	- Determine maximum amount of actions in one macro
+- --leds help argument
 
 ## Where to implement missing features
 - Macros: write_key_mapping_ansi() (writers.cpp)
