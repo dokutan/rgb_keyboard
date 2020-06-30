@@ -478,7 +478,10 @@ int main( int argc, char **argv ){
 				kbd.write_mode();
 				
 			} else{
-				std::cerr << "Unknown led pattern\n";
+				std::cerr << "Unknown led pattern, valid options are:\n";
+				std::cerr << "fixed, sine, rain, waterfall, vortex, swirl, breathing, breathing-color,\n";
+				std::cerr << "reactive-ripple, reactive-single, reactive-horizontal, reactive-color,\n";
+				std::cerr << "horizontal-wave, vertical-wave, diagonal-wave, pulse, hurricane, ripple, custom, off\n";
 				kbd.close_keyboard();
 				return 1;
 			}
