@@ -12,15 +12,16 @@ Data is written to usb endpoint 3, and read from usb endpoint 2. After each writ
 
 To set some property on the keyboard, first a start packet (_data_start) is send, this packet starts with 0x04 0x01 0x00 0x01 and the rest are zeroes.
 The next step are some packets for the specific property. Depending on the specific setting, the number of these packets varies.
-To finish the process the _data_send packet is written (containing 0x04 0x02 0x00 0x02, rest zeroes).
+To finish the process the _data_end packet is written (containing 0x04 0x02 0x00 0x02, rest zeroes).
 
 The data packets can be found in include/data*.cpp.
 
 When using the official software in many cases some bytes in the beginning of the settings data are changed depending on the particular values for the setting, this appears to be some sort of checksum. However these don't seem to be important and are therefore ignored.
 
 ## Example
-This is a piece from write_brightness() (include/writers.cpp), that shows the whole process.
+To accomodate the differences between the the Ajazz AK33 and other keyboards sending data is done through the _write_data() function (include/helpers.cpp). 
 
+The following code example shows how the process would be done without the _write_data() function.
 ```
 //write start data packet to endpoint 3
 res += libusb_interrupt_transfer( _handle, 0x03, _data_start,	64, &transferred, 1000);
