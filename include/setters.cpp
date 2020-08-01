@@ -21,10 +21,16 @@
 //setter functions
 
 int rgb_keyboard::keyboard::set_ajazzak33_compatibility( bool compatibility ){
+	
 	_ajazzak33_compatibility = compatibility;
 	
-	_keyboard_pid = 0x7903; // different PID
-	_brightness_max = 5; // different maximum brightness
+	if( compatibility ){
+		_keyboard_pid = _keyboard_pid_ajazzak33; // different PID
+		_brightness_max = _brightness_max_ajazzak33; // different maximum brightness
+	} else{
+		_keyboard_pid = _keyboard_pid_others;
+		_brightness_max = _brightness_max_others;
+	}
 	
 	return 0;
 }

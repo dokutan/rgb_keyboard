@@ -294,8 +294,12 @@ class rgb_keyboard::keyboard{
 		//min and max values
 		/// Minimum value for brightness
 		const int _brightness_min = 0;
+		/// Maximum value for brightness for the Ajazz AK 33
+		const int _brightness_max_ajazzak33 = 5;
+		/// Maximum value for brightness for keyboards except the Ajazz AK 33
+		const int _brightness_max_others = 9;
 		/// Maximum value for brightness (this is not constant, the Ajazz AK33 has a different value)
-		int _brightness_max = 9;
+		int _brightness_max = _brightness_max_others;
 		/// Minimum led pattern animation speed
 		const int _speed_min = 0;
 		/// Maximum led pattern animation speed
@@ -305,8 +309,19 @@ class rgb_keyboard::keyboard{
 		//usb device vars
 		/// USB vendor id
 		const uint16_t _keyboard_vid = 0x0c45;
+		
+		/// USB product id for the Ajazz AK33
+		std::vector< uint16_t > _keyboard_pid_ajazzak33 = { 0x7903 };
+		/** USB product ids for other keyboards
+		 * Tecware Phantom, GMMK = 0x652f
+		 * Redragon K550 Yama = 0x5204
+		 * Redragon K552 Kumara = 0x5104
+		 * Redragon K556 Devarajas = 0x5004
+		 * Warrior Kane TC235 = 0x8520
+		 */
+		std::vector< uint16_t > _keyboard_pid_others = { 0x5204, 0x5104, 0x5004, 0x8520, 0x652f };
 		/// USB product id, this is not constant as the Ajazz AK33 has a different PID
-		uint16_t _keyboard_pid = 0x652f;
+		std::vector< uint16_t > _keyboard_pid = _keyboard_pid_others;
 		
 		/// If true, try to detach the kernel driver when opening the keyboard
 		bool _detach_kernel_driver = true;
@@ -316,7 +331,7 @@ class rgb_keyboard::keyboard{
 		/// Detached  kernel driver? → for attaching after being done
 		bool _detached_driver_1 = false;
 		
-		/// Open usb interface 0 ?
+		/// Try to open usb interface 0 ?
 		bool _open_interface_0 = true;
 		
 		/// libusb device handle

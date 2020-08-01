@@ -32,10 +32,16 @@ int rgb_keyboard::keyboard::open_keyboard(){
 		return res;
 	}
 	
-	//open device
-	_handle = libusb_open_device_with_vid_pid( NULL, _keyboard_vid, 
-	_keyboard_pid );
-	if( !_handle ){
+	//open device, try to open keyboard with each pid
+	for( auto pid : _keyboard_pid ){
+		
+		_handle = libusb_open_device_with_vid_pid( NULL, _keyboard_vid, pid );
+		
+		if( _handle )
+			break;
+	}
+	
+	if( !_handle ){ // no device opened
 		res++;
 		return res;
 	}
