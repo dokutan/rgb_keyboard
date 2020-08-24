@@ -5,8 +5,8 @@ Controls the RGB lighting on some keyboards. Tested on Linux, should work on oth
 
 - [Supported keyboards](#supported-keyboards)
 - [Installing](#installing)
-	-[Automated (recommended](#automated-recommended)
-	-[Manual](#manual)
+	- [Automated (recommended](#automated-recommended)
+	- [Manual](#manual)
 - [Usage](#usage)
 	- [Profiles](#profiles)
 	- [Examples](#examples)
