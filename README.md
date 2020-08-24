@@ -3,6 +3,23 @@ Controls the RGB lighting on some keyboards. Tested on Linux, should work on oth
 
 **Disclaimer: This software is not supported by the manufacturer of the hardware in any way, and relies completely on information from reverse-engineering. There is no warranty, especially in case of damage to the hardware.**
 
+- [Supported keyboards](#supported-keyboards)
+- [Installing](#installing)
+	-[Automated (recommended](#automated-recommended)
+	-[Manual](#manual)
+- [Usage](#usage)
+	- [Profiles](#profiles)
+	- [Examples](#examples)
+	- [Config files](#config-files-key-mapping-and-color)
+	- [Change custom key colors from the commandline](#change-custom-key-colors-from-the-commandline)
+	- [--bus and --device options](#--bus-and---device-options)
+	- [--kernel-driver option](#--kernel-driver-option)
+	- [--interface0 option](#--interface0-option)
+	- [--ajazzak33 option](#--ajazzak33-option)
+- [GUI](#gui)
+- [TODO](#todo)
+- [License](#license)
+
 ## Supported keyboards
 USB keyboards with VID 0x0c45, maybe others.
 Tested with:
@@ -137,6 +154,6 @@ The gui is not copied to /usr/bin by default, you can do so manually.
 ## TODO
 [TODO.md](https://github.com/dokutan/rgb_keyboard/blob/master/TODO.md)
 
-# License
+## License
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
 
