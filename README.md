@@ -1,12 +1,12 @@
 # rgb_keyboard
-Controls the RGB lighting on some keyboards. Tested on Linux, should work on other operating systems.
+Controls the RGB lighting on some keyboards. Tested on Linux and FreeBSD, should work on other operating systems.
 
 **Disclaimer: This software is not supported by the manufacturer of the hardware in any way, and relies completely on information from reverse-engineering. There is no warranty, especially in case of damage to the hardware.**
 
 - [Supported keyboards](#supported-keyboards)
 - [Installing](#installing)
-	- [Automated (recommended)](#automated-recommended)
-	- [Manual](#manual)
+	- [Linux](#linux)
+	- [FreeBSD](#freebsd)
 - [Usage](#usage)
 	- [Profiles](#profiles)
 	- [Examples](#examples)
@@ -47,7 +47,7 @@ cd ./rgb_keyboard
 ```
 - Make sure you have [libusb](https://libusb.info/) installed (on some distros (e.g. Ubuntu) you might need a dev package)
 
-### Automated (recommended)
+### Linux
 - compile and copy everything to the right place with (not required: replace the 4 with the number of cpu cores you have)
 ```
 make -j4
@@ -55,20 +55,21 @@ sudo make install
 ```
 - restart for the udev rule to take effect (without this you probably won't be able to use this softwate without root)
 
-### Manual
-- Compile with:
+### FreeBSD
+- install pkgconf
+- compile with
 ```
-g++ -c include/constructor.cpp include/fileio.cpp include/getters.cpp include/helpers.cpp include/print_help.cpp include/print_keycodes.cpp include/setters.cpp include/writers.cpp rgb_keyboard.cpp -Wall -Wextra -O2
-g++ *.o -Wall -Wextra -O2 -lusb-1.0 -o rgb_keyboard
+make CC=clang++ -j4
 ```
-- (Optionally) add the binary to some place in your PATH variable
-- IMPORTANT: make the keyboard accessible without root rights by adding a udev rule
-  - create a file named 'keyboard.rules' in /etc/udev/rules.d/
-  - add the following lines to the file and restart afterwards
+
+- copy ``rgb_keyboard`` to some directory in your $PATH, or execute it directly with
 ```
-SUBSYSTEM=="usb", ATTRS{idVendor}=="0c45", ATTRS{idProduct}=="652f", MODE:="0666"
-SUBSYSTEM=="usb_device", ATTRS{idVendor}=="0c45", ATTRS{idProduct}=="652f", MODE:="0666"
+./rgb_keyboard
 ```
+
+- Current limitations on FreeBSD:
+	- You need root privileges to use the program
+	- After the program has finished, the keyboard won't work and needs to be unplugged and plugged back in.
 
 ## Usage
 
