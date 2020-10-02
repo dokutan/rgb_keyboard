@@ -26,9 +26,9 @@ Tested with:
 - Tecware Phantom RGB TKL (PID 0x652f)
 - Glorious GMMK full-size ANSI and TKL ANSI (PID 0x652f)
 - Ajazz AK33 (PID 0x7903) (thanks to [diogotr7](https://github.com/diogotr7))
+- Redragon K550 Yama (PID 0x5204), requires the ``--ajazzak33`` option and maybe the ``--bus`` and ``--device`` options
 
 Not tested:
-- Redragon K550 Yama (PID 0x5204)
 - Redragon K552 Kumara (PID 0x5104)
 - Redragon K556 Devarajas (PID 0x5004)
 - Warrior Kane TC235 (PID 0x8520)
