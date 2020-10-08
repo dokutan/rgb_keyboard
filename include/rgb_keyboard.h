@@ -310,8 +310,9 @@ class rgb_keyboard::keyboard{
 		/// USB vendor id
 		const uint16_t _keyboard_vid = 0x0c45;
 		
+		// TODO! rewrite this
 		/// USB product id for the Ajazz AK33
-		std::vector< uint16_t > _keyboard_pid_ajazzak33 = { 0x7903 };
+		std::vector< uint16_t > _keyboard_pid_ajazzak33 = { 0x7903, 0x5204, 0x5104, 0x5004, 0x8520 };
 		/** USB product ids for other keyboards
 		 * Tecware Phantom, GMMK = 0x652f
 		 * Redragon K550 Yama = 0x5204
