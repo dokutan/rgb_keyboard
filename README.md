@@ -22,22 +22,24 @@ Controls the RGB lighting on some keyboards. Tested on Linux and FreeBSD, should
 
 ## Supported keyboards
 USB keyboards with VID 0x0c45, maybe others.
-Tested with:
-- Tecware Phantom RGB TKL (PID 0x652f)
-- Glorious GMMK full-size ANSI and TKL ANSI (PID 0x652f)
-- Ajazz AK33 (PID 0x7903) (thanks to [diogotr7](https://github.com/diogotr7))
-- Redragon K550 Yama (PID 0x5204), requires the ``--ajazzak33`` option and maybe the ``--bus`` and ``--device`` options
 
-Not tested:
-- Redragon K552 Kumara (PID 0x5104)
-- Redragon K556 Devarajas (PID 0x5004)
-- Warrior Kane TC235 (PID 0x8520)
+Name | PID | Tested | Notes
+---|---|---|---
+Tecware Phantom RGB TKL | 0x652f | Yes |
+Glorious GMMK full-size ANSI and TKL ANSI | 0x652f | Yes |
+Ajazz AK33 | 0x7903 | Yes | requires the ``--ajazzak33`` option
+Redragon K550 Yama | 0x5204 | Yes | requires the ``--ajazzak33`` option
+Redragon K552 Kumara | 0x5104 | No |
+Redragon K556 Devarajas | 0x5004 | No |
+Warrior Kane TC235 | 0x8520 | No |
 
-You can help expand this list by providing information whether this software works correctly or not.
+You can help to expand this list by providing information whether this software works correctly or not.
 
-**Note on ISO-layout boards:** As i do not have access to a compatible keyboard with an ISO layout, setting the color of the ISO international key (Int_Key) is supported but not tested. **Remapping is broken (all keys are shifted around)**, it is required to capture the USB communication on an affected keyboard to fix this. Therefore if you are affected and capable of doing this, you can help with this issue.
-
-**Note on the Ajazz AK33:** Changing the lighting has been confirmed to work (except for setting the reactive-color variant), setting the report rate is untested, **remapping the keys suffers from the same issue as ISO boards**. It appears however, that there are multiple firmware versions with incompatibilities. **Therefore be extra careful if you have this board.** As this keyboard requires a slightly different method of sending data, the ``--ajazzak33`` option must be used.
+### Known issues that require your help (please open an issue or pull request if you want to contribute):
+- **Remapping keys on the Ajazz AK33 and ISO boards is broken (all keys are shifted around)**
+- Setting the color of the ISO international key (Int_Key) in custom pattern mode is supported but not tested.
+- Setting the USB report/poll rate on the Ajazz AK33 is untested
+- Custom led patterns don't work correctly on the Redragon K550 Yama
 
 ## Installing
 - Clone this repository or download a release
