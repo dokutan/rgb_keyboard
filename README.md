@@ -29,8 +29,8 @@ Tecware Phantom RGB TKL | 0x652f | Yes |
 Glorious GMMK full-size ANSI and TKL ANSI | 0x652f | Yes |
 Ajazz AK33 | 0x7903 | Yes | requires the ``--ajazzak33`` option
 Redragon K550 Yama | 0x5204 | Yes | requires the ``--ajazzak33`` option
+Redragon K556 Devarajas | 0x5004 | Yes | requires the ``--ajazzak33`` option
 Redragon K552 Kumara | 0x5104 | No |
-Redragon K556 Devarajas | 0x5004 | No |
 Warrior Kane TC235 | 0x8520 | No |
 
 You can help to expand this list by providing information whether this software works correctly or not.
@@ -39,7 +39,7 @@ You can help to expand this list by providing information whether this software 
 - **Remapping keys on the Ajazz AK33 and ISO boards is broken (all keys are shifted around)**
 - Setting the color of the ISO international key (Int_Key) in custom pattern mode is supported but not tested.
 - Setting the USB report/poll rate on the Ajazz AK33 is untested
-- Custom led patterns don't work correctly on the Redragon K550 Yama
+- Custom led patterns don't work correctly on the Redragon K550 Yama and K556 Devarajas
 
 ## Installing
 - Clone this repository or download a release
