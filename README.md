@@ -30,6 +30,7 @@ Glorious GMMK full-size ANSI and TKL ANSI | 0x652f | Yes |
 Ajazz AK33 | 0x7903 | Yes | requires the ``--ajazzak33`` option
 Redragon K550 Yama | 0x5204 | Yes | requires the ``--ajazzak33`` option
 Redragon K556 Devarajas | 0x5004 | Yes | requires the ``--ajazzak33`` option
+Redragon K587 PRO Magic Wand | | Yes | requires the ``--ajazzak33`` option
 Redragon K552 Kumara | 0x5104 | No |
 Warrior Kane TC235 | 0x8520 | No |
 
