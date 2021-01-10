@@ -46,7 +46,8 @@ class rgb_keyboard::macro{
 			t_down
 		};
 		
-		/// The maximum amount of actions in a macro, TODO!
+		/// The maximum amount of actions in a macro,
+		/// just a placeholder, the real value is not known 
 		static const unsigned int max_actions = 10;
 		/// The maximum delay value
 		static const unsigned int max_delay = 40000;

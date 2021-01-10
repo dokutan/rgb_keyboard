@@ -280,11 +280,11 @@ class rgb_keyboard::keyboard{
 		
 		//prints all valid keycodes
 		/// Print all valid key names for custom led patterns to stdout
-		int print_keycodes_led();
+		int print_keycodes_led(std::ostream& output);
 		/// Print all valid key names for key remapping to stdout
-		int print_keycodes_remap();
+		int print_keycodes_remap(std::ostream& output);
 		/// Print all valid options for key remapping to stdout
-		int print_keycodes_options();
+		int print_keycodes_options(std::ostream& output);
 		
 	private:
 		
@@ -292,25 +292,6 @@ class rgb_keyboard::keyboard{
 		uint16_t _keyboard_vid;
 		uint16_t _keyboard_pid;
 		
-		/// USB vendor id
-		//const uint16_t _keyboard_vid = 0x0c45;
-		
-		/*
-		// TODO! rewrite this
-		/// USB product id for the Ajazz AK33
-		std::vector< uint16_t > _keyboard_pid_ajazzak33 = { 0x7903, 0x5204, 0x5104, 0x5004, 0x8520 };
-		/** USB product ids for other keyboards
-		 * Tecware Phantom, GMMK = 0x652f
-		 * Redragon K550 Yama = 0x5204
-		 * Redragon K552 Kumara = 0x5104
-		 * Redragon K556 Devarajas = 0x5004
-		 * Warrior Kane TC235 = 0x8520
-		 */
-		/*
-		std::vector< uint16_t > _keyboard_pid_others = { 0x5204, 0x5104, 0x5004, 0x8520, 0x652f };
-		/// USB product id, this is not constant as the Ajazz AK33 has a different PID
-		std::vector< uint16_t > _keyboard_pid = _keyboard_pid_others;
-		*/
 		
 		/// Wrapper around libusb for sending data
 		int _write_data( unsigned char* data, int length );

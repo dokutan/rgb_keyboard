@@ -34,6 +34,8 @@ Redragon K587 PRO Magic Wand | | Yes | Yes
 Redragon K552 Kumara | 0x5104 | No | (Yes)
 Warrior Kane TC235 | 0x8520 | No | (Yes)
 
+See [--control option](#--control-option) for details on the control transfer mode.
+
 You can help to expand this list by providing information whether this software works correctly or not.
 
 ### Known issues that require your help (please open an issue or pull request if you want to contribute):

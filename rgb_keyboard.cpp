@@ -209,46 +209,34 @@ int main( int argc, char **argv ){
 	// set USB ids
 	kbd.set_vid( rgb_keyboard::keyboard_vid );
 	kbd.set_pid( rgb_keyboard::detect_pid() );
-	
 	if( kbd.get_pid() == 0 ){
 		std::cerr << "Could not detect keyboard, check hardware and permissions.\n";
 		std::cerr << "Try with the --bus and --device options.\n";
 		return 1;
 	}
 	
-	// set transfer mode
-	if( flag_control_transfer && string_control_transfer == "true" ){
-		kbd.set_ajazzak33_compatibility( true );
-	} else if( flag_control_transfer && string_control_transfer == "false" ){
-		kbd.set_ajazzak33_compatibility( false );
-	} else if( flag_control_transfer ){
-		std::cerr << "Invalid argument: expected true or false\n";
-		return 1;
-	} else{
-		if( rgb_keyboard::use_control_transfer.find( kbd.get_pid() ) != rgb_keyboard::use_control_transfer.end() )
-			kbd.set_ajazzak33_compatibility( rgb_keyboard::use_control_transfer.at( kbd.get_pid() ));
-	}
 	
-	//parse list keys flag TODO! pass output stream to functions
+	
+	//parse list keys flag
 	if( flag_list_keys ){
 		
 		if( string_list_keys == "led" || string_list_keys == "custom" ){
 			
 			// list physical keys for custom led pattern
 			std::cout << "Keynames for custom pattern:\n(Some keys might have multiple names)\n\n";
-			kbd.print_keycodes_led();
+			kbd.print_keycodes_led(std::cout);
 			
 		} else if( string_list_keys == "map" || string_list_keys == "keymap" ){
 			
 			// list physical keys for key remapping
 			std::cout << "Keynames of physical keys for remapping:\n(Some keys might have multiple names)\n\n";
-			kbd.print_keycodes_remap();
+			kbd.print_keycodes_remap(std::cout);
 			
 		} else if( string_list_keys == "function" || string_list_keys == "option" ){
 			
 			// list options for remapping
 			std::cout << "Options for key remapping:\n(Some options might have multiple names)\n\n";
-			kbd.print_keycodes_options();
+			kbd.print_keycodes_options(std::cout);
 			
 		} else{
 			
@@ -262,6 +250,8 @@ int main( int argc, char **argv ){
 		return 0;
 	}
 	
+	
+	
 	// detach kernel driver ?
 	if( flag_kernel_driver )
 		kbd.set_detach_kernel_driver( false );
@@ -270,8 +260,12 @@ int main( int argc, char **argv ){
 	if( flag_interface0 )
 		kbd.set_open_interface_0( false );
 	
-	// open keyboard, apply settigns, close keyboard
+	
+	
+	// open keyboard, apply settings, close keyboard
 	try{
+		
+		
 		
 		// open keyboard
 		if( flag_bus != flag_device ){ // only -B xor -D: error
@@ -300,13 +294,30 @@ int main( int argc, char **argv ){
 			}
 		}
 		
+		
+		
+		// set transfer mode
+		if( flag_control_transfer && string_control_transfer == "true" ){
+			kbd.set_ajazzak33_compatibility( true );
+		} else if( flag_control_transfer && string_control_transfer == "false" ){
+			kbd.set_ajazzak33_compatibility( false );
+		} else if( flag_control_transfer ){
+			std::cerr << "Invalid argument: expected true or false\n";
+			return 1;
+		} else{
+			if( rgb_keyboard::use_control_transfer.find( kbd.get_pid() ) != rgb_keyboard::use_control_transfer.end() )
+				kbd.set_ajazzak33_compatibility( rgb_keyboard::use_control_transfer.at( kbd.get_pid() ));
+		}
+		
+		
+		
 		// read settings from keyboard
 		if( flag_read && kbd.get_ajazzak33_compatibility() ){
 			std::cerr << "This feature is currently not supported for keyboards using control transfer.\n";
 			std::cerr << "You can help to implement it by capturing USB communication, for more information open an issue on Github.\n";
 		} else if( flag_read ){
 			
-			// a copy of the main kbd object, this prevents unintentional behaviour
+			// a copy of the main kbd object, this prevents unintentional changing of settings
 			rgb_keyboard::keyboard kbd_in = kbd;
 			
 			std::cout << "This feature is experimental, not everything is read, please report bugs\n";
@@ -403,6 +414,8 @@ int main( int argc, char **argv ){
 			
 		}
 		
+		
+		
 		// parse active flag, set active profile
 		if( flag_active ){
 			
@@ -418,6 +431,7 @@ int main( int argc, char **argv ){
 		}
 		
 		
+		
 		// parse profile flag, set profile (to which profile settings are applied)
 		if( flag_profile ){
 			
@@ -430,6 +444,8 @@ int main( int argc, char **argv ){
 			}
 			
 		}
+		
+		
 		
 		// parse leds flag, set led pattern
 		if( flag_leds ){
@@ -507,6 +523,7 @@ int main( int argc, char **argv ){
 		}
 		
 		
+		
 		// parse custom keys flag
 		if( flag_custom_keys ){
 			
@@ -515,6 +532,7 @@ int main( int argc, char **argv ){
 			
 		}
 					
+		
 		
 		//parse color flag
 		if( flag_color ){
@@ -536,6 +554,7 @@ int main( int argc, char **argv ){
 			}
 			
 		}
+		
 		
 		
 		//parse brightness flag
@@ -576,6 +595,7 @@ int main( int argc, char **argv ){
 		}
 		
 		
+		
 		//parse direction flag
 		if( flag_direction ){
 			//set direction
@@ -591,6 +611,7 @@ int main( int argc, char **argv ){
 				return 1;
 			}
 		}
+		
 		
 		
 		//parse report rate flag
@@ -614,6 +635,7 @@ int main( int argc, char **argv ){
 				return 1;
 			}
 		}
+		
 		
 		
 		//parse keymap flag

@@ -19,30 +19,30 @@
 #include "rgb_keyboard.h"
 
 //prints all keys for custom led pattern
-int rgb_keyboard::keyboard::print_keycodes_led(){
+int rgb_keyboard::keyboard::print_keycodes_led(std::ostream& output){
 	
 	for( auto i : _keycodes ){
-		std::cout << i.first << "\n";
+		output << i.first << "\n";
 	}
 	
 	return 0;
 }
 
 //prints all keys for remapping
-int rgb_keyboard::keyboard::print_keycodes_remap(){
+int rgb_keyboard::keyboard::print_keycodes_remap(std::ostream& output){
 	
 	for( auto i : _keymap_offsets ){
-		std::cout << i.first << "\n";
+		output << i.first << "\n";
 	}
 	
 	return 0;
 }
 
 //prints all rempping options
-int rgb_keyboard::keyboard::print_keycodes_options(){
+int rgb_keyboard::keyboard::print_keycodes_options(std::ostream& output){
 	
 	for( auto i : _keymap_options ){
-		std::cout << i.first << "\n";
+		output << i.first << "\n";
 	}
 	
 	return 0;

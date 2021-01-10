@@ -19,6 +19,7 @@
 #include "rgb_keyboard.h"
 
 // functions from the rgb_keyboard namespace
+/// Detects the USB PID of the first known device with the given VID
 uint16_t rgb_keyboard::detect_pid( uint16_t vid ){
 	
 	uint16_t pid = 0;

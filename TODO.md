@@ -19,5 +19,3 @@
 - Macros: write_key_mapping_ansi() (writers.cpp)
 - Keymapping on ISO or Ajazz AK33: new function in writers.cpp (similar to write_key_mapping_ansi()) and appropriate selection code in main
 
-# 1.0
-- remove -A option
