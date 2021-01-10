@@ -25,10 +25,8 @@ int rgb_keyboard::keyboard::set_ajazzak33_compatibility( bool compatibility ){
 	_ajazzak33_compatibility = compatibility;
 	
 	if( compatibility ){
-		_keyboard_pid = _keyboard_pid_ajazzak33; // different PID
 		_brightness_max = _brightness_max_ajazzak33; // different maximum brightness
 	} else{
-		_keyboard_pid = _keyboard_pid_others;
 		_brightness_max = _brightness_max_others;
 	}
 	
@@ -136,4 +134,12 @@ int rgb_keyboard::keyboard::set_detach_kernel_driver( bool detach_kernel_driver 
 int rgb_keyboard::keyboard::set_open_interface_0( bool open_interface_0 ){
 	_open_interface_0 = open_interface_0;
 	return 0;
+}
+
+void rgb_keyboard::keyboard::set_vid( uint16_t vid ){
+	_keyboard_vid = vid;
+}
+
+void rgb_keyboard::keyboard::set_pid( uint16_t pid ){
+	_keyboard_pid = pid;
 }

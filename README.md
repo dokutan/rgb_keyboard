@@ -15,7 +15,7 @@ Controls the RGB lighting on some keyboards. Tested on Linux and FreeBSD, should
 	- [--bus and --device options](#--bus-and---device-options)
 	- [--kernel-driver option](#--kernel-driver-option)
 	- [--interface0 option](#--interface0-option)
-	- [--ajazzak33 option](#--ajazzak33-option)
+	- [--control option](#--control-option)
 - [GUI](#gui)
 - [TODO](#todo)
 - [License](#license)
@@ -23,16 +23,16 @@ Controls the RGB lighting on some keyboards. Tested on Linux and FreeBSD, should
 ## Supported keyboards
 USB keyboards with VID 0x0c45, maybe others.
 
-Name | PID | Tested | Notes
+Name | PID | Tested | Uses control transfer mode
 ---|---|---|---
-Tecware Phantom RGB TKL | 0x652f | Yes |
-Glorious GMMK full-size ANSI and TKL ANSI | 0x652f | Yes |
-Ajazz AK33 | 0x7903 | Yes | requires the ``--ajazzak33`` option
-Redragon K550 Yama | 0x5204 | Yes | requires the ``--ajazzak33`` option
-Redragon K556 Devarajas | 0x5004 | Yes | requires the ``--ajazzak33`` option
-Redragon K587 PRO Magic Wand | | Yes | requires the ``--ajazzak33`` option
-Redragon K552 Kumara | 0x5104 | No |
-Warrior Kane TC235 | 0x8520 | No |
+Tecware Phantom RGB TKL | 0x652f | Yes | No
+Glorious GMMK full-size ANSI and TKL ANSI | 0x652f | Yes | Yes
+Ajazz AK33 | 0x7903 | Yes | Yes
+Redragon K550 Yama | 0x5204 | Yes | Yes
+Redragon K556 Devarajas | 0x5004 | Yes | Yes
+Redragon K587 PRO Magic Wand | | Yes | Yes
+Redragon K552 Kumara | 0x5104 | No | (Yes)
+Warrior Kane TC235 | 0x8520 | No | (Yes)
 
 You can help to expand this list by providing information whether this software works correctly or not.
 
@@ -143,8 +143,8 @@ On some systems libusb might no be able to properly detach the kernel driver, an
 ### --interface0 option
 Don't open usb interface 0 on the keyboard. This allows input to happen while settings are applied, and is primarily intended for scripting purposes. Because compatibility is untested, this needs to be specifically enabled with this option.
 
-### --ajazzak33 option
-This is required for the Ajazz AK33 keyboard, as it uses a slightly different method of transmitting data.
+### --control option
+This is the replacement for the ``--ajazzak33`` or ``-A`` option. This option expects ``true`` or ``false`` as an argument and toggles the control transfer mode to send data. Normally this shouldn't be required as the program attempts to use the right mode automatically.
 
 ## GUI
 

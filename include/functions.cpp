@@ -19,7 +19,7 @@
 #include "rgb_keyboard.h"
 
 // functions from the rgb_keyboard namespace
-uint16_t rgb_keyboard::g_detect_pid( uint16_t vid ){
+uint16_t rgb_keyboard::detect_pid( uint16_t vid ){
 	
 	uint16_t pid = 0;
 	
@@ -41,7 +41,7 @@ uint16_t rgb_keyboard::g_detect_pid( uint16_t vid ){
 		libusb_get_device_descriptor( dev_list[i], &descriptor );
 		
 		// compare USB ids against known ids
-		for( auto p : g_keyboard_pid ){
+		for( auto p : keyboard_pid ){
 			if( p == descriptor.idProduct && vid == descriptor.idVendor )
 				pid = descriptor.idProduct;
 		}

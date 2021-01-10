@@ -54,7 +54,7 @@ int main( int argc, char **argv ){
 		{"profile", required_argument, 0, 'p'},
 		{"active", required_argument, 0, 'a'},
 		{"kernel-driver", no_argument, 0, 'k'},
-		{"ajazzak33", no_argument, 0, 'A'},
+		{"control", required_argument, 0, 'C'},
 		{"interface0", no_argument, 0, 'I'},
 		{"read", no_argument, 0, 'r'},
 		{0, 0, 0, 0}
@@ -77,7 +77,7 @@ int main( int argc, char **argv ){
 	bool flag_profile = false;
 	bool flag_active = false;
 	bool flag_kernel_driver = false;
-	bool flag_ajazzak33 = false;
+	bool flag_control_transfer = false;
 	bool flag_interface0 = false;
 	bool flag_read = false;
 	
@@ -96,6 +96,7 @@ int main( int argc, char **argv ){
 	string string_device;
 	string string_active;
 	string string_profile;
+	string string_control_transfer;
 	
 	// check number of commandline options
 	if( argc == 1 ){
@@ -105,7 +106,7 @@ int main( int argc, char **argv ){
 	
 	// parse command line options
 	int c, option_index = 0;
-	while( (c = getopt_long( argc, argv, "hc:b:s:d:l:v:P:K:R:M:L:B:D:p:a:kAIr",
+	while( (c = getopt_long( argc, argv, "hc:b:s:d:l:v:P:K:R:M:L:B:D:p:a:kC:Ir",
 	long_options, &option_index ) ) != -1 ){
 		
 		switch( c ){
@@ -182,8 +183,9 @@ int main( int argc, char **argv ){
 			case 'k':
 				flag_kernel_driver = true;
 				break;
-			case 'A':
-				flag_ajazzak33 = true;
+			case 'C':
+				flag_control_transfer = true;
+				string_control_transfer = optarg;
 				break;
 			case 'I':
 				flag_interface0 = true;
@@ -204,12 +206,30 @@ int main( int argc, char **argv ){
 	// keyboard object
 	rgb_keyboard::keyboard kbd;
 	
-	// set compatbility mode
-	if( flag_ajazzak33 ){
-		kbd.set_ajazzak33_compatibility( true );
+	// set USB ids
+	kbd.set_vid( rgb_keyboard::keyboard_vid );
+	kbd.set_pid( rgb_keyboard::detect_pid() );
+	
+	if( kbd.get_pid() == 0 ){
+		std::cerr << "Could not detect keyboard, check hardware and permissions.\n";
+		std::cerr << "Try with the --bus and --device options.\n";
+		return 1;
 	}
 	
-	//parse list keys flag
+	// set transfer mode
+	if( flag_control_transfer && string_control_transfer == "true" ){
+		kbd.set_ajazzak33_compatibility( true );
+	} else if( flag_control_transfer && string_control_transfer == "false" ){
+		kbd.set_ajazzak33_compatibility( false );
+	} else if( flag_control_transfer ){
+		std::cerr << "Invalid argument: expected true or false\n";
+		return 1;
+	} else{
+		if( rgb_keyboard::use_control_transfer.find( kbd.get_pid() ) != rgb_keyboard::use_control_transfer.end() )
+			kbd.set_ajazzak33_compatibility( rgb_keyboard::use_control_transfer.at( kbd.get_pid() ));
+	}
+	
+	//parse list keys flag TODO! pass output stream to functions
 	if( flag_list_keys ){
 		
 		if( string_list_keys == "led" || string_list_keys == "custom" ){
@@ -281,9 +301,9 @@ int main( int argc, char **argv ){
 		}
 		
 		// read settings from keyboard
-		if( flag_read && flag_ajazzak33 ){
-			std::cout << "This feature is currently not supported for the Ajazz AK33\n";
-			std::cout << "You can help to implement it by capturing USB communication, for more information open an issue on Github.\n";
+		if( flag_read && kbd.get_ajazzak33_compatibility() ){
+			std::cerr << "This feature is currently not supported for keyboards using control transfer.\n";
+			std::cerr << "You can help to implement it by capturing USB communication, for more information open an issue on Github.\n";
 		} else if( flag_read ){
 			
 			// a copy of the main kbd object, this prevents unintentional behaviour
@@ -597,7 +617,7 @@ int main( int argc, char **argv ){
 		
 		
 		//parse keymap flag
-		if( flag_keymap && !flag_ajazzak33 ){
+		if( flag_keymap && !kbd.get_ajazzak33_compatibility() ){
 			
 			// ask user for confirmation?
 			std::cout << "Remapping the keys is experimental and potentially dangerous.\n";
@@ -620,6 +640,9 @@ int main( int argc, char **argv ){
 			} else{
 				std::cout << "Not remapping the keys.\n";
 			}
+		} else if( flag_keymap && kbd.get_ajazzak33_compatibility() ){
+			std::cerr << "This feature is currently not supported for keyboards using control transfer.\n";
+			std::cerr << "You can help to implement it by capturing USB communication, for more information open an issue on Github.\n";
 		}
 		
 	// catch exception

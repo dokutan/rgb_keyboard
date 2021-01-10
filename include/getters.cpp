@@ -77,3 +77,11 @@ int rgb_keyboard::keyboard::get_profile(){
 bool rgb_keyboard::keyboard::get_ajazzak33_compatibility(){
 	return _ajazzak33_compatibility;
 }
+
+uint16_t rgb_keyboard::keyboard::get_vid(){
+	return _keyboard_vid;
+}
+
+uint16_t rgb_keyboard::keyboard::get_pid(){
+	return _keyboard_pid;
+}

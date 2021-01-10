@@ -24,7 +24,7 @@ Set currently active profile (1-3)
 Sets color of the current animation (format: rrggbb or "multi")
 .TP
 \fB\-b\fR, \fB\-\-brightness\fR=\fINUMBER\fR
-Sets brightness of the current animation (0-9, 0-5 for Ajazz AK33)
+Sets brightness of the current animation (0-9, 0-5 for keyboards that use control transfer mode like the Ajazz AK33)
 .TP
 \fB\-s\fR, \fB\-\-speed\fR=\fINUMBER\fR
 Sets speed of the current animation (0-3)
@@ -65,8 +65,8 @@ Do not attempt to detach the kernel drivers. Useful for compatibility on some sy
 \fB\-I\fR, \fB\-\-interface0\fR
 Do not open usb interface 0. Allows input to occur while settings are applied.
 .TP
-\fB\-A\fR, \fB\-\-ajazzak33\fR
-Enables experimental support for the Ajazz AK33 keyboard (PID 0x7903).
+\fB\-C\fR, \fB\-\-control\fR=\fItrue|false\fR
+Enables or disables experimental support for keyoards that use USB control transfers to send data, e.g. the Ajazz AK33 or Redragon keyboards. This option replaced the \fB\-A\fR (\fB\-\-ajazzak33\fR) option.
 .SH EXAMPLES
 To set a specific led mode, color, speed and brightness.
 .PP
