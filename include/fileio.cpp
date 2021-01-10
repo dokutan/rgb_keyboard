@@ -101,8 +101,11 @@ int rgb_keyboard::keyboard::load_keymap( std::string File ){
 					std::regex_replace( line, std::regex("[[:print:]]+="), "" ) );
 			}
 			
+		}
+		
+		#ifdef USE_MACROS
 		// is section a macro definition ?
-		} else if( std::regex_match( current_section, std::regex("macro[0-9]+") ) ){
+		else if( std::regex_match( current_section, std::regex("macro[0-9]+") ) ){
 			
 			// get number of macro
 			std::string macroname = current_section;
@@ -141,6 +144,7 @@ int rgb_keyboard::keyboard::load_keymap( std::string File ){
 				_macros.at(macronumber).append_action( type, key, delay );
 			
 		}
+		#endif
 		
 	}
 	

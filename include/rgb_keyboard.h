@@ -30,12 +30,28 @@
 #include <exception>
 #include <regex>
 #include <deque>
-//#include <assert.h>
 
 #include "macro.h"
 
 namespace rgb_keyboard{
+	
+	// the main class
 	class keyboard;
+	
+	// usb ids
+	const uint16_t g_keyboard_vid = 0x0c45;
+	const std::vector< uint16_t > g_keyboard_pid = {
+		0x7903,	// Ajazz AK33
+		0x5204,	// Redragon K550 Yama
+		0x5104,	// Redragon K552 Kumara
+		0x5004,	// Redragon K556 Devarajas, K587 PRO Magic Wand, Mitra RGB
+		0x8520,	// Warrior Kane TC235
+		0x652f	// Glorious GMMK and Tecware Phantom
+	};
+	
+	/// \return the VID of the first detected supported keyboard or 0 if no keyboard was found
+	uint16_t g_detect_pid( uint16_t vid = g_keyboard_vid );
+	
 }
 
 /**
@@ -255,6 +271,24 @@ class rgb_keyboard::keyboard{
 		
 	private:
 		
+		//usb device vars
+		/// USB vendor id
+		const uint16_t _keyboard_vid = 0x0c45;
+		
+		// TODO! rewrite this
+		/// USB product id for the Ajazz AK33
+		std::vector< uint16_t > _keyboard_pid_ajazzak33 = { 0x7903, 0x5204, 0x5104, 0x5004, 0x8520 };
+		/** USB product ids for other keyboards
+		 * Tecware Phantom, GMMK = 0x652f
+		 * Redragon K550 Yama = 0x5204
+		 * Redragon K552 Kumara = 0x5104
+		 * Redragon K556 Devarajas = 0x5004
+		 * Warrior Kane TC235 = 0x8520
+		 */
+		std::vector< uint16_t > _keyboard_pid_others = { 0x5204, 0x5104, 0x5004, 0x8520, 0x652f };
+		/// USB product id, this is not constant as the Ajazz AK33 has a different PID
+		std::vector< uint16_t > _keyboard_pid = _keyboard_pid_others;
+		
 		/// Wrapper around libusb for sending data
 		int _write_data( unsigned char* data, int length );
 		
@@ -291,6 +325,11 @@ class rgb_keyboard::keyboard{
 		/// USB poll rate
 		std::array< report_rate, 3 > _report_rate;
 		
+		#ifdef USE_MACROS
+			/// All macros
+			std::array< rgb_keyboard::macro, 100 > _macros;
+		#endif
+		
 		//min and max values
 		/// Minimum value for brightness
 		const int _brightness_min = 0;
@@ -304,25 +343,6 @@ class rgb_keyboard::keyboard{
 		const int _speed_min = 0;
 		/// Maximum led pattern animation speed
 		const int _speed_max = 3;
-		
-		
-		//usb device vars
-		/// USB vendor id
-		const uint16_t _keyboard_vid = 0x0c45;
-		
-		// TODO! rewrite this
-		/// USB product id for the Ajazz AK33
-		std::vector< uint16_t > _keyboard_pid_ajazzak33 = { 0x7903, 0x5204, 0x5104, 0x5004, 0x8520 };
-		/** USB product ids for other keyboards
-		 * Tecware Phantom, GMMK = 0x652f
-		 * Redragon K550 Yama = 0x5204
-		 * Redragon K552 Kumara = 0x5104
-		 * Redragon K556 Devarajas = 0x5004
-		 * Warrior Kane TC235 = 0x8520
-		 */
-		std::vector< uint16_t > _keyboard_pid_others = { 0x5204, 0x5104, 0x5004, 0x8520, 0x652f };
-		/// USB product id, this is not constant as the Ajazz AK33 has a different PID
-		std::vector< uint16_t > _keyboard_pid = _keyboard_pid_others;
 		
 		/// If true, try to detach the kernel driver when opening the keyboard
 		bool _detach_kernel_driver = true;
@@ -354,8 +374,10 @@ class rgb_keyboard::keyboard{
 		static uint8_t _data_remap_9[64];
 		static uint8_t _data_remap_10[64];
 		static uint8_t _data_profile[64];
-		static uint8_t _data_macros[64];
 		static uint8_t _data_read[64];
+		#ifdef USE_MACROS
+			static uint8_t _data_macros[64];
+		#endif
 		
 		/// Stores the key names for custom key colors
 		static std::map< std::string, std::array<uint8_t, 3> > _keycodes;
@@ -368,21 +390,6 @@ class rgb_keyboard::keyboard{
 		static std::map < std::string, std::array<uint8_t, 3> > _keymap_options;
 		/// Stores current keymapping ( key → option)
 		std::array< std::map < std::string, std::string >, 3> _keymap;
-		
-		/// All macros
-		std::array< rgb_keyboard::macro, 100 > _macros;
 };
-
-
-/*#include "data.cpp"
-#include "data_profile.cpp"
-#include "setters.cpp"
-#include "getters.cpp"
-#include "writers.cpp"
-#include "helpers.cpp"
-#include "fileio.cpp"
-#include "constructor.cpp"
-#include "print_keycodes.cpp"
-*/
 
 #endif

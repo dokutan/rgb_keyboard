@@ -17,6 +17,8 @@
  */
 
 //macro class
+#ifdef USE_MACROS
+
 #ifndef RGB_KEYBOARD_MACRO
 #define RGB_KEYBOARD_MACRO
 
@@ -90,4 +92,5 @@ class rgb_keyboard::macro{
 		std::array< unsigned int, max_actions > _delays;
 };
 
+#endif
 #endif

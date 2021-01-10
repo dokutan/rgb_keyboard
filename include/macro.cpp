@@ -16,6 +16,8 @@
  * 
  */
 
+#ifdef USE_MACROS
+
 #include "macro.h"
 #include <iostream>
 
@@ -61,3 +63,5 @@ int rgb_keyboard::macro::append_action( action_type type, std::string key, unsig
 	
 	return 0;
 }
+
+#endif

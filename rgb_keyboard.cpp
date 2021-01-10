@@ -113,7 +113,6 @@ int main( int argc, char **argv ){
 				print_help();
 				return 0;
 				break;
-				
 			case 'c':
 				flag_color = true;
 				string_color = optarg;
@@ -140,7 +139,6 @@ int main( int argc, char **argv ){
 				flag_variant = true;
 				string_variant = optarg;
 				break;
-				
 			case 'P':
 				flag_leds = true;
 				string_leds = "custom";
@@ -148,12 +146,11 @@ int main( int argc, char **argv ){
 				string_custom_pattern = optarg;
 				break;
 			case 'K':
-				//flag_leds = true;
-				//string_leds = "custom";
+				flag_leds = true;
+				string_leds = "custom";
 				flag_custom_keys = true;
 				string_custom_keys = optarg;
 				break;
-				
 			case 'R':
 				flag_report_rate = true;
 				string_report_rate = optarg;
@@ -166,7 +163,6 @@ int main( int argc, char **argv ){
 				flag_list_keys = true;
 				string_list_keys = optarg;
 				break;
-				
 			case 'B':
 				flag_bus = true;
 				string_bus = optarg;
@@ -175,7 +171,6 @@ int main( int argc, char **argv ){
 				flag_device = true;
 				string_device = optarg;
 				break;
-				
 			case 'p':
 				flag_profile = true;
 				string_profile = optarg;
@@ -184,23 +179,18 @@ int main( int argc, char **argv ){
 				flag_active = true;
 				string_active = optarg;
 				break;
-				
 			case 'k':
 				flag_kernel_driver = true;
 				break;
-				
 			case 'A':
 				flag_ajazzak33 = true;
 				break;
-				
 			case 'I':
 				flag_interface0 = true;
 				break;
-				
 			case 'r':
 				flag_read = true;
 				break;
-				
 			case '?':
 				return 1;
 				break;
@@ -223,22 +213,30 @@ int main( int argc, char **argv ){
 	if( flag_list_keys ){
 		
 		if( string_list_keys == "led" || string_list_keys == "custom" ){
+			
 			// list physical keys for custom led pattern
 			std::cout << "Keynames for custom pattern:\n(Some keys might have multiple names)\n\n";
 			kbd.print_keycodes_led();
+			
 		} else if( string_list_keys == "map" || string_list_keys == "keymap" ){
+			
 			// list physical keys for key remapping
 			std::cout << "Keynames of physical keys for remapping:\n(Some keys might have multiple names)\n\n";
 			kbd.print_keycodes_remap();
+			
 		} else if( string_list_keys == "function" || string_list_keys == "option" ){
+			
 			// list options for remapping
 			std::cout << "Options for key remapping:\n(Some options might have multiple names)\n\n";
 			kbd.print_keycodes_options();
+			
 		} else{
+			
 			std::cout << "Valid options:\n";
 			std::cout << "\"--list-keys led\" or \"--list-keys custom\"\n";
 			std::cout << "\"--list-keys map\" or \"--list-keys keymap\"\n";
 			std::cout << "\"--list-keys function\" or \"--list-keys option\"\n";
+			
 		}
 		
 		return 0;
@@ -603,7 +601,7 @@ int main( int argc, char **argv ){
 			
 			// ask user for confirmation?
 			std::cout << "Remapping the keys is experimental and potentially dangerous.\n";
-			std::cout << "On ISO-layout boards and on the Ajazz AK33 this has been reported to mess up all keys.\n";
+			std::cout << "On ISO-layout boards and keyboards with a PID other than 0x652f this has been reported to mess up all keys.\n";
 			std::cout << "You can help to improve it by capturing USB communication, for more information open an issue on Github.\n";
 			std::cout << "If you accept the risk of permanent damage to the keyboard, type YES and press enter to continue.\n";
 			std::cout << "Anything else will cancel this process.\n";

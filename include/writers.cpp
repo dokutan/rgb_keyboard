@@ -164,6 +164,7 @@ int rgb_keyboard::keyboard::write_mode(){
 	uint8_t data_settings[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
+	// TODO! rewrite
 	if( _profile == 1 ){
 		switch( _mode[_profile-1] ){
 			case m_horizontal_wave://ok
@@ -813,8 +814,11 @@ int rgb_keyboard::keyboard::write_key_mapping_ansi(){
 			data_remap[ _keymap_offsets[element.first][2][0] ][ _keymap_offsets[element.first][2][1] ]
 			= _keymap_options[ element.second ][2];
 			
-			// is key name known and function is a macro?
-		} else if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&
+		}
+		
+		#ifdef USE_MACROS
+		// is key name known and function is a macro?
+		else if( _keymap_offsets.find( element.first ) != _keymap_offsets.end() &&
 			std::regex_match( element.second, std::regex("macro[0-9]+") ) ){
 			
 			std::string macroname = element.second;
@@ -833,70 +837,75 @@ int rgb_keyboard::keyboard::write_key_mapping_ansi(){
 			}
 			
 		}
+		#endif
 		
 	}
 	
-	// prepare macro data packets
-	/*uint8_t data_macros[19][64];
-	for( int i = 0; i < 19; i++ ){
-		std::copy(std::begin(_data_macros), std::end(_data_macros), std::begin(data_macros[i]));
-		data_macros[i][2] = 0x06 + (2*i); // set packet counter
-	}
-	
-	// special values in the first packet
-	data_macros[0][8] = 0xaa;
-	data_macros[0][9] = 0x55;
-	data_macros[0][10] = 0x32;
-	data_macros[0][11] = 0x00;
-	data_macros[0][12] = _macro_bytes.size(); // set number of macros
-	data_macros[0][13] = 0x00;
-	data_macros[0][14] = 0x01;
-	data_macros[0][15] = 0x00;
-	data_macros[0][24] = 0x10 + (2*_macro_bytes.size()); // set number of macros
-	
-	// copy _macro_bytes
-	int packet_index = 0, byte_index = 25; // macro data begins at 25 for the first packet
-	for( unsigned int i = 0; i < _macro_bytes.size(); i++ ){ // for each macro
-		
-		for( unsigned int j = 0; j < _macro_bytes[i].size(); j++ ){ // for each byte
-			data_macros[packet_index][byte_index] = _macro_bytes[i][j];
-			
-			// increment packet and byte index
-			byte_index++;
-			if( byte_index >= 64 ){
-				byte_index = 8; // macro bytes start at 8 for all other packets
-				packet_index++;
-				if( packet_index >= 19 ){
-					return 1; // this means not enough space for all macros
-				}
-			}
+	#ifdef USE_MACROS
+		// prepare macro data packets, doesn't work
+		/*uint8_t data_macros[19][64];
+		for( int i = 0; i < 19; i++ ){
+			std::copy(std::begin(_data_macros), std::end(_data_macros), std::begin(data_macros[i]));
+			data_macros[i][2] = 0x06 + (2*i); // set packet counter
 		}
 		
-	}*/
+		// special values in the first packet
+		data_macros[0][8] = 0xaa;
+		data_macros[0][9] = 0x55;
+		data_macros[0][10] = 0x32;
+		data_macros[0][11] = 0x00;
+		data_macros[0][12] = _macro_bytes.size(); // set number of macros
+		data_macros[0][13] = 0x00;
+		data_macros[0][14] = 0x01;
+		data_macros[0][15] = 0x00;
+		data_macros[0][24] = 0x10 + (2*_macro_bytes.size()); // set number of macros
 		
+		// copy _macro_bytes
+		int packet_index = 0, byte_index = 25; // macro data begins at 25 for the first packet
+		for( unsigned int i = 0; i < _macro_bytes.size(); i++ ){ // for each macro
+			
+			for( unsigned int j = 0; j < _macro_bytes[i].size(); j++ ){ // for each byte
+				data_macros[packet_index][byte_index] = _macro_bytes[i][j];
+				
+				// increment packet and byte index
+				byte_index++;
+				if( byte_index >= 64 ){
+					byte_index = 8; // macro bytes start at 8 for all other packets
+					packet_index++;
+					if( packet_index >= 19 ){
+						return 1; // this means not enough space for all macros
+					}
+				}
+			}
+			
+		}*/
+	#endif
+	
 	//send start data
 	res += _write_data( _data_start, 64 );
 	
-	//write macro data here
-	/*for( int i = 0; i <= packet_index; i++ ){
-		
-		if( _ajazzak33_compatibility ){
+	#ifdef USE_MACROS
+		//write macro data here, doesn't work
+		/*for( int i = 0; i <= packet_index; i++ ){
 			
-			//write end data packet to endpoint 0
-			libusb_control_transfer( _handle, 0x21, 0x09, 0x0204, 0x0001, data_macros[i], 64, 1000 );
-			//read from endpoint 2
-			res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
-		
-		} else{
+			if( _ajazzak33_compatibility ){
+				
+				//write end data packet to endpoint 0
+				libusb_control_transfer( _handle, 0x21, 0x09, 0x0204, 0x0001, data_macros[i], 64, 1000 );
+				//read from endpoint 2
+				res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
 			
-			//write data packet to endpoint 3
-			res += libusb_interrupt_transfer( _handle, 0x03, data_macros[i], 64, &transferred, 1000);
-			//read from endpoint 2
-			res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+			} else{
+				
+				//write data packet to endpoint 3
+				res += libusb_interrupt_transfer( _handle, 0x03, data_macros[i], 64, &transferred, 1000);
+				//read from endpoint 2
+				res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64, &transferred, 1000);
+				
+			}
 			
-		}
-		
-	}*/
+		}*/
+	#endif
 	
 	//write keymap data
 	for( int i = 0; i < 8; i++ )
