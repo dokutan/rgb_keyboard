@@ -164,86 +164,86 @@ int rgb_keyboard::keyboard::write_mode(){
 	uint8_t data_settings[64];
 	std::copy(std::begin(_data_settings), std::end(_data_settings), std::begin(data_settings));
 	
-	// TODO! rewrite
+	// The magic numbers could be moved to data.cpp
 	if( _profile == 1 ){
 		switch( _mode[_profile-1] ){
-			case m_horizontal_wave://ok
+			case m_horizontal_wave:
 				data_settings[1] = 0x08;
 				data_settings[8] = 0x01;
 				break;
-			case m_pulse://ok
+			case m_pulse:
 				data_settings[1] = 0x09;
 				data_settings[8] = 0x02;
 				break;
-			case m_hurricane://ok
+			case m_hurricane:
 				data_settings[1] = 0x0a;
 				data_settings[8] = 0x03;
 				break;
-			case m_breathing_color://ok
+			case m_breathing_color:
 				data_settings[1] = 0x0b;
 				data_settings[8] = 0x04;
 				break;
-			case m_breathing://ok
+			case m_breathing:
 				data_settings[1] = 0x0c;
 				data_settings[8] = 0x05;
 				break;
-			case m_fixed://ok
+			case m_fixed:
 				data_settings[1] = 0x0d;
 				data_settings[8] = 0x06;
 				break;
-			case m_reactive_single://ok
+			case m_reactive_single:
 				data_settings[1] = 0x0e;
 				data_settings[8] = 0x07;
 				break;
-			case m_reactive_ripple://ok
+			case m_reactive_ripple:
 				data_settings[1] = 0x0f;
 				data_settings[8] = 0x08;
 				break;
-			case m_reactive_horizontal://ok
+			case m_reactive_horizontal:
 				data_settings[1] = 0x10;
 				data_settings[8] = 0x09;
 				break;
-			case m_waterfall://ok
+			case m_waterfall:
 				data_settings[1] = 0x11;
 				data_settings[8] = 0x0a;
 				break;
-			case m_swirl://ok
+			case m_swirl:
 				data_settings[1] = 0x12;
 				data_settings[8] = 0x0b;
 				break;
-			case m_vertical_wave://ok
+			case m_vertical_wave:
 				data_settings[1] = 0x13;
 				data_settings[8] = 0x0c;
 				break;
-			case m_sine://ok
+			case m_sine:
 				data_settings[1] = 0x14;
 				data_settings[8] = 0x0d;
 				break;
-			case m_vortex://ok
+			case m_vortex:
 				data_settings[1] = 0x15;
 				data_settings[8] = 0x0e;
 				break;
-			case m_rain://ok
+			case m_rain:
 				data_settings[1] = 0x16;
 				data_settings[8] = 0x0f;
 				break;
-			case m_diagonal_wave://ok
+			case m_diagonal_wave:
 				data_settings[1] = 0x17;
 				data_settings[8] = 0x10;
 				break;
-			case m_reactive_color://ok
+			case m_reactive_color:
 				data_settings[1] = 0x18;
 				data_settings[8] = 0x11;
 				break;
-			case m_ripple://ok
+			case m_ripple:
 				data_settings[1] = 0x19;
 				data_settings[8] = 0x12;
 				break;
-			case m_custom://ok
+			case m_custom:
 				data_settings[1] = 0x1b;
 				data_settings[8] = 0x14;
 				break;
-			case m_off://ok
+			case m_off:
 				data_settings[1] = 0x1a;
 				data_settings[8] = 0x13;
 				break;
@@ -252,102 +252,102 @@ int rgb_keyboard::keyboard::write_mode(){
 		}
 	} else if( _profile == 2 ){
 		switch( _mode[_profile-1] ){
-			case m_horizontal_wave://ok
+			case m_horizontal_wave:
 				data_settings[1] = 0x32;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x01;
 				break;
-			case m_pulse://ok
+			case m_pulse:
 				data_settings[1] = 0x33;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x02;
 				break;
-			case m_hurricane://ok
+			case m_hurricane:
 				data_settings[1] = 0x34;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x03;
 				break;
-			case m_breathing_color://ok
+			case m_breathing_color:
 				data_settings[1] = 0x35;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x04;
 				break;
-			case m_breathing://ok
+			case m_breathing:
 				data_settings[1] = 0x36;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x05;
 				break;
-			case m_fixed://ok ---
+			case m_fixed:
 				data_settings[1] = 0x37;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x06;
 				break;
-			case m_reactive_single://ok
+			case m_reactive_single:
 				data_settings[1] = 0x38;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x07;
 				break;
-			case m_reactive_ripple://ok
+			case m_reactive_ripple:
 				data_settings[1] = 0x39;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x08;
 				break;
-			case m_reactive_horizontal://ok
+			case m_reactive_horizontal:
 				data_settings[1] = 0x3a;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x09;
 				break;
-			case m_waterfall://ok
+			case m_waterfall:
 				data_settings[1] = 0x3b;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x0a;
 				break;
-			case m_swirl://ok
+			case m_swirl:
 				data_settings[1] = 0x3c;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x0b;
 				break;
-			case m_vertical_wave://ok
+			case m_vertical_wave:
 				data_settings[1] = 0x3d;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x0c;
 				break;
-			case m_sine://ok
+			case m_sine:
 				data_settings[1] = 0x3e;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x0d;
 				break;
-			case m_vortex://ok
+			case m_vortex:
 				data_settings[1] = 0x3f;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x0e;
 				break;
-			case m_rain://ok
+			case m_rain:
 				data_settings[1] = 0x40;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x0f;
 				break;
-			case m_diagonal_wave://ok
+			case m_diagonal_wave:
 				data_settings[1] = 0x41;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x10;
 				break;
-			case m_reactive_color://ok
+			case m_reactive_color:
 				data_settings[1] = 0x42;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x11;
 				break;
-			case m_ripple://ok
+			case m_ripple:
 				data_settings[1] = 0x43;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x12;
 				break;
-			case m_custom://ok
+			case m_custom:
 				data_settings[1] = 0x45;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x14;
 				break;
-			case m_off://ok
+			case m_off:
 				data_settings[1] = 0x44;
 				data_settings[5] = 0x2a;
 				data_settings[8] = 0x13;
@@ -357,102 +357,102 @@ int rgb_keyboard::keyboard::write_mode(){
 		}
 	} else if( _profile == 3 ){
 		switch( _mode[_profile-1] ){
-			case m_horizontal_wave://ok
+			case m_horizontal_wave:
 				data_settings[1] = 0x5c;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x01;
 				break;
-			case m_pulse://ok
+			case m_pulse:
 				data_settings[1] = 0x5d;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x02;
 				break;
-			case m_hurricane://ok
+			case m_hurricane:
 				data_settings[1] = 0x5e;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x03;
 				break;
-			case m_breathing_color://ok
+			case m_breathing_color:
 				data_settings[1] = 0x5f;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x04;
 				break;
-			case m_breathing://ok
+			case m_breathing:
 				data_settings[1] = 0x60;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x05;
 				break;
-			case m_fixed://ok ---
+			case m_fixed:
 				data_settings[1] = 0x61;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x06;
 				break;
-			case m_reactive_single://ok
+			case m_reactive_single:
 				data_settings[1] = 0x62;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x07;
 				break;
-			case m_reactive_ripple://ok
+			case m_reactive_ripple:
 				data_settings[1] = 0x63;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x08;
 				break;
-			case m_reactive_horizontal://ok
+			case m_reactive_horizontal:
 				data_settings[1] = 0x64;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x09;
 				break;
-			case m_waterfall://ok
+			case m_waterfall:
 				data_settings[1] = 0x65;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x0a;
 				break;
-			case m_swirl://ok
+			case m_swirl:
 				data_settings[1] = 0x66;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x0b;
 				break;
-			case m_vertical_wave://ok
+			case m_vertical_wave:
 				data_settings[1] = 0x67;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x0c;
 				break;
-			case m_sine://ok
+			case m_sine:
 				data_settings[1] = 0x68;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x0d;
 				break;
-			case m_vortex://ok
+			case m_vortex:
 				data_settings[1] = 0x69;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x0e;
 				break;
-			case m_rain://ok
+			case m_rain:
 				data_settings[1] = 0x6a;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x0f;
 				break;
-			case m_diagonal_wave://ok
+			case m_diagonal_wave:
 				data_settings[1] = 0x6b;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x10;
 				break;
-			case m_reactive_color://ok
+			case m_reactive_color:
 				data_settings[1] = 0x6c;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x11;
 				break;
-			case m_ripple://ok
+			case m_ripple:
 				data_settings[1] = 0x6d;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x12;
 				break;
-			case m_custom://ok
+			case m_custom:
 				data_settings[1] = 0x6f;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x14;
 				break;
-			case m_off://ok
+			case m_off:
 				data_settings[1] = 0x6e;
 				data_settings[5] = 0x54;
 				data_settings[8] = 0x13;

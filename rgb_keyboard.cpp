@@ -320,8 +320,6 @@ int main( int argc, char **argv ){
 			// a copy of the main kbd object, this prevents unintentional changing of settings
 			rgb_keyboard::keyboard kbd_in = kbd;
 			
-			std::cout << "This feature is experimental, not everything is read, please report bugs\n";
-			
 			// active profile
 			kbd_in.read_active_profile();
 			std::cout << "Active profile: " << kbd_in.get_active_profile() << "\n";

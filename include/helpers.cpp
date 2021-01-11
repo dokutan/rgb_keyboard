@@ -107,7 +107,14 @@ int rgb_keyboard::keyboard::open_keyboard_bus_device( uint8_t bus, uint8_t devic
 		if( bus == libusb_get_bus_number( dev_list[i] ) &&
 			device == libusb_get_device_address( dev_list[i] ) ){
 			
-			// open device TODO! set vid and pid
+			// get device descriptor
+			libusb_device_descriptor descriptor;
+			libusb_get_device_descriptor( dev_list[i], &descriptor );
+			
+			_keyboard_vid = descriptor.idVendor;
+			_keyboard_pid = descriptor.idProduct;
+			
+			// open device
 			if( libusb_open( dev_list[i], &_handle ) != 0 ){
 				return 1;
 			} else{
