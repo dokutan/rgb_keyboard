@@ -5,7 +5,7 @@ MAN_DIR = $(PREFIX)/share/man/man1
 CXX = g++
 CXXFLAGS = -Wall -Wextra -O2
 
-build: rgb_keyboard.o constructor.o fileio.o getters.o helpers.o print_help.o print_keycodes.o setters.o writers.o readers.o data.o macro.o functions.o
+build: rgb_keyboard.o constructor.o fileio.o getters.o helpers.o print_keycodes.o setters.o writers.o readers.o data.o macro.o functions.o
 	$(CXX) *.o -o rgb_keyboard -lusb-1.0 $(CXXFLAGS)
 
 install:
@@ -41,9 +41,6 @@ getters.o:
 
 helpers.o:
 	$(CXX) -c include/helpers.cpp $(CXXFLAGS)
-
-print_help.o:
-	$(CXX) -c include/print_help.cpp $(CXXFLAGS)
 
 print_keycodes.o:
 	$(CXX) -c include/print_keycodes.cpp $(CXXFLAGS)
