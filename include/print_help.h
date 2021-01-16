@@ -3,27 +3,27 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
- * 
+ *
  */
 
 #ifndef PRINT_HELP
 #define PRINT_HELP
 
 /// Prints the help message (usage information)
-void print_help(){
-	
+void print_help() {
+
 	std::cout <<
-R"(This software controls the RGB lighting on some keyboards.
+		R"(This software controls the RGB lighting on some keyboards.
 Licensed under the GNU GPL version 3 or later.
 
 Options:
@@ -63,7 +63,6 @@ Options:
 Colors need to be specified in hexadecimal without any prefix (rrggbb).
 multi can also be used to create a rainbow effect.
 )";
-
 }
 
 #endif

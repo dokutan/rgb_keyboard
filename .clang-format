@@ -1,0 +1,9 @@
+Language: Cpp
+Standard: Cpp11
+IndentWidth: 4
+TabWidth: 4
+UseTab: Always
+AlignEscapedNewlinesLeft: true
+AlignTrailingComments: true
+AllowShortFunctionsOnASingleLine: true
+

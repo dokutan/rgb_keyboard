@@ -26,6 +26,9 @@ uninstall:
 clean:
 	rm ./rgb_keyboard *.o
 
+format:
+	clang-format -i --style=file include/* *.cpp
+
 # individual .cpp files
 data.o:
 	$(CXX) -c include/data.cpp -Wall $(CXXFLAGS)
