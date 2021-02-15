@@ -5,6 +5,7 @@ Controls the RGB lighting on some keyboards. Tested on Linux and FreeBSD, should
 
 - [Supported keyboards](#supported-keyboards)
 - [Installing](#installing)
+	- [Arch Linux](#arch-linux)
 	- [Linux](#linux)
 	- [FreeBSD](#freebsd)
 - [Usage](#usage)
@@ -49,6 +50,9 @@ git clone https://github.com/dokutan/rgb_keyboard
 cd ./rgb_keyboard
 ```
 - Make sure you have [libusb](https://libusb.info/) installed (on some distros (e.g. Ubuntu) you might need a dev package)
+
+### Arch Linux
+An [AUR package](https://aur.archlinux.org/packages/rgb_keyboard-git/) is available.
 
 ### Linux
 - compile and copy everything to the right place with (not required: replace the 4 with the number of cpu cores you have)
