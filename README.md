@@ -124,7 +124,7 @@ rgb_keyboard --keymap example.keymap
 to set a custom keymap from a file.
 
 ### Config files (Key mapping and color)
-Take a look at example.conf and example.keymap.
+Take a look at example.conf and example.keymap. Use the ``--layout`` option if your keyboard is not an ANSI one, e.g. ``--layout brazil``.
 
 ### Change custom key colors from the commandline
 
