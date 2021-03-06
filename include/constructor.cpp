@@ -28,4 +28,5 @@ rgb_keyboard::keyboard::keyboard() {
 	_speed.fill(1);
 	_profile = 1;
 	_active_profile = 1;
+	_keycodes = keycodes_ansi;
 }

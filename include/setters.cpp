@@ -142,3 +142,7 @@ int rgb_keyboard::keyboard::set_open_interface_0(bool open_interface_0) {
 void rgb_keyboard::keyboard::set_vid(uint16_t vid) { _keyboard_vid = vid; }
 
 void rgb_keyboard::keyboard::set_pid(uint16_t pid) { _keyboard_pid = pid; }
+
+void rgb_keyboard::keyboard::set_keycodes(std::map<std::string, std::array<uint8_t, 3>> keycodes){
+	_keycodes = keycodes;
+}

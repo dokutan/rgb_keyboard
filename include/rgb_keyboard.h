@@ -180,6 +180,8 @@ class rgb_keyboard::keyboard {
 	void set_vid(uint16_t vid);
 	/// Set USB PID
 	void set_pid(uint16_t pid);
+	/// Set kycodes for custom LED patterns 
+	void set_keycodes(std::map<std::string, std::array<uint8_t, 3>> keycodes);
 
 	// getter functions
 	/// LED mode getter
@@ -281,6 +283,11 @@ class rgb_keyboard::keyboard {
 	/// Print all valid options for key remapping to stdout
 	int print_keycodes_options(std::ostream &output);
 
+	/// Stores the key names for custom key colors (ANSI layout)
+	const static std::map<std::string, std::array<uint8_t, 3>> keycodes_ansi;
+	/// Stores the key names for custom key colors (brazilian layout)
+	const static std::map<std::string, std::array<uint8_t, 3>> keycodes_brazil;
+
   private:
 	// usb device vars
 	uint16_t _keyboard_vid;
@@ -379,7 +386,7 @@ class rgb_keyboard::keyboard {
 #endif
 
 	/// Stores the key names for custom key colors
-	static std::map<std::string, std::array<uint8_t, 3>> _keycodes;
+	std::map<std::string, std::array<uint8_t, 3>> _keycodes;
 	/// Stores custom key colors
 	std::array<std::map<std::string, std::array<uint8_t, 3>>, 3> _key_colors;
 

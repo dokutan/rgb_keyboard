@@ -57,6 +57,7 @@ int main(int argc, char **argv) {
 		{"control", required_argument, 0, 'C'},
 		{"interface0", no_argument, 0, 'I'},
 		{"read", no_argument, 0, 'r'},
+		{"layout", required_argument, 0, 'Y'},
 		{0, 0, 0, 0}};
 
 	// these variables store the commandline options
@@ -79,6 +80,7 @@ int main(int argc, char **argv) {
 	bool flag_control_transfer = false;
 	bool flag_interface0 = false;
 	bool flag_read = false;
+	bool flag_layout = false;
 
 	string string_color;
 	string string_brightness;
@@ -96,6 +98,7 @@ int main(int argc, char **argv) {
 	string string_active;
 	string string_profile;
 	string string_control_transfer;
+	string string_layout;
 
 	// check number of commandline options
 	if (argc == 1) {
@@ -105,7 +108,7 @@ int main(int argc, char **argv) {
 
 	// parse command line options
 	int c, option_index = 0;
-	while ((c = getopt_long(argc, argv, "hc:b:s:d:l:v:P:K:R:M:L:B:D:p:a:kC:Ir",
+	while ((c = getopt_long(argc, argv, "hc:b:s:d:l:v:P:K:R:M:L:B:D:p:a:kC:IrY:",
 							long_options, &option_index)) != -1) {
 
 		switch (c) {
@@ -192,6 +195,10 @@ int main(int argc, char **argv) {
 		case 'r':
 			flag_read = true;
 			break;
+		case 'Y':
+			flag_layout = true;
+			string_layout = optarg;
+			break;
 		case '?':
 			return 1;
 			break;
@@ -211,6 +218,22 @@ int main(int argc, char **argv) {
 			<< "Could not detect keyboard, check hardware and permissions.\n";
 		std::cerr << "Try with the --bus and --device options.\n";
 		return 1;
+	}
+
+	// set keyboard layout
+	if (flag_layout) {
+
+		if (string_layout == "ansi") {
+			kbd.set_keycodes(rgb_keyboard::keyboard::keycodes_ansi);
+		} else if (string_layout == "brazil") {
+			kbd.set_keycodes(rgb_keyboard::keyboard::keycodes_brazil);
+		} else {
+			std::cerr
+				<< "Unknown keyboard layout, supported are:\n"
+				<< "ansi, brazil\n";
+			return 1;
+		}
+
 	}
 
 	// parse list keys flag
