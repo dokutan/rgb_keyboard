@@ -26,7 +26,7 @@ USB keyboards with VID 0x0c45, maybe others.
 
 Name | PID | Tested | Uses control transfer mode
 ---|---|---|---
-Tecware Phantom RGB TKL<br>Glorious GMMK full-size ANSI and TKL ANSI | 0x652f | Yes | No
+Tecware Phantom RGB TKL ANSI and TKL ISO<br>Glorious GMMK full-size ANSI and TKL ANSI | 0x652f | Yes | No
 Ajazz AK33 | 0x7903 | Yes | Yes
 Redragon K550 Yama | 0x5204 | Yes | Yes
 Redragon K556 Devarajas<br>Redragon K587 PRO Magic Wand<br>Redragon Mitra RGB | 0x5004 | Yes | Yes
@@ -38,8 +38,7 @@ See [--control option](#--control-option) for details on the control transfer mo
 You can help to expand this list by providing information whether this software works correctly or not.
 
 ### Known issues that require your help (please open an issue or pull request if you want to contribute):
-- **Remapping keys on the Ajazz AK33 and ISO boards is broken (all keys are shifted around)**
-- Setting the color of the ISO international key (Int_Key) in custom pattern mode is supported but not tested.
+- **Remapping keys on the Ajazz AK33 and some ISO boards is broken (all keys are shifted around).** Remapping works on the Tecware Phantom TKL ISO, but there might be different firmware versions, so be careful when trying this.
 - Setting the USB report/poll rate on the Ajazz AK33 is untested
 - Custom led patterns don't work correctly on the Redragon K550 Yama and K556 Devarajas
 
