@@ -773,161 +773,51 @@ int rgb_keyboard::keyboard::write_report_rate() {
 
 int rgb_keyboard::keyboard::write_key_mapping_ansi() {
 
+	int res = 0;
+
 	// sanity check, this function does not support the Ajazz AK33
 	if (_ajazzak33_compatibility)
 		throw std::invalid_argument("Not supported on the Ajazz AK33");
 
-	// vars
-	int res = 0;
-
-	// prepare data packets
+	// prepare data
 	uint8_t data_remap[8][64];
-	std::copy(std::begin(_data_remap_1), std::end(_data_remap_1),
-			  std::begin(data_remap[0]));
-	std::copy(std::begin(_data_remap_2), std::end(_data_remap_2),
-			  std::begin(data_remap[1]));
-	std::copy(std::begin(_data_remap_3), std::end(_data_remap_3),
-			  std::begin(data_remap[2]));
-	std::copy(std::begin(_data_remap_4), std::end(_data_remap_4),
-			  std::begin(data_remap[3]));
-	std::copy(std::begin(_data_remap_5), std::end(_data_remap_5),
-			  std::begin(data_remap[4]));
-	std::copy(std::begin(_data_remap_6), std::end(_data_remap_6),
-			  std::begin(data_remap[5]));
-	std::copy(std::begin(_data_remap_7), std::end(_data_remap_7),
-			  std::begin(data_remap[6]));
-	std::copy(std::begin(_data_remap_8), std::end(_data_remap_8),
-			  std::begin(data_remap[7]));
+	for( int i = 0; i < 8; i++ )
+		std::copy( std::begin(_data_remap_ansi[i]), std::end(_data_remap_ansi[i]), std::begin(data_remap[i]) );
 
 	// change data for correct profile
-	if (_profile == 2) {
+	int increment = 0;
+	if (_profile == 2)
+		increment = 0x02;
+	else if (_profile == 3)
+		increment = 0x04;
 
-		for (int i = 1; i < 8; i++) {
-			data_remap[i][1] = data_remap[i][1] + 0x02;
-			data_remap[i][6] = data_remap[i][6] + 0x02;
-		}
-
-	} else if (_profile == 3) {
-
-		for (int i = 1; i < 8; i++) {
-			data_remap[i][1] = data_remap[i][1] + 0x04;
-			data_remap[i][6] = data_remap[i][6] + 0x04;
-		}
+	for (int i = 1; i < 8; i++) {
+		data_remap[i][1] = data_remap[i][1] + increment;
+		data_remap[i][6] = data_remap[i][6] + increment;
 	}
 
 	// change data to include keycodes at the right positions
-	for (std::pair<std::string, std::string> element : _keymap[_profile - 1]) {
+	for (auto element : _keymap[_profile - 1]) {
 
 		// is key name and key function known?
-		if (_keymap_offsets.find(element.first) != _keymap_offsets.end() &&
+		if (_keymap_offsets_ansi.find(element.first) != _keymap_offsets_ansi.end() &&
 			_keymap_options.find(element.second) != _keymap_options.end()) {
 
-			data_remap[_keymap_offsets[element.first][0][0]]
-					  [_keymap_offsets[element.first][0][1]] =
+			data_remap[_keymap_offsets_ansi[element.first][0][0]]
+					  [_keymap_offsets_ansi[element.first][0][1]] =
 						  _keymap_options[element.second][0];
-			data_remap[_keymap_offsets[element.first][1][0]]
-					  [_keymap_offsets[element.first][1][1]] =
+			data_remap[_keymap_offsets_ansi[element.first][1][0]]
+					  [_keymap_offsets_ansi[element.first][1][1]] =
 						  _keymap_options[element.second][1];
-			data_remap[_keymap_offsets[element.first][2][0]]
-					  [_keymap_offsets[element.first][2][1]] =
+			data_remap[_keymap_offsets_ansi[element.first][2][0]]
+					  [_keymap_offsets_ansi[element.first][2][1]] =
 						  _keymap_options[element.second][2];
 
 		}
-
-#ifdef USE_MACROS
-		// is key name known and function is a macro?
-		else if (_keymap_offsets.find(element.first) != _keymap_offsets.end() &&
-				 std::regex_match(element.second, std::regex("macro[0-9]+"))) {
-
-			std::string macroname = element.second;
-			int macronumber = std::stoi(macroname.erase(0, 5));
-
-			// check for range of macronumber
-			if (macronumber <= 100 && macronumber >= 1) {
-
-				data_remap[_keymap_offsets[element.first][0][0]]
-						  [_keymap_offsets[element.first][0][1]] = 0x05;
-				data_remap[_keymap_offsets[element.first][1][0]]
-						  [_keymap_offsets[element.first][1][1]] = 0x01;
-				data_remap[_keymap_offsets[element.first][2][0]]
-						  [_keymap_offsets[element.first][2][1]] =
-							  macronumber - 1;
-			}
-		}
-#endif
 	}
 
-#ifdef USE_MACROS
-	// prepare macro data packets, doesn't work
-	/*uint8_t data_macros[19][64];
-	for( int i = 0; i < 19; i++ ){
-		std::copy(std::begin(_data_macros), std::end(_data_macros),
-	std::begin(data_macros[i])); data_macros[i][2] = 0x06 + (2*i); // set packet
-	counter
-	}
-
-	// special values in the first packet
-	data_macros[0][8] = 0xaa;
-	data_macros[0][9] = 0x55;
-	data_macros[0][10] = 0x32;
-	data_macros[0][11] = 0x00;
-	data_macros[0][12] = _macro_bytes.size(); // set number of macros
-	data_macros[0][13] = 0x00;
-	data_macros[0][14] = 0x01;
-	data_macros[0][15] = 0x00;
-	data_macros[0][24] = 0x10 + (2*_macro_bytes.size()); // set number of macros
-
-	// copy _macro_bytes
-	int packet_index = 0, byte_index = 25; // macro data begins at 25 for the
-	first packet for( unsigned int i = 0; i < _macro_bytes.size(); i++ ){ // for
-	each macro
-
-		for( unsigned int j = 0; j < _macro_bytes[i].size(); j++ ){ // for each
-	byte data_macros[packet_index][byte_index] = _macro_bytes[i][j];
-
-			// increment packet and byte index
-			byte_index++;
-			if( byte_index >= 64 ){
-				byte_index = 8; // macro bytes start at 8 for all other packets
-				packet_index++;
-				if( packet_index >= 19 ){
-					return 1; // this means not enough space for all macros
-				}
-			}
-		}
-
-	}*/
-#endif
-
-	// send start data
+	// write start data
 	res += _write_data(_data_start, 64);
-
-#ifdef USE_MACROS
-	// write macro data here, doesn't work
-	/*for( int i = 0; i <= packet_index; i++ ){
-
-		if( _ajazzak33_compatibility ){
-
-			//write end data packet to endpoint 0
-			libusb_control_transfer( _handle, 0x21, 0x09, 0x0204, 0x0001,
-	data_macros[i], 64, 1000 );
-			//read from endpoint 2
-			res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64,
-	&transferred, 1000);
-
-		} else{
-
-			//write data packet to endpoint 3
-			res += libusb_interrupt_transfer( _handle, 0x03, data_macros[i], 64,
-	&transferred, 1000);
-			//read from endpoint 2
-			res += libusb_interrupt_transfer( _handle, 0x82, buffer, 64,
-	&transferred, 1000);
-
-		}
-
-	}*/
-#endif
 
 	// write keymap data
 	for (int i = 0; i < 8; i++)

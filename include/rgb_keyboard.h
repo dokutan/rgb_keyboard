@@ -291,6 +291,8 @@ class rgb_keyboard::keyboard {
 	const static std::map<std::string, std::array<uint8_t, 3>> keycodes_ansi;
 	/// Stores the key names for custom key colors (brazilian layout)
 	const static std::map<std::string, std::array<uint8_t, 3>> keycodes_brazil;
+	/// Stores the key names for custom key colors (ISO layout)
+	const static std::map<std::string, std::array<uint8_t, 3>> keycodes_iso;
 
   private:
 	// usb device vars
@@ -373,14 +375,7 @@ class rgb_keyboard::keyboard {
 	static uint8_t _data_start[64];
 	static uint8_t _data_end[64];
 	static uint8_t _data_settings[64];
-	static uint8_t _data_remap_1[64];
-	static uint8_t _data_remap_2[64];
-	static uint8_t _data_remap_3[64];
-	static uint8_t _data_remap_4[64];
-	static uint8_t _data_remap_5[64];
-	static uint8_t _data_remap_6[64];
-	static uint8_t _data_remap_7[64];
-	static uint8_t _data_remap_8[64];
+	static uint8_t _data_remap_ansi[8][64];
 	static uint8_t _data_remap_iso[11][64];
 	static uint8_t _data_profile[64];
 	static uint8_t _data_read[64];
@@ -396,7 +391,7 @@ class rgb_keyboard::keyboard {
 	/// Offsets for key remapping ( key → data positon ) ["string":[ [x,y],
 	/// [x,y], [x,y] ]]
 	static std::map<std::string, std::array<std::array<uint8_t, 2>, 3>>
-		_keymap_offsets;
+		_keymap_offsets_ansi;
 	/// Offsets for key remapping ( key → data positon ) ["string":[ [x,y],
 	/// [x,y], [x,y] ]]
 	static std::map<std::string, std::array<std::array<uint8_t, 2>, 3>>

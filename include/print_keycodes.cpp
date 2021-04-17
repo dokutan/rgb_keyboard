@@ -31,7 +31,7 @@ int rgb_keyboard::keyboard::print_keycodes_led(std::ostream &output) {
 // prints all keys for remapping (ANSI layout)
 int rgb_keyboard::keyboard::print_keycodes_remap_ansi(std::ostream &output) {
 
-	for (auto i : _keymap_offsets) {
+	for (auto i : _keymap_offsets_ansi) {
 		output << i.first << "\n";
 	}
 

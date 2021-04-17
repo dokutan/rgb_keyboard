@@ -228,7 +228,7 @@ int main(int argc, char **argv) {
 		} else if (string_layout == "brazil") {
 			kbd.set_keycodes(rgb_keyboard::keyboard::keycodes_brazil);
 		} else if (string_layout == "iso") {
-			//kbd.set_keycodes(rgb_keyboard::keyboard::keycodes_iso); TODO!
+			kbd.set_keycodes(rgb_keyboard::keyboard::keycodes_iso);
 		} else {
 			std::cerr
 				<< "Unknown keyboard layout, supported are:\n"

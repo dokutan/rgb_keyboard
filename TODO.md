@@ -15,8 +15,6 @@
 - move macro storage to string based format:
 	- Determine maximum amount of actions in one macro
 
-- Move _data_remap_* to single array
-
 ## Where to implement missing features
 - Macros: write_key_mapping_ansi() (writers.cpp)
 - Keymapping on ISO or Ajazz AK33: new function in writers.cpp (similar to write_key_mapping_ansi()) and appropriate selection code in main
