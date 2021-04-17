@@ -40,7 +40,7 @@ You can help to expand this list by providing information whether this software 
 ### Known issues that require your help (please open an issue or pull request if you want to contribute):
 - **Remapping keys on the Ajazz AK33 and some ISO boards is broken (all keys are shifted around).** Remapping works on the Tecware Phantom TKL ISO, but there might be different firmware versions, so be careful when trying this.
 - Setting the USB report/poll rate on the Ajazz AK33 is untested
-- Custom led patterns don't work correctly on the Redragon K550 Yama and K556 Devarajas
+- Custom led patterns don't work correctly on the Redragon K550 Yama, K556 Devarajas and K587 PRO Magic Wand.
 
 ## Installing
 - Clone this repository or download a release
