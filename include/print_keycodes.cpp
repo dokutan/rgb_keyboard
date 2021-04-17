@@ -28,10 +28,20 @@ int rgb_keyboard::keyboard::print_keycodes_led(std::ostream &output) {
 	return 0;
 }
 
-// prints all keys for remapping
-int rgb_keyboard::keyboard::print_keycodes_remap(std::ostream &output) {
+// prints all keys for remapping (ANSI layout)
+int rgb_keyboard::keyboard::print_keycodes_remap_ansi(std::ostream &output) {
 
 	for (auto i : _keymap_offsets) {
+		output << i.first << "\n";
+	}
+
+	return 0;
+}
+
+// prints all keys for remapping (ISO layout)
+int rgb_keyboard::keyboard::print_keycodes_remap_iso(std::ostream &output) {
+
+	for (auto i : _keymap_offsets_iso) {
 		output << i.first << "\n";
 	}
 

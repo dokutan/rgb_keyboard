@@ -939,6 +939,64 @@ int rgb_keyboard::keyboard::write_key_mapping_ansi() {
 	return res;
 }
 
+int rgb_keyboard::keyboard::write_key_mapping_iso() {
+
+	int res = 0;
+
+	// sanity check, this function does not support the Ajazz AK33
+	if (_ajazzak33_compatibility)
+		throw std::invalid_argument("Not supported on the Ajazz AK33");
+
+	// prepare data
+	uint8_t data_remap[11][64];
+	for( int i = 0; i < 11; i++ )
+		std::copy( std::begin(_data_remap_iso[i]), std::end(_data_remap_iso[i]), std::begin(data_remap[i]) );
+
+	// change data for correct profile
+	int increment = 0;
+	if (_profile == 2)
+		increment = 0x02;
+	else if (_profile == 3)
+		increment = 0x04;
+
+	for (int i = 1; i < 11; i++) {
+		data_remap[i][1] = data_remap[i][1] + increment;
+		data_remap[i][6] = data_remap[i][6] + increment;
+	}
+
+	// change data to include keycodes at the right positions
+	for (auto element : _keymap[_profile - 1]) {
+
+		// is key name and key function known?
+		if (_keymap_offsets_iso.find(element.first) != _keymap_offsets_iso.end() &&
+			_keymap_options.find(element.second) != _keymap_options.end()) {
+
+			data_remap[_keymap_offsets_iso[element.first][0][0]]
+					  [_keymap_offsets_iso[element.first][0][1]] =
+						  _keymap_options[element.second][0];
+			data_remap[_keymap_offsets_iso[element.first][1][0]]
+					  [_keymap_offsets_iso[element.first][1][1]] =
+						  _keymap_options[element.second][1];
+			data_remap[_keymap_offsets_iso[element.first][2][0]]
+					  [_keymap_offsets_iso[element.first][2][1]] =
+						  _keymap_options[element.second][2];
+
+		}
+	}
+
+	// write start data
+	res += _write_data(_data_start, 64);
+
+	// write keymap data
+	for (int i = 0; i < 11; i++)
+		res += _write_data(data_remap[i], 64);
+
+	// write end data
+	res += _write_data(_data_end, 64);
+
+	return res;
+}
+
 int rgb_keyboard::keyboard::write_active_profile() {
 
 	// vars

@@ -28,8 +28,8 @@ Licensed under the GNU GPL version 3 or later.
 
 Options:
     -h --help           Displays this message
-    -Y --layout         Select the keyboard layout: ansi (default), brazil
-                        This affects custom led patterns and the keynames.
+    -Y --layout         Select the keyboard layout: ansi (default), brazil, iso
+                        This affects custom led patterns, keymapping and the keynames.
     -L --list-keys=arg  List valid keynames (arg: led, map, option)
     -p --profile=arg     Set profile to which the settings are applied
 						Integer from 1 to 3.

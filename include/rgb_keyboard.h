@@ -238,6 +238,8 @@ class rgb_keyboard::keyboard {
 	int write_report_rate();
 	/// Write the keymapping to the keyboard, (ANSI layout only)
 	int write_key_mapping_ansi();
+	/// Write the keymapping to the keyboard, (ISO layout only)
+	int write_key_mapping_iso();
 	/// Write the active profile to the keyboard
 	int write_active_profile();
 
@@ -278,8 +280,10 @@ class rgb_keyboard::keyboard {
 	// prints all valid keycodes
 	/// Print all valid key names for custom led patterns to stdout
 	int print_keycodes_led(std::ostream &output);
-	/// Print all valid key names for key remapping to stdout
-	int print_keycodes_remap(std::ostream &output);
+	/// Print all valid key names for key remapping to stdout (ANSI layout)
+	int print_keycodes_remap_ansi(std::ostream &output);
+	/// Print all valid key names for key remapping to stdout (ISO layout)
+	int print_keycodes_remap_iso(std::ostream &output);
 	/// Print all valid options for key remapping to stdout
 	int print_keycodes_options(std::ostream &output);
 
@@ -377,8 +381,7 @@ class rgb_keyboard::keyboard {
 	static uint8_t _data_remap_6[64];
 	static uint8_t _data_remap_7[64];
 	static uint8_t _data_remap_8[64];
-	static uint8_t _data_remap_9[64];
-	static uint8_t _data_remap_10[64];
+	static uint8_t _data_remap_iso[11][64];
 	static uint8_t _data_profile[64];
 	static uint8_t _data_read[64];
 #ifdef USE_MACROS
@@ -394,6 +397,10 @@ class rgb_keyboard::keyboard {
 	/// [x,y], [x,y] ]]
 	static std::map<std::string, std::array<std::array<uint8_t, 2>, 3>>
 		_keymap_offsets;
+	/// Offsets for key remapping ( key → data positon ) ["string":[ [x,y],
+	/// [x,y], [x,y] ]]
+	static std::map<std::string, std::array<std::array<uint8_t, 2>, 3>>
+		_keymap_offsets_iso;
 	/// Keymap options (what a key can do when pressed)  ( option → code )
 	static std::map<std::string, std::array<uint8_t, 3>> _keymap_options;
 	/// Stores current keymapping ( key → option)

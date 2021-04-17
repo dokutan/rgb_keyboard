@@ -227,10 +227,12 @@ int main(int argc, char **argv) {
 			kbd.set_keycodes(rgb_keyboard::keyboard::keycodes_ansi);
 		} else if (string_layout == "brazil") {
 			kbd.set_keycodes(rgb_keyboard::keyboard::keycodes_brazil);
+		} else if (string_layout == "iso") {
+			//kbd.set_keycodes(rgb_keyboard::keyboard::keycodes_iso); TODO!
 		} else {
 			std::cerr
 				<< "Unknown keyboard layout, supported are:\n"
-				<< "ansi, brazil\n";
+				<< "ansi, brazil, iso\n";
 			return 1;
 		}
 
@@ -249,9 +251,13 @@ int main(int argc, char **argv) {
 		} else if (string_list_keys == "map" || string_list_keys == "keymap") {
 
 			// list physical keys for key remapping
-			std::cout << "Keynames of physical keys for remapping:\n(Some keys "
-						 "might have multiple names)\n\n";
-			kbd.print_keycodes_remap(std::cout);
+			if (string_layout == "iso") {
+				std::cout << "Keynames of physical keys for remapping (ISO layout):\n(Some keys might have multiple names)\n\n";
+				kbd.print_keycodes_remap_iso(std::cout);
+			} else{
+				std::cout << "Keynames of physical keys for remapping (ANSI layout):\n(Some keys might have multiple names)\n\n";
+				kbd.print_keycodes_remap_ansi(std::cout);
+			}
 
 		} else if (string_list_keys == "function" ||
 				   string_list_keys == "option") {
@@ -725,7 +731,15 @@ int main(int argc, char **argv) {
 
 			if (user_input == "YES") {
 				if (kbd.load_keymap(string_keymap) == 0) {
-					kbd.write_key_mapping_ansi();
+
+					// write key mapping, depends on the specified layout
+					if( string_layout == "ansi" )
+						kbd.write_key_mapping_ansi();
+					else if( string_layout == "iso" )
+						kbd.write_key_mapping_iso();
+					else
+						kbd.write_key_mapping_ansi();
+
 				} else {
 					std::cerr << "Couldn't open keymap file.\n";
 					kbd.close_keyboard();
