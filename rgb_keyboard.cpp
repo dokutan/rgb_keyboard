@@ -286,6 +286,37 @@ int main(int argc, char **argv) {
 	if (flag_interface0)
 		kbd.set_open_interface_0(false);
 
+
+	// parse keymap flag, ask user for confirmation and load keymap (writing the keymap happens after opening the keyboard)
+	if (flag_keymap) {
+
+		// ask user for confirmation?
+		std::cout << "Remapping the keys is experimental and potentially dangerous.\n";
+		std::cout << "Make sure your keyboards has the following layout, if not use the --layout option: ";
+		if( string_layout == "iso" )
+			std::cout << "iso\n";
+		else
+			std::cout << "ansi\n";
+		std::cout << "On some ISO-layout boards and keyboards with a PID other than 0x652f this has been reported to mess up all keys.\n";
+		std::cout << "If you accept the risk of permanent damage to the keyboard, type YES and press enter to continue, anything else will cancel this process.\n";
+
+		std::string user_input;
+		std::cin >> user_input;
+
+		if (user_input == "YES") {
+
+			if (kbd.load_keymap(string_keymap) != 0) {
+				std::cerr << "Couldn't open keymap file.\n";
+				kbd.close_keyboard();
+				return 1;
+			}
+
+		} else {
+			std::cout << "Not remapping the keys.\n";
+			return 1;
+		}
+	}
+
 	// open keyboard, apply settings, close keyboard
 	try {
 
@@ -710,44 +741,15 @@ int main(int argc, char **argv) {
 			}
 		}
 
-		// parse keymap flag
+		// parse keymap flag, write keymap (loading the keymap happens before opening the keyboard)
 		if (flag_keymap && !kbd.get_ajazzak33_compatibility()) {
 
-			// ask user for confirmation?
-			std::cout << "Remapping the keys is experimental and potentially "
-						 "dangerous.\n";
-			std::cout
-				<< "On ISO-layout boards and keyboards with a PID other than "
-				   "0x652f this has been reported to mess up all keys.\n";
-			std::cout
-				<< "You can help to improve it by capturing USB communication, "
-				   "for more information open an issue on Github.\n";
-			std::cout << "If you accept the risk of permanent damage to the "
-						 "keyboard, type YES and press enter to continue.\n";
-			std::cout << "Anything else will cancel this process.\n";
-
-			std::string user_input;
-			std::cin >> user_input;
-
-			if (user_input == "YES") {
-				if (kbd.load_keymap(string_keymap) == 0) {
-
-					// write key mapping, depends on the specified layout
-					if( string_layout == "ansi" )
-						kbd.write_key_mapping_ansi();
-					else if( string_layout == "iso" )
-						kbd.write_key_mapping_iso();
-					else
-						kbd.write_key_mapping_ansi();
-
-				} else {
-					std::cerr << "Couldn't open keymap file.\n";
-					kbd.close_keyboard();
-					return 1;
-				}
-			} else {
-				std::cout << "Not remapping the keys.\n";
-			}
+			// write key mapping, depends on the specified layout
+			if( string_layout == "iso" )
+				kbd.write_key_mapping_iso();
+			else
+				kbd.write_key_mapping_ansi();
+			
 		} else if (flag_keymap && kbd.get_ajazzak33_compatibility()) {
 			std::cerr << "This feature is currently not supported for "
 						 "keyboards using control transfer.\n";
