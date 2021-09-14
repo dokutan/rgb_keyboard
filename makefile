@@ -3,7 +3,7 @@ BIN_DIR = $(PREFIX)/bin
 DOC_DIR = $(PREFIX)/share/doc
 MAN_DIR = $(PREFIX)/share/man/man1
 CXX = g++
-CXXFLAGS = -Wall -Wextra -O2
+CXXFLAGS = -Wall -Wextra -O2 -std=c++11
 
 build: rgb_keyboard.o constructor.o fileio.o getters.o helpers.o print_keycodes.o setters.o writers.o readers.o data.o macro.o functions.o
 	$(CXX) *.o -o rgb_keyboard -lusb-1.0 $(CXXFLAGS)
