@@ -8,6 +8,7 @@ Controls the RGB lighting on some keyboards. Tested on Linux and FreeBSD, should
 	- [Arch Linux](#arch-linux)
 	- [Linux](#linux)
 	- [FreeBSD](#freebsd)
+	- [OS X](#os-x)
 - [Usage](#usage)
 	- [Profiles](#profiles)
 	- [Examples](#examples)
@@ -76,6 +77,9 @@ make CC=clang++ -j4
 - Current limitations on FreeBSD:
 	- You need root privileges to use the program
 	- After the program has finished, the keyboard won't work and needs to be unplugged and plugged back in.
+
+### OS X
+Compiling and running on OS X is not properly tested or supported because i don't have access to a machine with OS X. However all dependencies are available and compiling with clang should work ([more information](https://github.com/dokutan/rgb_keyboard/pull/16)), your feedback and contributions are welcome.
 
 ## Usage
 
