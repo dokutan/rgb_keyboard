@@ -30,7 +30,7 @@ Name | PID | Tested | Uses control transfer mode
 Tecware Phantom RGB TKL ANSI and TKL ISO<br>Glorious GMMK full-size ANSI and TKL ANSI | 0x652f | Yes | No
 Ajazz AK33 | 0x7903 | Yes | Yes
 Redragon K550 Yama | 0x5204 | Yes | Yes
-Redragon K556 Devarajas<br>Redragon K587 PRO Magic Wand<br>Redragon Mitra RGB | 0x5004 | Yes | Yes
+Redragon K556 Devarajas<br>Redragon K587 PRO Magic Wand<br>Redragon Mitra RGB<br>Redragon SURARA K582 | 0x5004 | Yes | Yes
 Redragon K552 Kumara | 0x5104 | Yes | Yes
 Warrior Kane TC235 | 0x8520 | No | (Yes)
 
