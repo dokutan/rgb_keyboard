@@ -227,12 +227,14 @@ int main(int argc, char **argv) {
 			kbd.set_keycodes(rgb_keyboard::keyboard::keycodes_ansi);
 		} else if (string_layout == "brazil") {
 			kbd.set_keycodes(rgb_keyboard::keyboard::keycodes_brazil);
+		} else if (string_layout == "brazil_k552rgb1") {
+			kbd.set_keycodes(rgb_keyboard::keyboard::keycodes_brazil_k552rgb1);
 		} else if (string_layout == "iso") {
 			kbd.set_keycodes(rgb_keyboard::keyboard::keycodes_iso);
 		} else {
 			std::cerr
 				<< "Unknown keyboard layout, supported are:\n"
-				<< "ansi, brazil, iso\n";
+				<< "ansi, brazil, brazil_k552rgb1, iso\n";
 			return 1;
 		}
 

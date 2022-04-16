@@ -292,6 +292,8 @@ class rgb_keyboard::keyboard {
 	const static std::map<std::string, std::array<uint8_t, 3>> keycodes_ansi;
 	/// Stores the key names for custom key colors (brazilian layout)
 	const static std::map<std::string, std::array<uint8_t, 3>> keycodes_brazil;
+	/// Stores the key names for custom key colors (K552RGB-1, brazilian layout)
+	const static std::map<std::string, std::array<uint8_t, 3>> keycodes_brazil_k552rgb1;
 	/// Stores the key names for custom key colors (ISO layout)
 	const static std::map<std::string, std::array<uint8_t, 3>> keycodes_iso;
 
