@@ -214,6 +214,10 @@ int main(int argc, char **argv) {
 	kbd.set_vid(rgb_keyboard::keyboard_vid);
 	kbd.set_pid(rgb_keyboard::detect_pid());
 	if (kbd.get_pid() == 0) {
+		kbd.set_vid(rgb_keyboard::keyboard_vid2);
+		kbd.set_pid(rgb_keyboard::detect_pid(rgb_keyboard::keyboard_vid2));
+	}
+	if (kbd.get_pid() == 0) {
 		std::cerr
 			<< "Could not detect keyboard, check hardware and permissions.\n";
 		std::cerr << "Try with the --bus and --device options.\n";

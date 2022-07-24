@@ -40,6 +40,7 @@ class keyboard;
 
 // usb ids
 const uint16_t keyboard_vid = 0x0c45;
+const uint16_t keyboard_vid2 = 0x320f;
 const std::vector<uint16_t> keyboard_pid = {
 	0x7903, // Ajazz AK33
 	0x5204, // Redragon K550 Yama
